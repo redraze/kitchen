@@ -5,5 +5,12 @@ extend({ OrbitControls });
 
 export default function Controls(props) {
   const { camera, gl } = useThree();
-  return <orbitControls attach={"orbitControls"}  args={[camera, gl.domElement]} />;
+  return <orbitControls 
+    attach={"orbitControls"}  
+    args={[camera, gl.domElement]}
+    enableDamping={true}
+    dampingFactor={.1}
+    enablePan={false}
+    enableZoom={false}
+  />;
 };

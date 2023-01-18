@@ -17,7 +17,7 @@ export default function Home() {
           position: [-6, 7, 7],
         }}
       >
-        {/* <ambientLight color={"white"} intensity={0.3} /> */}
+        <ambientLight color={"white"} intensity={0.3} />
         <LightBulb position={[0, 3, 0]} />
         <DragItem>
           <Suspense>
