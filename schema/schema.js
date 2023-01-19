@@ -1,5 +1,5 @@
-import { Recipe } from '../models/Recipe';
-import { Ingredient } from '../models/Ingredient';
+import { Recipe } from 'models/Recipe';
+import { Ingredient } from 'models/Ingredient';
 
 import { 
     GraphQLObjectType, 

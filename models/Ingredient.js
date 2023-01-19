@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const IngredientSchema = new Schema({
     name: {
@@ -11,4 +11,4 @@ const IngredientSchema = new Schema({
     }
 });
 
-export default model('Ingredient', IngredientSchema);
+export default models.Ingredient || model('Ingredient', RecipeSchema);

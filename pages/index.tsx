@@ -1,10 +1,10 @@
-import css from "../styles/Home.module.css";
+import css from "styles/Home.module.css";
 import { Canvas } from "@react-three/fiber";
-import LightBulb from "../components/LightBulb";
-import DragItem from "../components/DragItem";
-import Box from "../components/Box";
-import OrbitControls from "../components/OrbitControls";
-import Floor from "../components/Floor";
+import LightBulb from "components/LightBulb";
+import DragItem from "components/DragItem";
+import Box from "components/Box";
+import OrbitControls from "components/OrbitControls";
+import Floor from "components/Floor";
 import { Suspense } from "react";
 
 export default function Home() {
