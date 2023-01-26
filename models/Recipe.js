@@ -1,10 +1,8 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, models, model } from 'mongoose';
 
 const RecipeSchema = new Schema({
     name: {
-        type: String,
-        required: [true, 'Please provide a name for this recipe.'],
-        maxLength: [60, 'Name cannot be more than 60 characters.']
+        type: String
     },
     description: {
         type: String
@@ -14,4 +12,4 @@ const RecipeSchema = new Schema({
     }
 });
 
-export default models.Recipe || model('Recipe', RecipeSchema);
+export default models.RecipeModel || model('RecipeModel', RecipeSchema, 'recipes');

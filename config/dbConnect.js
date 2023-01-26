@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+mongoose.set('strictQuery', true);
+
 const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
@@ -26,7 +28,7 @@ async function dbConnect() {
 
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
+      bufferCommands: true,
     }
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
@@ -42,6 +44,6 @@ async function dbConnect() {
   }
 
   return cached.conn
-};
+}
 
 export default dbConnect;

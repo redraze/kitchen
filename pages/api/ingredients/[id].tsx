@@ -1,15 +1,15 @@
-import { ingredients } from 'data.js';
+import dbConnect from 'lib/dbConnect';
+import IngredientModel from 'models/Ingredient';
 
-export default function handler({ query: { id } }: any, res: any) {
-    const filtered = ingredients.filter(ingredients => ingredients.id === id)
-
-    if (filtered.length > 0) {
-        res.status(200).json(filtered[0])
-    } else {
-        res
-            .status(404)
-            .json({ 
-                message: `Ingredient with the id of ${ id } not found` 
-            })
-    };
+export default async function handler({ query: { id } }: any, res: any) {
+    await dbConnect;
+    try {
+        const ingredient = await IngredientModel.findById(id);
+        if (!ingredient) {
+            return res.status(400).json({ success: false })
+        }
+        res.status(200).json({ success: true, data: ingredient })
+    } catch (error) {
+        res.status(400).json({ success: false })
+    }
 };
