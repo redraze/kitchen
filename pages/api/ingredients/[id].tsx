@@ -1,8 +1,6 @@
-import dbConnect from 'lib/dbConnect';
 import IngredientModel from 'models/Ingredient';
 
 export default async function handler({ query: { id } }: any, res: any) {
-    await dbConnect;
     try {
         const ingredient = await IngredientModel.findById(id);
         if (!ingredient) {

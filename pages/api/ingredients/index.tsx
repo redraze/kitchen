@@ -1,8 +1,6 @@
-import dbConnect from 'lib/dbConnect';
 import IngredientModel from 'models/Ingredient';
 
-export default async function handler(req, res) {
-    await dbConnect;
+export default async function handler(_req: any, res: any) {
     try {
         const ingredients = await IngredientModel.find({})
         return res.status(200).json({ success: true, data: ingredients})
