@@ -11,14 +11,14 @@ export default function Box(props) {
             {...props}
             recieveShadow={true} 
             castShadow={true}
-            onPointerOver={(_e) => hover(true)}
-            onPointerOut={(_e) => hover(false)}
-            scale={ props.active === props.index ? 1.5 : 1} 
+            onPointerOver={() => hover(true)}
+            onPointerOut={() => hover(false)}
+            scale={ props.focus === props.index ? 1.5 : 1} 
         >
             <boxGeometry />
             <meshPhysicalMaterial 
                 map={ texture } 
-                color={hovered ? "white" : "brown"} 
+                color={hovered ? "white" : "gray"} 
             />
         </mesh>
     </>);
