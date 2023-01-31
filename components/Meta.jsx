@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Meta({ title, description, keywords }: any) {
+export default function Meta({ title, description, keywords }) {
     return(<>
     <Head>
         <title>{ title }</title>

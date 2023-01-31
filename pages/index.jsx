@@ -8,8 +8,8 @@ import Box from "components/Box";
 import Floor from "components/Floor";
 
 export default function Home() {
-  const initPos = [0,-3,0]
-  const [pos, setPos] = useState(initPos)
+  const initPos = [0,-5,-8];
+  const [pos, setPos] = useState(initPos);
   const [focus, setFocus] = useState(-1);
   const toggleFocus = (index=-1, [x,y,z]=initPos) => {
     index === focus ? 
@@ -20,28 +20,34 @@ export default function Home() {
   return (
     <div className={ css.scene }>
       <Canvas 
-        camera={{ fov: 40, position: [0,0,20] }}
+        camera={{ fov: 40, position: [0,0,10], rotation: [-Math.PI / 40, 0, 0] }}
         onPointerMissed={ () => toggleFocus() }
         touch-action={"none"}
         >
         <color attach="background" args={['#87CEEB']} />
         <ambientLight color={"white"} intensity={1} />
-        <Controls >
-          <Group pos={pos} >
+        <Controls>
+          <Group pos={pos} initPos={initPos} focus={focus} >
             <LightBulb position={[0, 7, 0]} />
             <Box 
-              position={[0,0,3]}
-              onClick={ (e) => toggleFocus(0, e.eventObject.position) }
+              position={[-5,.5,0]}
+              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
               index={0}
               focus={focus}
             />
             <Box 
-              position={[3,0,0]}
-              onClick={ (e) => toggleFocus(1, e.eventObject.position) }
+              position={[0,.5,0]}
+              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
               index={1}
               focus={focus}
             />
-            <Floor position={[8, -.5, 8]} />
+            <Box 
+              position={[5,.5,0]}
+              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
+              index={2}
+              focus={focus}
+            />
+            <Floor />
           </Group>
         </Controls>
       </Canvas>

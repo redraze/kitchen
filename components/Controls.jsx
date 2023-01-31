@@ -8,7 +8,7 @@ export default function Controls({ children }) {
             zoom={0.8} 
             polar={[0, Math.PI / 4]} 
             azimuth={[-Math.PI / 4, Math.PI / 4]}
-            >
+        >
             {children}
         </PresentationControls>
     );
