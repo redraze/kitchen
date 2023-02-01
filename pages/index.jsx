@@ -6,6 +6,7 @@ import Group from "components/Group";
 import LightBulb from "components/LightBulb";
 import Box from "components/Box";
 import Floor from "components/Floor";
+import { Vector3 } from "three";
 
 export default function Home() {
   const initPos = [0,-5,-8];
@@ -30,22 +31,19 @@ export default function Home() {
           <Group pos={pos} initPos={initPos} focus={focus} >
             <LightBulb position={[0, 7, 0]} />
             <Box 
-              position={[-5,.5,0]}
+              position={new Vector3(-5,.5,0)}
+              index={0} focus={focus}
               onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
-              index={0}
-              focus={focus}
             />
             <Box 
-              position={[0,.5,0]}
+              position={new Vector3(0,.5,0)}
+              index={1} focus={focus}
               onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
-              index={1}
-              focus={focus}
             />
             <Box 
-              position={[5,.5,0]}
+              position={new Vector3(5,.5,0)}
+              index={2} focus={focus}
               onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
-              index={2}
-              focus={focus}
             />
             <Floor />
           </Group>
