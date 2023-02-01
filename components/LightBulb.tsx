@@ -1,4 +1,10 @@
-export default function LightBulb(props) {
+import { Vector3 } from 'three';
+
+export type LightBulbProps = {
+    position: Vector3
+}
+
+export default function LightBulb(props: LightBulbProps) {
     return (<>
         <mesh {...props} >
             <pointLight castShadow />

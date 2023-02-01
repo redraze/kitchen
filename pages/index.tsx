@@ -1,27 +1,27 @@
-import { useState } from "react";
 import css from "styles/Home.module.css";
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Vector3 } from "three";
 import Controls from "components/Controls"
 import Group from "components/Group";
 import LightBulb from "components/LightBulb";
 import Box from "components/Box";
 import Floor from "components/Floor";
-import { Vector3 } from "three";
 
 export default function Home() {
-  const initPos = [0,-5,-8];
+  const initPos = new Vector3(0,5,20);
   const [pos, setPos] = useState(initPos);
   const [focus, setFocus] = useState(-1);
-  const toggleFocus = (index=-1, [x,y,z]=initPos) => {
+  const toggleFocus = (index=-1, toPos=initPos) => {
     index === focus ? 
       ( (setFocus(-1)), setPos(initPos) ): 
-      ( (setFocus(index)), setPos([x,y,z]) );
+      ( (setFocus(index)), setPos(toPos) );
   };
   
   return (
     <div className={ css.scene }>
       <Canvas 
-        camera={{ fov: 40, position: [0,0,10], rotation: [-Math.PI / 40, 0, 0] }}
+        camera={{ fov: 50, position: initPos, rotation: [-Math.PI / 40, 0, 0] }}
         onPointerMissed={ () => toggleFocus() }
         touch-action={"none"}
         >
@@ -29,7 +29,7 @@ export default function Home() {
         <ambientLight color={"white"} intensity={1} />
         <Controls>
           <Group pos={pos} initPos={initPos} focus={focus} >
-            <LightBulb position={[0, 7, 0]} />
+            <LightBulb position={new Vector3(0,7,0)} />
             <Box 
               position={new Vector3(-5,.5,0)}
               index={0} focus={focus}

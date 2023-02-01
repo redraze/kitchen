@@ -3,10 +3,19 @@ import { useRef, useState } from "react";
 import { TextureLoader } from "three";
 import { Vector3 } from "three";
 
-export default function Box(props) {
+export type BoxProps = {
+    position: Vector3
+    focus?: number
+    index?: number
+    onClick?: (param: any) => void
+};
+
+export type PositionType = Vector3;
+
+export default function Box(props: BoxProps) {
     const texture = useLoader(TextureLoader, "textures/wood box texture.jpg");
     const [hovered, hover] = useState(false);
-    const ref = useRef();
+    const ref = useRef<THREE.Mesh>(null!)
     const growthFactor = 2;
     const lerpFactor = 0.2
     const small = new Vector3(1,1,1);
@@ -41,10 +50,10 @@ export default function Box(props) {
         <mesh 
             {...props}
             // Initially position is brought in through props, but 
-            // we don't want it to interfere with the position lerp
-            // position={null}
+            // we don't want it to interfere with the position lerp.
+            position={undefined}
             ref={ref}
-            recieveShadow={true} 
+            receiveShadow={true} 
             castShadow={true}
             onPointerOver={ () => hover(true) }
             onPointerOut={ () => hover(false) }
@@ -52,7 +61,6 @@ export default function Box(props) {
             <boxGeometry />
             <meshPhysicalMaterial 
                 map={ texture } 
-                color={{ r:dark, g:dark, b:dark }}
             />
         </mesh>
     </>);

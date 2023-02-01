@@ -1,6 +1,11 @@
 import { PresentationControls } from '@react-three/drei';
+import React, { ReactNode } from 'react';
 
-export default function Controls({ children }) {
+export type ControlsProps = {
+    children?: ReactNode
+}
+
+export default function Controls({ children }: ControlsProps) {
     return (
         <PresentationControls
             global 
