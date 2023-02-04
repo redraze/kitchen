@@ -18,7 +18,7 @@ export default function Group({ pos, initPos, focus, children }: GroupProps) {
         ref.current.position.lerp(
             focus === -1 ? 
                 new Vector3(0,0,0) : 
-                new Vector3(pos['x'] * -1,0,0),
+                new Vector3(pos['x']*-1,pos['y']*-1,pos['z']*-1),
             0.04);
         // Zoom camera in
         state.camera.position.lerp(
@@ -28,7 +28,7 @@ export default function Group({ pos, initPos, focus, children }: GroupProps) {
             0.04);
         state.camera.fov = lerp(
             state.camera.fov, 
-            focus === -1 ? 40 : 30,
+            focus === -1 ? 40 : 50,
             0.05
         );
         state.camera.updateProjectionMatrix();
