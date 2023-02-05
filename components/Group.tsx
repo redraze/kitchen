@@ -14,17 +14,17 @@ export default function Group({ pos, initPos, focus, children }: GroupProps) {
     const ref = useRef<THREE.Mesh>(null!)
     
     useFrame((state) => {
-        // Center focused member of group on camera focal point
+        // Center focused component of group on camera focal point
         ref.current.position.lerp(
             focus === -1 ? 
                 new Vector3(0,0,0) : 
                 new Vector3(pos['x']*-1,pos['y']*-1,pos['z']*-1),
             0.04);
-        // Zoom camera in
+        // Zoom camera
         state.camera.position.lerp(
             focus === -1 ?
                 initPos :
-                new Vector3(0,2,8),
+                new Vector3(0,2,7),
             0.04);
         state.camera.fov = lerp(
             state.camera.fov, 

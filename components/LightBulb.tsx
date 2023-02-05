@@ -9,7 +9,7 @@ export default function LightBulb(props: LightBulbProps) {
         <mesh {...props} >
             <pointLight castShadow />
             <sphereGeometry args={[0.2, 30, 10]} />
-            <meshPhongMaterial emissive={"yellow"}  />
+            <meshPhongMaterial emissive={"yellow"} />
         </mesh>
     </>);
 };

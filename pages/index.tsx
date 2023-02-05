@@ -8,6 +8,7 @@ import LightBulb from "components/LightBulb";
 import Box from "components/Box";
 import Floor from "components/Floor";
 import Fridge from "components/Fridge";
+import Universe from "components/Universe";
 
 export default function Home() {
   const initPos = new Vector3(0,5,20);
@@ -18,6 +19,7 @@ export default function Home() {
       ( (setFocus(-1)), setPos(initPos) ): 
       ( (setFocus(index)), setPos(toPos) );
   };
+  const [night, setNight] = useState(false);
   
   return (
     <div className={ css.scene }>
@@ -26,8 +28,6 @@ export default function Home() {
         onPointerMissed={ () => toggleFocus() }
         touch-action={"none"}
         >
-        <color attach="background" args={['#87CEEB']} />
-        <ambientLight color={"white"} intensity={1} />
         <Controls>
           <Group pos={pos} initPos={initPos} focus={focus} >
             <LightBulb position={new Vector3(-8,7,-2)} />
@@ -36,27 +36,36 @@ export default function Home() {
             <Box 
               position={new Vector3(-5,.5,0)}
               index={0} focus={focus}
-              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
+              onClick={ (e) => 
+                toggleFocus(e.eventObject.index, e.eventObject.position) 
+              }
             />
             <Box 
               position={new Vector3(0,.5,0)}
               index={1} focus={focus}
-              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
+              onClick={ (e) => 
+                toggleFocus(e.eventObject.index, e.eventObject.position) 
+              }
             />
             <Box 
               position={new Vector3(5,.5,0)}
               index={2} focus={focus}
-              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
+              onClick={ (e) => 
+                toggleFocus(e.eventObject.index, e.eventObject.position) 
+              }
             />
             <Floor />
             <Fridge 
               position={new Vector3(0,.6,-5)} 
               rotation={new Euler(0,0,0,)}
               index={3} focus={focus}
-              onClick={ (e) => toggleFocus(e.eventObject.index, e.eventObject.position) }
+              onClick={ (e) => 
+                toggleFocus(e.eventObject.index, e.eventObject.position) 
+              }
             />
           </Group>
         </Controls>
+        <Universe night={night} onClick={ () => setNight(!night) } />
       </Canvas>
     </div>
   );
