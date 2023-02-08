@@ -8,13 +8,14 @@ export type UniverseProps = {
 }
 
 export default function Universe({ night, onClick }: UniverseProps) {
-    // TODO: male lerp more linear (right now it starts too fast and slows down)
+    // TODO: make lerp more linear (right now it starts too fast and slows down)
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
-    const bg = useRef();
-    const amb = useRef();
-    const sun = useRef();
+    // TS 'any' usage here              ---------------------------------
+    const bg: any = useRef<THREE.Color>();
+    const amb: any = useRef<THREE.AmbientLight>();
+    const sun: any = useRef<THREE.Mesh>();
+    const moon: any = useRef<THREE.Mesh>();
     const sunInitPos = new Vector3(100,40,0);
-    const moon = useRef();
     const moonInitPos = new Vector3(-70,-20,0);
 
     useFrame(() => {

@@ -13,15 +13,14 @@ export type FridgeProps = {
 
 export default function Fridge(props: FridgeProps) {
     const url = "objects/fridge.gltf"
-    const { nodes, materials } = useGLTF(url);
-    const ref = useRef();
+    // TS 'any' usage here              ---------------------------------
+    const { nodes, materials }: any = useGLTF<string | string[]>(url);
+    const ref: any = useRef<THREE.Group>();
 
     return(
         <group
             {...props}
             ref={ref}
-            // position={null}
-            // rotation={null}
             dispose={null}
         >
             {Object.keys(nodes).map((element, key) => {

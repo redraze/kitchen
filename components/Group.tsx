@@ -11,9 +11,10 @@ export type GroupProps = {
 
 export default function Group({ pos, initPos, focus, children }: GroupProps) {
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
-    const ref = useRef<THREE.Mesh>(null!)
-    
-    useFrame((state) => {
+    const ref = useRef<THREE.Group>(null!)
+
+    // TS 'any' usage here              ---------------------------------
+    useFrame((state: any) => {
         // Center focused component of group on camera focal point
         ref.current.position.lerp(
             focus === -1 ? 

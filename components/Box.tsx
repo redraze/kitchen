@@ -15,7 +15,8 @@ export type PositionType = Vector3;
 export default function Box(props: BoxProps) {
     const texture = useLoader(TextureLoader, "textures/wood box texture.jpg");
     const [hovered, hover] = useState(false);
-    const ref = useRef<THREE.Mesh>(null!)
+    // TS 'any' usage here              ---------------------------------
+    const ref: any = useRef<THREE.Mesh>(null!)
     const growthFactor = 2;
     const lerpFactor = 0.2
     const small = new Vector3(1,1,1);
