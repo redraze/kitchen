@@ -15,8 +15,16 @@ export default function Universe({ night, onClick }: UniverseProps) {
     const amb: any = useRef<THREE.AmbientLight>();
     const sun: any = useRef<THREE.Mesh>();
     const moon: any = useRef<THREE.Mesh>();
-    const sunInitPos = new Vector3(100,40,0);
-    const moonInitPos = new Vector3(-70,-20,0);
+    const sunInitPos = new Vector3(
+        44 * window.innerWidth/window.innerHeight,
+        40,
+        0
+    );
+    const moonInitPos = new Vector3(
+        -34 * window.innerWidth/window.innerHeight,
+        20,
+        0
+    );
 
     useFrame(() => {
         bg.current.lerp(
@@ -45,7 +53,7 @@ export default function Universe({ night, onClick }: UniverseProps) {
             night ? 
                 new Vector3(
                     moonInitPos['x'], 
-                    moonInitPos['y'] * -1,
+                    moonInitPos['y'],
                     moonInitPos['z']
                 ) :
                 new Vector3(
