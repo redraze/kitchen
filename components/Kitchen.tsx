@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "components/Controls"
@@ -38,44 +38,46 @@ export default function Kitchen() {
         >
             {/* <axesHelper args={[10]} /> */}
             <Controls rotation={rot}>
-                <Group
-                    pos={pos}
-                    initPos={initPos}
-                    focus={focus}
-                >
-                <Floor />
-                <LightBulb position={new Vector3(-8,7,-2)} />
-                <LightBulb position={new Vector3(0,7,-2)} />
-                <LightBulb position={new Vector3(8,7,-2)} />
-                <Box 
-                    position={new Vector3(0,.5,0)}
-                    index={index(i + 1)} focus={focus}
-                    onClick={ (e) => toggleFocus(
-                    e.eventObject.index,
-                    e.eventObject.position
-                    )}
-                />
-                <Fridge 
-                    position={new Vector3(-8,.6,-5)} 
-                    rotation={new Euler(0,1,0)}
-                    index={index(i + 1)} focus={focus}
-                    onClick={ (e) => toggleFocus(
-                    e.eventObject.index, 
-                    e.eventObject.position, 
-                    e.eventObject.rotation
-                    )}
-                />
-                <Fridge 
-                    position={new Vector3(8,.6,-5)} 
-                    rotation={new Euler(0,-1,0)}
-                    index={index(i + 1)} focus={focus}
-                    onClick={ (e) => toggleFocus(
-                    e.eventObject.index,
-                    e.eventObject.position,
-                    e.eventObject.rotation
-                    )}
-                />
-                </Group>
+                <Suspense>
+                    <Group
+                        pos={pos}
+                        initPos={initPos}
+                        focus={focus}
+                    >
+                    <Floor />
+                    <LightBulb position={new Vector3(-8,7,-2)} />
+                    <LightBulb position={new Vector3(0,7,-2)} />
+                    <LightBulb position={new Vector3(8,7,-2)} />
+                    <Box 
+                        position={new Vector3(0,.5,0)}
+                        index={index(i + 1)} focus={focus}
+                        onClick={ (e) => toggleFocus(
+                        e.eventObject.index,
+                        e.eventObject.position
+                        )}
+                    />
+                    <Fridge 
+                        position={new Vector3(-8,.6,-5)} 
+                        rotation={new Euler(0,1,0)}
+                        index={index(i + 1)} focus={focus}
+                        onClick={ (e) => toggleFocus(
+                        e.eventObject.index, 
+                        e.eventObject.position, 
+                        e.eventObject.rotation
+                        )}
+                    />
+                    <Fridge 
+                        position={new Vector3(8,.6,-5)} 
+                        rotation={new Euler(0,-1,0)}
+                        index={index(i + 1)} focus={focus}
+                        onClick={ (e) => toggleFocus(
+                        e.eventObject.index,
+                        e.eventObject.position,
+                        e.eventObject.rotation
+                        )}
+                    />
+                    </Group>
+                </Suspense>
             </Controls>
             <Universe 
                 night={night} 
