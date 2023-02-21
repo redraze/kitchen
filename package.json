@@ -30,6 +30,7 @@
     "@types/three": "^0.149.0",
     "colors": "^1.4.0",
     "eslint": "^8.32.0",
-    "eslint-config-next": "^13.1.2"
+    "eslint-config-next": "^13.1.2",
+    "gltfjsx": "^6.1.4"
   }
 }
