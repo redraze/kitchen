@@ -39,7 +39,7 @@ type FridgeProps = {
 
 const url = 'objects/fridge.gltf';
 
-export default function Model(props: FridgeProps) {
+export default function Fridge(props: FridgeProps) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
   // TS 'any' usage here              ---------------------------------
   const group: any = useRef<THREE.Group>();

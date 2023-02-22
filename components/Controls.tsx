@@ -12,7 +12,7 @@ export default function Controls({ rotation, children }: ControlsProps) {
         <PresentationControls
             global 
             snap 
-            config={{ mass: 1, tension: 40, friction: 20 }}
+            config={{ mass: 1, tension: 30, friction: 10 }}
             zoom={0.8} 
             polar={[0, Math.PI / 4]} 
             azimuth={[-Math.PI / 4, Math.PI / 4]}

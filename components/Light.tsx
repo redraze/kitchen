@@ -1,5 +1,5 @@
-import { useGLTF } from '@react-three/drei'
-import { GLTF } from 'three-stdlib'
+import { useGLTF } from '@react-three/drei';
+import { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -10,11 +10,11 @@ type GLTFResult = GLTF & {
     hull: THREE.MeshStandardMaterial
     bulb: THREE.MeshStandardMaterial
   }
-}
+};
 
 const url = 'objects/light.gltf';
 
-export default function Model(props: JSX.IntrinsicElements['group']) {
+export default function Light(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF(url) as unknown as GLTFResult
   return (
     <group {...props} dispose={null}>
@@ -24,6 +24,6 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
       </mesh>
     </group>
   )
-}
+};
 
-useGLTF.preload(url)
+useGLTF.preload(url);
