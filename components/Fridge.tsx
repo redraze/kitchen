@@ -1,7 +1,7 @@
 import { Vector3, Euler, LoopOnce } from "three";
 import { GLTF } from 'three-stdlib';
-import { useEffect, useRef } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
+import { useEffect, useRef } from 'react';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -37,8 +37,9 @@ type FridgeProps = {
   onClick?: (param: any) => void
 };
 
+const url = 'objects/fridge.gltf';
+
 export default function Model(props: FridgeProps) {
-  const url = 'objects/fridge.gltf';
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
   // TS 'any' usage here              ---------------------------------
   const group: any = useRef<THREE.Group>();
@@ -101,4 +102,4 @@ export default function Model(props: FridgeProps) {
   )
 };
 
-useGLTF.preload('objects/fridge.gltf');
+useGLTF.preload(url);

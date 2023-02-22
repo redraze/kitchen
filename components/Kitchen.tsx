@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import Controls from "components/Controls"
 import Group from "components/Group";
 import Floor from "components/Floor";
-import LightBulb from "components/LightBulb";
+import Light from "components/Light";
 import Box from "components/Box";
 import Fridge from "components/Fridge";
 import Universe from "components/Universe";
@@ -45,9 +45,9 @@ export default function Kitchen() {
                         focus={focus}
                     >
                     <Floor />
-                    <LightBulb position={new Vector3(-8,7,-2)} />
-                    <LightBulb position={new Vector3(0,7,-2)} />
-                    <LightBulb position={new Vector3(8,7,-2)} />
+                    <Light position={new Vector3(-8,7,-2)} />
+                    <Light position={new Vector3(0,7,-2)} />
+                    <Light position={new Vector3(8,7,-2)} />
                     <Box 
                         position={new Vector3(0,.5,0)}
                         index={index(i + 1)} focus={focus}
