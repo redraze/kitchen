@@ -20,7 +20,7 @@ export default function Light(props: JSX.IntrinsicElements['group']) {
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Cube.geometry} material={materials.hull} scale={[1, 0.5, 1]} />
       <mesh geometry={nodes.Sphere.geometry} material={materials.bulb} position={[0, -0.4, 0]} >
-        <pointLight />
+        <pointLight intensity={.6} />
       </mesh>
     </group>
   )

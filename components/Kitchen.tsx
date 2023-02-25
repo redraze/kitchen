@@ -3,7 +3,7 @@ import { Euler, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "components/Controls"
 import Group from "components/Group";
-import Floor from "components/Floor";
+import Level from "components/Level";
 import Light from "components/Light";
 import Box from "components/Box";
 import Fridge from "components/Fridge";
@@ -44,11 +44,11 @@ export default function Kitchen() {
                         initPos={initPos}
                         focus={focus}
                     >
-                    <Floor />
-                    <Light position={new Vector3(-8,7,-2)} />
-                    <Light position={new Vector3(0,7,-2)} />
-                    <Light position={new Vector3(8,7,-2)} />
-                    <Box 
+                    <Level />
+                    <Light position={new Vector3(-8,7,-4)} />
+                    <Light position={new Vector3(0,7,-8)} />
+                    <Light position={new Vector3(8,7,-4)} />
+                    {/* <Box 
                         position={new Vector3(0,.5,0)}
                         index={index(i + 1)} focus={focus}
                         onClick={ (e) => toggleFocus(
@@ -65,10 +65,10 @@ export default function Kitchen() {
                         e.eventObject.position, 
                         e.eventObject.rotation
                         )}
-                    />
+                    /> */}
                     <Fridge 
-                        position={new Vector3(8,.6,-5)} 
-                        rotation={new Euler(0,-1,0)}
+                        position={new Vector3(-11,.6,-5)} 
+                        rotation={new Euler(0,Math.PI/2,0)}
                         index={index(i + 1)} focus={focus}
                         onClick={ (e) => toggleFocus(
                         e.eventObject.index,
