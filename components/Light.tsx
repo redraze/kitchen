@@ -1,4 +1,5 @@
 import { useGLTF } from '@react-three/drei';
+import { Vector3 } from 'three';
 import { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
@@ -12,15 +13,20 @@ type GLTFResult = GLTF & {
   }
 };
 
+type LightProps = {
+  position: Vector3
+  night: boolean
+}
+
 const url = 'objects/light.gltf';
 
-export default function Light(props: JSX.IntrinsicElements['group']) {
+export default function Light({ position, night }: LightProps) {
   const { nodes, materials } = useGLTF(url) as unknown as GLTFResult
   return (
-    <group {...props} dispose={null}>
+    <group position={position} dispose={null}>
       <mesh geometry={nodes.Cube.geometry} material={materials.hull} scale={[1, 0.5, 1]} />
       <mesh geometry={nodes.Sphere.geometry} material={materials.bulb} position={[0, -0.4, 0]} >
-        <pointLight intensity={.6} />
+        <pointLight intensity={ night ? .6 : 1 } />
       </mesh>
     </group>
   )

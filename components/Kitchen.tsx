@@ -5,13 +5,13 @@ import Controls from "components/Controls"
 import Group from "components/Group";
 import Level from "components/Level";
 import Light from "components/Light";
-import Box from "components/Box";
+// import Box from "components/Box";
 import Fridge from "components/Fridge";
 import Universe from "components/Universe";
 
 export default function Kitchen() {
     const initPos = new Vector3(0,5,20);
-    const initRot = new Euler(0,0,0);
+    const initRot = new Euler(0,Math.PI/4,0);
     const [pos, setPos] = useState(initPos);
     const [rot, setRot] = useState(initRot);
     const [focus, setFocus] = useState(-1);
@@ -19,7 +19,7 @@ export default function Kitchen() {
     let i = 0;
     const index = (n: number) => { i = n; return n };
     const toggleFocus = (
-      index=-1, toPos=initPos, toRot=new Euler(0,0,0)
+      index=-1, toPos=initPos, toRot=initRot
     ) => {
       index === focus ? 
         ( (setFocus(-1)), setPos(initPos), setRot(initRot) ): 
@@ -45,30 +45,12 @@ export default function Kitchen() {
                         focus={focus}
                     >
                     <Level />
-                    <Light position={new Vector3(-8,7,-4)} />
-                    <Light position={new Vector3(0,7,-8)} />
-                    <Light position={new Vector3(8,7,-4)} />
-                    {/* <Box 
-                        position={new Vector3(0,.5,0)}
-                        index={index(i + 1)} focus={focus}
-                        onClick={ (e) => toggleFocus(
-                        e.eventObject.index,
-                        e.eventObject.position
-                        )}
-                    />
+                    <Light position={new Vector3(-5,7,2)} night={night} />
+                    <Light position={new Vector3(2,7,-4)} night={night} />
+                    {/* <Light position={new Vector3(5,7,0)} /> */}
                     <Fridge 
-                        position={new Vector3(-8,.6,-5)} 
-                        rotation={new Euler(0,1,0)}
-                        index={index(i + 1)} focus={focus}
-                        onClick={ (e) => toggleFocus(
-                        e.eventObject.index, 
-                        e.eventObject.position, 
-                        e.eventObject.rotation
-                        )}
-                    /> */}
-                    <Fridge 
-                        position={new Vector3(-11,.6,-5)} 
-                        rotation={new Euler(0,Math.PI/2,0)}
+                        position={new Vector3(-5.25,.6,-5.25)} 
+                        rotation={new Euler(0,Math.PI/4,0)}
                         index={index(i + 1)} focus={focus}
                         onClick={ (e) => toggleFocus(
                         e.eventObject.index,
