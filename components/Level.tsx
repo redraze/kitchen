@@ -1,5 +1,7 @@
-import { useGLTF } from '@react-three/drei';
-import { GLTF } from 'three-stdlib';
+import { useRef, useEffect, useState } from 'react'
+import { useGLTF, useAnimations } from '@react-three/drei'
+import { GLTF } from 'three-stdlib'
+import { MeshPhysicalMaterial, LoopOnce } from 'three';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -13,10 +15,14 @@ type GLTFResult = GLTF & {
     Cube009: THREE.Mesh
     Cube009_1: THREE.Mesh
     Cube009_2: THREE.Mesh
-    Cube009_3: THREE.Mesh
     counter001: THREE.Mesh
     Cube006: THREE.Mesh
     Cube006_1: THREE.Mesh
+    Cube006_2: THREE.Mesh
+    Cube008: THREE.Mesh
+    Cube008_1: THREE.Mesh
+    ovenElement: THREE.Mesh
+    stoveButton: THREE.Mesh
   }
   materials: {
     floor: THREE.MeshPhysicalMaterial
@@ -26,6 +32,7 @@ type GLTFResult = GLTF & {
     counter: THREE.MeshStandardMaterial
     iron: THREE.MeshStandardMaterial
     ['metallic.001']: THREE.MeshStandardMaterial
+    glass: THREE.MeshPhysicalMaterial
     button: THREE.MeshStandardMaterial
   }
 };
@@ -33,29 +40,77 @@ type GLTFResult = GLTF & {
 const url = 'objects/level.gltf';
 
 export default function Level(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(url) as unknown as GLTFResult;
+  const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
+  // TS 'any' usage here              ---------------------------------0
+  const group: any = useRef<THREE.Group>()
+  const { actions } = useAnimations<THREE.AnimationClip>(animations, group)
+
+  const [door, setDoor] = useState(false);
+
+  const fadeTimer = 0.5;
+  useEffect(() => {
+    if (
+      door &&
+      actions.ovenDoorAction
+    ) {
+      actions.ovenDoorAction.reset().fadeIn(fadeTimer).play();
+      actions.ovenDoorAction.setLoop(LoopOnce, 1);
+      actions.ovenDoorAction.clampWhenFinished = true;
+    } else {
+      actions.ovenDoorAction?.fadeOut(fadeTimer);
+    }
+  }, [door]);
+
+  const glass = new MeshPhysicalMaterial({
+    roughness: 0.2,
+    transmission: .98
+  });
+
   return (
-    <group {...props} dispose={null}>
-      <mesh geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
-      <mesh geometry={nodes.window.geometry} material={materials.window} position={[0, 3.95, -8.21]} rotation={[0, 0, -Math.PI]} scale={[-2.57, -1.36, -0.24]} />
-      <mesh geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-      <mesh geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.77, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
-      <mesh geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.77, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
-      <mesh geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-      <mesh geometry={nodes.counter002.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-      <group position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
-        <mesh geometry={nodes.Cube009.geometry} material={materials.metallic} />
-        <mesh geometry={nodes.Cube009_1.geometry} material={materials.iron} />
-        <mesh geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
-        <mesh geometry={nodes.Cube009_3.geometry} material={materials.button} />
-      </group>
-      <mesh geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
-      <group position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
-        <mesh geometry={nodes.Cube006.geometry} material={materials.metallic} />
-        <mesh geometry={nodes.Cube006_1.geometry} material={materials['metallic.001']} />
+    <group ref={group} {...props} dispose={null}>
+      <group name="Scene">
+        <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
+        <mesh name="window" geometry={nodes.window.geometry} material={materials.window} position={[0, 3.95, -8.21]} rotation={[0, 0, -Math.PI]} scale={[-2.57, -1.36, -0.24]} />
+        <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
+        <mesh name="stool001" geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.77, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
+        <mesh name="stool002" geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.77, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
+        <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
+        <mesh name="counter002" geometry={nodes.counter002.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
+        <group name="stove" position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
+          <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={materials.metallic} />
+          <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={materials.iron} />
+          <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
+        </group>
+        <mesh name="counter001" geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
+        <group name="oven" position={[-6.54, 1.36, -1.07]} scale={[13.12, 1.21, 1]}>
+          <mesh name="Cube006" geometry={nodes.Cube006.geometry} material={materials.metallic} />
+          <mesh name="Cube006_1" geometry={nodes.Cube006_1.geometry} material={materials['metallic.001']} />
+          <mesh name="Cube006_2" geometry={nodes.Cube006_2.geometry} material={materials.iron} />
+        </group>
+        <group 
+          name="ovenDoor" 
+          position={[-6.09, 0.39, -1.07]} 
+          scale={[13.12, 1.21, 1]} 
+          onClick={() => setDoor(!door)}
+        >
+          <mesh name="Cube008" geometry={nodes.Cube008.geometry} material={materials.metallic} />
+          <mesh name="Cube008_1" geometry={nodes.Cube008_1.geometry} material={glass} />
+        </group>
+        <mesh name="ovenElement" geometry={nodes.ovenElement.geometry} material={materials.iron} position={[-7.04, 0.58, -1.07]} scale={[1, 2, 1.55]} />
+        <mesh 
+          name="stoveButton" 
+          geometry={nodes.stoveButton.geometry} 
+          material={materials.button} 
+          position={[-6.24, 2.54, 0.27]} 
+          scale={[13.12, 1.21, 1]}
+          onClick={() => {
+            actions.stoveButtonAction?.reset().fadeIn(fadeTimer).play();
+            actions.stoveButtonAction?.setLoop(LoopOnce, 1);
+          }}
+        />
       </group>
     </group>
-  );
-};
+  )
+}
 
 useGLTF.preload(url);

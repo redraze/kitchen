@@ -52,11 +52,11 @@ export default function Fridge(props: FridgeProps) {
       actions.openRight &&
       actions.openLeft
     ) {
-      actions.openLeft?.reset().fadeIn(fadeTimer).play();
-      actions.openLeft?.setLoop(LoopOnce, 1);
+      actions.openLeft.reset().fadeIn(fadeTimer).play();
+      actions.openLeft.setLoop(LoopOnce, 1);
       actions.openLeft.clampWhenFinished = true;
-      actions.openRight?.reset().fadeIn(fadeTimer).play();
-      actions.openRight?.setLoop(LoopOnce, 1);
+      actions.openRight.reset().fadeIn(fadeTimer).play();
+      actions.openRight.setLoop(LoopOnce, 1);
       actions.openRight.clampWhenFinished = true;
     } else {
       actions.openLeft?.fadeOut(fadeTimer);
