@@ -10,12 +10,13 @@ type GLTFResult = GLTF & {
     stool002: THREE.Mesh
     dishWasher: THREE.Mesh
     counter002: THREE.Mesh
-    oven: THREE.Mesh
     Cube009: THREE.Mesh
     Cube009_1: THREE.Mesh
     Cube009_2: THREE.Mesh
     Cube009_3: THREE.Mesh
     counter001: THREE.Mesh
+    Cube006: THREE.Mesh
+    Cube006_1: THREE.Mesh
   }
   materials: {
     floor: THREE.MeshPhysicalMaterial
@@ -42,14 +43,17 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
       <mesh geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.77, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
       <mesh geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
       <mesh geometry={nodes.counter002.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-      <mesh geometry={nodes.oven.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
       <group position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
         <mesh geometry={nodes.Cube009.geometry} material={materials.metallic} />
         <mesh geometry={nodes.Cube009_1.geometry} material={materials.iron} />
         <mesh geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
         <mesh geometry={nodes.Cube009_3.geometry} material={materials.button} />
       </group>
-      <mesh geometry={nodes.counter001.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
+      <mesh geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
+      <group position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
+        <mesh geometry={nodes.Cube006.geometry} material={materials.metallic} />
+        <mesh geometry={nodes.Cube006_1.geometry} material={materials['metallic.001']} />
+      </group>
     </group>
   );
 };

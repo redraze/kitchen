@@ -5,11 +5,12 @@ import { Vector3 } from "three";
 export type GroupProps = {
     pos: Vector3
     initPos: Vector3
+    initFov: number
     focus?: number
     children?: ReactNode
 }
 
-export default function Group({ pos, initPos, focus, children }: GroupProps) {
+export default function Group({ pos, initPos, initFov, focus, children }: GroupProps) {
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const ref = useRef<THREE.Group>(null!)
 
@@ -29,7 +30,7 @@ export default function Group({ pos, initPos, focus, children }: GroupProps) {
             0.04);
         state.camera.fov = lerp(
             state.camera.fov, 
-            focus === -1 ? 40 : 50,
+            focus === -1 ? initFov : 50,
             0.05
         );
         state.camera.updateProjectionMatrix();

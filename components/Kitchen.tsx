@@ -5,12 +5,13 @@ import Controls from "components/Controls"
 import Group from "components/Group";
 import Level from "components/Level";
 import Light from "components/Light";
-// import Box from "components/Box";
 import Fridge from "components/Fridge";
+import Pantry from "./Pantry";
 import Universe from "components/Universe";
 
 export default function Kitchen() {
-    const initPos = new Vector3(0,5,20);
+    const initFov = 50;
+    const initPos = new Vector3(0,7,13);
     const initRot = new Euler(0,Math.PI/4,0);
     const [pos, setPos] = useState(initPos);
     const [rot, setRot] = useState(initRot);
@@ -29,9 +30,9 @@ export default function Kitchen() {
     return (
         <Canvas 
             camera={{
-                fov: 50, 
+                fov: initFov, 
                 position: initPos, 
-                rotation: [-Math.PI / 50, 0, 0]
+                rotation: [-Math.PI / 10, 0, 0]
             }}
             onPointerMissed={ () => toggleFocus() }
             touch-action={"none"}
@@ -42,6 +43,7 @@ export default function Kitchen() {
                     <Group
                         pos={pos}
                         initPos={initPos}
+                        initFov={initFov}
                         focus={focus}
                     >
                     <Level />
@@ -49,8 +51,18 @@ export default function Kitchen() {
                     <Light position={new Vector3(2,7,-4)} night={night} />
                     {/* <Light position={new Vector3(5,7,0)} /> */}
                     <Fridge 
-                        position={new Vector3(-5.25,.6,-5.25)} 
+                        position={new Vector3(-5.4,2.3,-5.4)} 
                         rotation={new Euler(0,Math.PI/4,0)}
+                        index={index(i + 1)} focus={focus}
+                        onClick={ (e) => toggleFocus(
+                        e.eventObject.index,
+                        e.eventObject.position,
+                        e.eventObject.rotation
+                        )}
+                    />
+                    <Pantry 
+                        position={new Vector3(-6.7,2.7,4.4)} 
+                        rotation={new Euler(0,Math.PI/2,0)}
                         index={index(i + 1)} focus={focus}
                         onClick={ (e) => toggleFocus(
                         e.eventObject.index,
