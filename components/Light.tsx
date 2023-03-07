@@ -1,35 +1,35 @@
+import { MeshPhongMaterial, MeshPhysicalMaterial } from 'three';
 import { useGLTF } from '@react-three/drei';
-import { Vector3 } from 'three';
 import { GLTF } from 'three-stdlib';
+import { Vector3 } from 'three';
 
 type GLTFResult = GLTF & {
   nodes: {
-    Cube: THREE.Mesh
-    Sphere: THREE.Mesh
-  }
-  materials: {
-    hull: THREE.MeshStandardMaterial
-    bulb: THREE.MeshStandardMaterial
+    hull: THREE.Mesh
+    filament: THREE.Mesh
   }
 };
 
 type LightProps = {
   position: Vector3
-  night: boolean
-}
+  key: number
+  intensity: number
+  glass: MeshPhysicalMaterial
+  filament: MeshPhongMaterial
+};
 
 const url = 'objects/light.gltf';
 
-export default function Light({ position, night }: LightProps) {
-  const { nodes, materials } = useGLTF(url) as unknown as GLTFResult
+export default function Light({ position, intensity, glass, filament }: LightProps) {
+  const { nodes } = useGLTF(url) as unknown as GLTFResult;
   return (
     <group position={position} dispose={null}>
-      <mesh geometry={nodes.Cube.geometry} material={materials.hull} scale={[1, 0.5, 1]} />
-      <mesh geometry={nodes.Sphere.geometry} material={materials.bulb} position={[0, -0.4, 0]} >
-        <pointLight intensity={ night ? .6 : 1 } />
+      <mesh geometry={nodes.hull.geometry} material={glass} scale={[0.32, 0.54, 0.32]} />
+      <mesh geometry={nodes.filament.geometry} material={filament} position={[-0.07, -0.4, 0]} rotation={[-Math.PI / 2, Math.PI / 2, 0]} scale={0.04} >
+        <pointLight intensity={intensity} />
       </mesh>
     </group>
-  )
+  );
 };
 
 useGLTF.preload(url);

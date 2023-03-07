@@ -1,10 +1,10 @@
 import { Suspense, useState } from "react";
-import { Euler, Vector3 } from "three";
+import { Euler, LightShadow, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "components/Controls"
 import Group from "components/Group";
 import Level from "components/Level";
-import Light from "components/Light";
+import Lights from "components/Lights";
 import Fridge from "components/Fridge";
 import Pantry from "./Pantry";
 import Universe from "components/Universe";
@@ -46,30 +46,34 @@ export default function Kitchen() {
                         initFov={initFov}
                         focus={focus}
                     >
-                    <Level />
-                    <Light position={new Vector3(-5,7,2)} night={night} />
-                    <Light position={new Vector3(2,7,-4)} night={night} />
-                    {/* <Light position={new Vector3(5,7,0)} /> */}
-                    <Fridge 
-                        position={new Vector3(-5.4,2.3,-5.4)} 
-                        rotation={new Euler(0,Math.PI/4,0)}
-                        index={index(i + 1)} focus={focus}
-                        onClick={ (e) => toggleFocus(
-                        e.eventObject.index,
-                        e.eventObject.position,
-                        e.eventObject.rotation
-                        )}
-                    />
-                    <Pantry 
-                        position={new Vector3(-6.7,2.7,4.4)} 
-                        rotation={new Euler(0,Math.PI/2,0)}
-                        index={index(i + 1)} focus={focus}
-                        onClick={ (e) => toggleFocus(
-                        e.eventObject.index,
-                        e.eventObject.position,
-                        e.eventObject.rotation
-                        )}
-                    />
+                        <Level />
+                        <Lights positions={[
+                            new Vector3(-5,7,2),
+                            new Vector3(2,7,-4),
+                            new Vector3(0,3,0)
+                        ]}
+                            night={night}
+                        />
+                        <Fridge
+                            position={new Vector3(-5.4,2.3,-5.4)}
+                            rotation={new Euler(0,Math.PI/4,0)}
+                            index={index(i + 1)} focus={focus}
+                            onClick={ (e) => toggleFocus(
+                                e.eventObject.index,
+                                e.eventObject.position,
+                                e.eventObject.rotation
+                            )}
+                        />
+                        <Pantry
+                            position={new Vector3(-6.7,2.7,4.4)}
+                            rotation={new Euler(0,Math.PI/2,0)}
+                            index={index(i + 1)} focus={focus}
+                            onClick={ (e) => toggleFocus(
+                                e.eventObject.index,
+                                e.eventObject.position,
+                                e.eventObject.rotation
+                            )}
+                        />
                     </Group>
                 </Suspense>
             </Controls>
