@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useFrame } from "@react-three/fiber";
 import Light from './Light';
 
 type LightsProps = {
@@ -9,13 +10,13 @@ type LightsProps = {
 export default function Lights({ positions, night }: LightsProps) {
   const [intensity, setIntensity] = useState(1);
   const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
-  useEffect(() => {
+  useFrame(() => {
     setIntensity(lerp(
       intensity, 
-      night ? .6 : 1, 
+      night ? 0.6 : .8, 
       night ? 0.1 : 0.08
     ));
-  }, [night]);
+  });
   
   return (<>
     {positions.map((position, index) => {

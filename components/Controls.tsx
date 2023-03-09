@@ -1,17 +1,17 @@
 import { PresentationControls } from '@react-three/drei';
-import React, { ReactNode } from 'react';
-import { Euler } from 'three';
+import { ReactNode } from 'react';
 
 export type ControlsProps = {
-    rotation: Euler
+    rotation: THREE.Euler
+    focus: number
     children?: ReactNode
 };
 
-export default function Controls({ rotation, children }: ControlsProps) {
+export default function Controls({ rotation, focus, children }: ControlsProps) {
     return (
         <PresentationControls
             global 
-            snap 
+            snap={focus === -1 ? true : false}
             config={{ mass: 1, tension: 30, friction: 10 }}
             zoom={0.8} 
             polar={[-Math.PI/12, Math.PI / 4]} 

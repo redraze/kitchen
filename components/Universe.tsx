@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Vector3 } from "three";
 
 export type UniverseProps = {
@@ -8,23 +8,22 @@ export type UniverseProps = {
 }
 
 export default function Universe({ night, onClick }: UniverseProps) {
-    // TODO: make lerp more linear (right now it starts too fast and slows down)
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     // TS 'any' usage here              ---------------------------------
     const bg: any = useRef<THREE.Color>();
     const amb: any = useRef<THREE.AmbientLight>();
-    const sun: any = useRef<THREE.Mesh>();
-    const moon: any = useRef<THREE.Mesh>();
-    const sunInitPos = new Vector3(
+    const body: any = useRef<THREE.Mesh>();
+    const bodyInitPos = new Vector3(
         44 * window.innerWidth/window.innerHeight,
-        40,
-        0
-    );
-    const moonInitPos = new Vector3(
-        -34 * window.innerWidth/window.innerHeight,
         20,
         0
     );
+    const initRadius = 20;
+    const [radius, setRadius] = useState(initRadius);
+    const initPhiStart = -1;
+    const [phiStart, setPhiStart] = useState(initPhiStart);
+    const initPhi = Math.PI*2;
+    const [phi, setPhi] = useState(initPhi);
 
     useFrame(() => {
         bg.current.lerp(
@@ -36,32 +35,34 @@ export default function Universe({ night, onClick }: UniverseProps) {
             night ? .6 : 1,
             night ? 0.1 : 0.08
         );
-        sun.current.position.lerp(
+        body.current.position.lerp(
             night ? 
                 new Vector3(
-                    sunInitPos['x'], 
-                    sunInitPos['y'] * -1 - 100,
-                    sunInitPos['z']
+                    bodyInitPos['x']-10, 
+                    bodyInitPos['y']-10,
+                    bodyInitPos['z']
                 ) :
                 new Vector3(
-                    sunInitPos['x'], 
-                    sunInitPos['y'],
-                    sunInitPos['z']
+                    bodyInitPos['x'], 
+                    bodyInitPos['y'],
+                    bodyInitPos['z']
                 ),
                 0.04);
-        moon.current.position.lerp(
-            night ? 
-                new Vector3(
-                    moonInitPos['x'], 
-                    moonInitPos['y'],
-                    moonInitPos['z']
-                ) :
-                new Vector3(
-                    moonInitPos['x'], 
-                    moonInitPos['y'] * -1 - 100,
-                    moonInitPos['z']
-                ),
-            0.04);
+        setRadius(lerp(
+            radius,
+            night ? 8 : initRadius,
+            night ? 0.08 : 0.04
+        ));
+        setPhiStart(lerp(
+            phiStart,
+            night ? 1.6 : initPhiStart,
+            night ? 0.08 : 0.04
+        ));
+        setPhi(lerp(
+            phi,
+            night ? 1.3 : initPhi,
+            night ? 0.08 : 0.04
+        ));
     });
 
     return(<>
@@ -69,17 +70,11 @@ export default function Universe({ night, onClick }: UniverseProps) {
         <ambientLight ref={amb} color={"white"} />
         <group position={new Vector3(0,0,-100)} >
             <mesh 
-                ref={sun}
+                ref={body}
                 onClick={onClick}
             >
-                <sphereGeometry args={[20, 20, 20]} />
+                <sphereGeometry args={[radius, 20, 20, phiStart, phi]} />
                 <meshPhongMaterial />
-            </mesh>
-            <mesh
-                ref={moon}
-                onClick={onClick}
-            >
-                <sphereGeometry args={[8, 20, 20, 0, 1.3]} />
             </mesh>
         </group>
     </>);
