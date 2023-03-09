@@ -611,11 +611,6 @@
             "pbrMetallicRoughness" : {
                 "roughnessFactor" : 0.5183486342430115
             }
-        },
-        {
-            "doubleSided" : true,
-            "name" : "glass",
-            "pbrMetallicRoughness" : {}
         }
     ],
     "meshes" : [
@@ -789,8 +784,7 @@
                         "TEXCOORD_0" : 50,
                         "NORMAL" : 51
                     },
-                    "indices" : 52,
-                    "material" : 2
+                    "indices" : 52
                 }
             ]
         },
@@ -803,8 +797,7 @@
                         "TEXCOORD_0" : 54,
                         "NORMAL" : 55
                     },
-                    "indices" : 52,
-                    "material" : 2
+                    "indices" : 52
                 }
             ]
         }

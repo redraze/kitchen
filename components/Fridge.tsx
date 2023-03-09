@@ -1,4 +1,4 @@
-import { Vector3, Euler, LoopOnce } from "three";
+import { LoopOnce, MeshPhysicalMaterial } from "three";
 import { GLTF } from 'three-stdlib';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
@@ -25,19 +25,24 @@ type GLTFResult = GLTF & {
   materials: {
     outide: THREE.MeshStandardMaterial
     inside: THREE.MeshStandardMaterial
-    glass: THREE.MeshStandardMaterial
   }
 };
 
 type FridgeProps = {
-  position: Vector3
-  rotation: Euler | undefined
+  position: THREE.Vector3
+  rotation: THREE.Euler | undefined
   focus?: number
   index?: number
   onClick?: (param: any) => void
 };
 
 const url = 'objects/fridge.gltf';
+
+const glass = new MeshPhysicalMaterial({
+  metalness: 0.5,
+  roughness: 0.1,
+  transmission: 0.98
+});
 
 export default function Fridge(props: FridgeProps) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
@@ -95,8 +100,8 @@ export default function Fridge(props: FridgeProps) {
           <mesh name="Cube001" geometry={nodes.Cube001.geometry} material={materials.outide} />
           <mesh name="Cube001_1" geometry={nodes.Cube001_1.geometry} material={materials.inside} />
         </group>
-        <mesh name="shelfUpper" geometry={nodes.shelfUpper.geometry} material={materials.glass} position={[0, 0.78, -0.21]} rotation={[0, -1.57, 0]} scale={[0.83, 0.4, 0.69]} />
-        <mesh name="shelfLower" geometry={nodes.shelfLower.geometry} material={materials.glass} position={[0, -0.74, -0.21]} rotation={[0, -1.57, 0]} scale={[0.83, 0.4, 0.69]} />
+        <mesh name="shelfUpper" geometry={nodes.shelfUpper.geometry} material={glass} position={[0, 0.78, -0.21]} rotation={[0, -1.57, 0]} scale={[0.83, 0.4, 0.69]} />
+        <mesh name="shelfLower" geometry={nodes.shelfLower.geometry} material={glass} position={[0, -0.74, -0.21]} rotation={[0, -1.57, 0]} scale={[0.83, 0.4, 0.69]} />
       </group>
     </group>
   )

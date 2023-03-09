@@ -1,10 +1,8 @@
-import { MeshPhongMaterial, Vector3 } from 'three';
 import { useEffect, useState } from 'react';
-import { MeshPhysicalMaterial } from 'three';
 import Light from './Light';
 
 type LightsProps = {
-  positions: Vector3[]
+  positions: THREE.Vector3[]
   night: boolean
 };
 
@@ -19,19 +17,6 @@ export default function Lights({ positions, night }: LightsProps) {
     ));
   }, [night]);
   
-  const glass = new MeshPhysicalMaterial({
-    metalness: .5,
-    roughness: .1,
-    transmission: .98
-  });
-
-  const filament = new MeshPhongMaterial({
-    color: 0xff8000,
-    emissive: 0xff8000,
-    specular: 0xff8000,
-    shininess: 1,
-  });
-
   return (<>
     {positions.map((position, index) => {
       return(
@@ -39,8 +24,6 @@ export default function Lights({ positions, night }: LightsProps) {
         position={position}
         key={index}
         intensity={intensity}
-        glass={glass}
-        filament={filament}
         />
       );
     })};

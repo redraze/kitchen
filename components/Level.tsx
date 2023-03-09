@@ -41,16 +41,16 @@ const url = 'objects/level.gltf';
 
 export default function Level(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
-  // TS 'any' usage here              ---------------------------------0
+  // TS 'any' usage here              ---------------------------------
   const group: any = useRef<THREE.Group>()
   const { actions } = useAnimations<THREE.AnimationClip>(animations, group)
 
-  const [door, setDoor] = useState(false);
+  const [doorPosition, setDoorPosition] = useState(false);
 
   const fadeTimer = 0.5;
   useEffect(() => {
     if (
-      door &&
+      doorPosition &&
       actions.ovenDoorAction
     ) {
       actions.ovenDoorAction.reset().fadeIn(fadeTimer).play();
@@ -59,11 +59,12 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
     } else {
       actions.ovenDoorAction?.fadeOut(fadeTimer);
     }
-  }, [door]);
+  }, [doorPosition]);
 
   const glass = new MeshPhysicalMaterial({
-    roughness: 0.2,
-    transmission: .98
+    metalness: 0.5,
+    roughness: 0.1,
+    transmission: 0.98
   });
 
   return (
@@ -82,16 +83,16 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
         </group>
         <mesh name="counter001" geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
-        <group name="oven" position={[-6.54, 1.36, -1.07]} scale={[13.12, 1.21, 1]}>
-          <mesh name="Cube006" geometry={nodes.Cube006.geometry} material={materials.metallic} />
-          <mesh name="Cube006_1" geometry={nodes.Cube006_1.geometry} material={materials['metallic.001']} />
-          <mesh name="Cube006_2" geometry={nodes.Cube006_2.geometry} material={materials.iron} />
+        <group name="oven" position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
+          <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={materials.metallic} />
+          <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={materials.iron} />
+          <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
         </group>
         <group 
           name="ovenDoor" 
           position={[-6.09, 0.39, -1.07]} 
           scale={[13.12, 1.21, 1]} 
-          onClick={() => setDoor(!door)}
+          onClick={() => setDoorPosition(!doorPosition)}
         >
           <mesh name="Cube008" geometry={nodes.Cube008.geometry} material={materials.metallic} />
           <mesh name="Cube008_1" geometry={nodes.Cube008_1.geometry} material={glass} />

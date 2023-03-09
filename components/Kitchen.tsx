@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { Euler, LightShadow, Vector3 } from "three";
+import { Euler, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "components/Controls"
 import Group from "components/Group";
@@ -47,12 +47,12 @@ export default function Kitchen() {
                         focus={focus}
                     >
                         <Level />
-                        <Lights positions={[
-                            new Vector3(-5,7,2),
-                            new Vector3(2,7,-4),
-                            new Vector3(0,3,0)
-                        ]}
+                        <Lights 
                             night={night}
+                            positions={[
+                                new Vector3(-5,7,2),
+                                new Vector3(2,7,-4),
+                            ]}
                         />
                         <Fridge
                             position={new Vector3(-5.4,2.3,-5.4)}
