@@ -1,0 +1,35 @@
+$navSize: 150px;
+$navBorder: 6px;
+$burgerPos: 58%;
+
+.nav {
+    position: fixed;
+    height: $navSize - 10px;
+    width: $navSize;
+    right: -$navSize/2;
+    top: -$navSize/2;
+    background: #8ad7f9;
+    border: $navBorder solid black;
+    border-radius: 10%;
+    z-index: 1;
+}
+
+.nav > * {
+    position: relative;
+    border: 3.5px solid black;
+    border-radius: 5px;
+    width: 35%;
+    left: 8%;
+}
+
+.one {
+    top: $burgerPos + 5%;
+}
+
+.two {
+    top: $burgerPos + 10%;
+}
+
+.three {
+    top: $burgerPos + 15%;
+}

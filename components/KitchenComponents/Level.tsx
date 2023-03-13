@@ -68,22 +68,24 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
   });
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} dispose={null}>
       <group name="Scene">
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
-        <mesh name="window" geometry={nodes.window.geometry} material={materials.window} position={[0, 3.95, -8.21]} rotation={[0, 0, -Math.PI]} scale={[-2.57, -1.36, -0.24]} />
+        <mesh name="window" 
+          // onClick={props.onClick} 
+          geometry={nodes.window.geometry} 
+          material={materials.window} 
+          position={[0, 3.95, -8.21]} 
+          rotation={[0, 0, 0]} 
+          scale={[-2.57, -1.36, -0.24]}
+        />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="stool001" geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.77, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
         <mesh name="stool002" geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.77, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
+        <mesh name="counter001" geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
         <mesh name="counter002" geometry={nodes.counter002.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <group name="stove" position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
-          <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={materials.metallic} />
-          <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={materials.iron} />
-          <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
-        </group>
-        <mesh name="counter001" geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
-        <group name="oven" position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
           <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={materials.metallic} />
           <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={materials.iron} />
           <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />

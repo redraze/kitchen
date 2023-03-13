@@ -1,10 +1,14 @@
-import css from "styles/Home.module.css";
-import Kitchen from "components/Kitchen";
+import css from "styles/Index.module.css";
+import Nav from "components/Nav";
+import Ingredients from "components/Ingredients";
+import Kitchen from "components/KitchenComponents/Kitchen";
 
-export default function Home() {
+export default function Index() {
   return (
     <div className={ css.scene }>
-      <Kitchen />
+      {/* <Nav /> */}
+      <Ingredients />
+      {/* <Kitchen /> */}
     </div>
   );
 };

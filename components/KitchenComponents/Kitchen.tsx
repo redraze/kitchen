@@ -1,13 +1,13 @@
 import { Suspense, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
-import Controls from "components/Controls"
-import Group from "components/Group";
-import Level from "components/Level";
-import Lights from "components/Lights";
-import Fridge from "components/Fridge";
+import Controls from "./Controls"
+import ControlGroup from "./ControlGroup";
+import Level from "./Level";
+import Lights from "./Lights";
+import Fridge from "./Fridge";
 import Pantry from "./Pantry";
-import Universe from "components/Universe";
+import Universe from "./Universe";
 
 export default function Kitchen() {
     const initFov = 50;
@@ -17,8 +17,9 @@ export default function Kitchen() {
     const [rot, setRot] = useState(initRot);
     const [focus, setFocus] = useState(-1);
     const [night, setNight] = useState(false);
-    let i = 0;
+    let i = 1;
     const index = (n: number) => { i = n; return n };
+    // TS 'any' usage here              ---------------------------------
     const toggleFocus = (e: any) => {
         if (e !== undefined && e.eventObject.index !== focus) {
             setFocus(e.eventObject.index);
@@ -29,7 +30,6 @@ export default function Kitchen() {
             setPos(initPos);
             setRot(initRot);
         };
-        console.log(focus)
     };
     return (
         <Canvas 
@@ -41,16 +41,15 @@ export default function Kitchen() {
             onPointerMissed={ () => toggleFocus(undefined) }
             touch-action={"none"}
         >
-            {/* <axesHelper args={[10]} /> */}
             <Controls rotation={rot} focus={focus} >
                 <Suspense>
-                    <Group
+                    <ControlGroup
                         pos={pos}
                         initPos={initPos}
                         initFov={initFov}
                         focus={focus}
                     >
-                        <Level />
+                        <Level onClick={ (e) => toggleFocus(e) }/>
                         <Lights 
                             night={night}
                             positions={[
@@ -66,13 +65,13 @@ export default function Kitchen() {
                             onClick={ (e) => toggleFocus(e) }
                         />
                         <Pantry
-                            position={new Vector3(-6.7,2.7,4.4)}
+                            position={new Vector3(-6.7,2.6,4.4)}
                             rotation={new Euler(0,Math.PI/2,0)}
                             index={index(i + 1)}
                             focus={focus}
                             onClick={ (e) => toggleFocus(e) }
                         />
-                    </Group>
+                    </ControlGroup>
                 </Suspense>
             </Controls>
             <Universe 

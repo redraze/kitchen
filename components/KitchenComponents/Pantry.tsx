@@ -18,7 +18,7 @@ type GLTFResult = GLTF & {
 
 type PantryProps = {
   position: Vector3
-  rotation: Euler | undefined
+  rotation: Euler
   focus?: number
   index?: number
   onClick?: (param: any) => void
@@ -63,8 +63,8 @@ export default function Pantry(props: PantryProps) {
 
   return (
     <group ref={group} {...props} dispose={null}>
+      <mesh name="struct" geometry={nodes.struct.geometry} material={materials.counter} position={[9.98, -1.58, 5.96]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]}/>
       <group name="Scene">
-        <mesh name="struct" geometry={nodes.struct.geometry} material={materials.counter} position={[9.98, -1.58, 5.96]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]} />
         <mesh name="LL" geometry={nodes.LL.geometry} material={materials.counter} position={[-2.34, -0.13, 0.81]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]} />
         <mesh name="LM" geometry={nodes.LM.geometry} material={materials.counter} position={[-1.23, -0.13, 0.81]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]} />
         <mesh name="RM" geometry={nodes.RM.geometry} material={materials.counter} position={[1.24, -0.13, 0.81]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]} />
