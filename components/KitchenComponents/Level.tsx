@@ -80,8 +80,8 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           scale={[-2.57, -1.36, -0.24]}
         />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-        <mesh name="stool001" geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.77, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
-        <mesh name="stool002" geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.77, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
+        <mesh name="stool001" geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.7, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
+        <mesh name="stool002" geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.7, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="counter001" geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
         <mesh name="counter002" geometry={nodes.counter002.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />

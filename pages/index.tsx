@@ -6,9 +6,9 @@ import Kitchen from "components/KitchenComponents/Kitchen";
 export default function Index() {
   return (
     <div className={ css.scene }>
-      {/* <Nav /> */}
+      <Nav />
       <Ingredients />
-      {/* <Kitchen /> */}
+      <Kitchen />
     </div>
   );
 };

@@ -1,35 +1,68 @@
-$navSize: 150px;
-$navBorder: 6px;
-$burgerPos: 58%;
+$navBackground: rgba(40,40,40,0.8);
+$buttonSize: 150px;
+$crossWidth: $buttonSize * 0.35;
+$borderThickness: 3.25px;
 
 .nav {
     position: fixed;
-    height: $navSize - 10px;
-    width: $navSize;
-    right: -$navSize/2;
-    top: -$navSize/2;
-    background: #8ad7f9;
-    border: $navBorder solid black;
-    border-radius: 10%;
+    height: 100vh;
+    width: 20vw;
     z-index: 1;
+    display: flex;
+    background: $navBackground;
+    transition: left 0.5s;
+    will-change: left;
+
+    ul {
+        justify-content: left;        
+        height: 80%;
+        margin: auto 0 auto 35px;
+        display: flex;
+        flex-flow: column;
+    
+        li {
+            width: 100%;
+            display: flex;
+            margin: auto;
+            font-family: calibri;
+            font-size: 30px;
+        }
+    }
 }
 
-.nav > * {
+.button {
+    height: $buttonSize;
+    width: $buttonSize/2;
+    background: $navBackground;
+    position: absolute;
+    top: calc(50% - $buttonSize/2);
+    left: -$buttonSize/2;
+    border-top-left-radius: $buttonSize;
+    border-bottom-left-radius: $buttonSize;
+}
+
+.cross {
     position: relative;
-    border: 3.5px solid black;
-    border-radius: 5px;
-    width: 35%;
-    left: 8%;
-}
+    top: 50%;
+    width: $crossWidth;
+    transition: margin 0.5s;
+    will-change: margin;
+    
+    > * {
+        background-color: white;
+        border: $borderThickness white solid;
+        border-radius: 10px;
+        width: 100%;
+        position: absolute;
+        transition: rotate 0.5s;
+        will-change: rotate;
+    }
 
-.one {
-    top: $burgerPos + 5%;
-}
-
-.two {
-    top: $burgerPos + 10%;
-}
-
-.three {
-    top: $burgerPos + 15%;
+    :first-child {
+        top: calc($crossWidth/2*sin(90) - 2*$borderThickness);
+    }
+    
+    :last-child {
+        top: calc($crossWidth/2*sin(90)*-1 + 2*$borderThickness);
+    }
 }
