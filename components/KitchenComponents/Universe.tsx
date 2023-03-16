@@ -4,10 +4,10 @@ import { Vector3 } from "three";
 
 export type UniverseProps = {
     night: boolean
-    onClick: (params: any) => void
+    setNight: (params: boolean) => void
 }
 
-export default function Universe({ night, onClick }: UniverseProps) {
+export default function Universe({ night, setNight }: UniverseProps) {
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     // TS 'any' usage here              ---------------------------------
     const bg: any = useRef<THREE.Color>();
@@ -71,7 +71,7 @@ export default function Universe({ night, onClick }: UniverseProps) {
         <group position={new Vector3(0,0,-100)} >
             <mesh 
                 ref={body}
-                onClick={onClick}
+                onClick={() => setNight(!night)}
             >
                 <sphereGeometry args={[radius, 20, 20, phiStart, phi]} />
                 <meshPhongMaterial />

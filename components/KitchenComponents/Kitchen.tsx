@@ -9,14 +9,18 @@ import Fridge from "./Fridge";
 import Pantry from "./Pantry";
 import Universe from "./Universe";
 
-export default function Kitchen() {
+type KitchenProps = {
+    night: boolean
+    setNight: (params: boolean) => void
+}
+
+export default function Kitchen({ night, setNight }: KitchenProps) {
     const initFov = 50;
     const initPos = new Vector3(0,7,13);
     const initRot = new Euler(0,Math.PI/4,0);
     const [pos, setPos] = useState(initPos);
     const [rot, setRot] = useState(initRot);
     const [focus, setFocus] = useState(-1);
-    const [night, setNight] = useState(false);
     let i = 1;
     const index = (n: number) => { i = n; return n };
     // TS 'any' usage here              ---------------------------------
@@ -74,10 +78,7 @@ export default function Kitchen() {
                     </ControlGroup>
                 </Suspense>
             </Controls>
-            <Universe 
-                night={night} 
-                onClick={ () => setNight(!night) }
-            />
+            <Universe night={night} setNight={setNight} />
         </Canvas>
     );
 };

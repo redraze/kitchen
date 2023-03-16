@@ -1,23 +1,24 @@
 import { useState } from "react";
 import css from "styles/Nav.module.scss";
+import NavButton from "./NavButton";
+import SimpleSwitch from "./SimpleSwitch";
 
-export default function Nav() {
+type NavProps = {
+    night: boolean
+    setNight: (param: boolean) => void
+}
+
+export default function Nav({ night, setNight }: NavProps) {
     const [open, setOpen] = useState(false);
 
     return (
         <div className={ css.nav } style={{left: open ? '80%' : '100%'}}>
-            <div className={ css.button } onClick={() => setOpen(!open)}>
-                <div 
-                    className={ css.cross } 
-                    onClick={() => setOpen(!open)}
-                    style={{margin: open ? '0 30%' : '0 20%'}}
-                >
-                    <div style={{rotate: open ? '-45deg' : '45deg'}}></div>
-                    <div style={{rotate: open ? '45deg' : '-45deg'}}></div>
-                </div>
-            </div>
+            <NavButton open={open} setOpen={setOpen} />
             <ul>
-                <li>Dark Mode</li>
+                <li className={ css.darkmode } onClick={() => setNight(!night)} >
+                    <span>Dark Mode</span>
+                    <SimpleSwitch night={night}/>
+                </li>
                 <li>All Recipes</li>
                 <li>About</li>
             </ul>

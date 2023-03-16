@@ -30,6 +30,10 @@ $borderThickness: 3.25px;
     }
 }
 
+.darkmode {
+    flex-flow: column;
+}
+
 .button {
     height: $buttonSize;
     width: $buttonSize/2;
