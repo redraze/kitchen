@@ -43,7 +43,6 @@ export default function Kitchen({ night, setNight }: KitchenProps) {
                 rotation: [-Math.PI / 10, 0, 0]
             }}
             onPointerMissed={ () => toggleFocus(undefined) }
-            touch-action={"none"}
         >
             <Controls rotation={rot} focus={focus} >
                 <Suspense>

@@ -1,7 +1,8 @@
 $navBackground: rgba(40,40,40,0.8);
-$buttonSize: 150px;
+$buttonSize: 125px;
 $crossWidth: $buttonSize * 0.35;
 $borderThickness: 3.25px;
+$crossPositionalFactor: 1.75;
 
 .nav {
     position: fixed;
@@ -26,6 +27,7 @@ $borderThickness: 3.25px;
             margin: auto;
             font-family: calibri;
             font-size: 30px;
+            cursor: pointer;
         }
     }
 }
@@ -43,6 +45,7 @@ $borderThickness: 3.25px;
     left: -$buttonSize/2;
     border-top-left-radius: $buttonSize;
     border-bottom-left-radius: $buttonSize;
+    cursor: pointer;
 }
 
 .cross {
@@ -63,10 +66,10 @@ $borderThickness: 3.25px;
     }
 
     :first-child {
-        top: calc($crossWidth/2*sin(90) - 2*$borderThickness);
+        top: calc($crossWidth/2*sin(90) - $crossPositionalFactor*$borderThickness);
     }
     
     :last-child {
-        top: calc($crossWidth/2*sin(90)*-1 + 2*$borderThickness);
+        top: calc($crossWidth/2*sin(90)*-1 + $crossPositionalFactor*$borderThickness);
     }
 }

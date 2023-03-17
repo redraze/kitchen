@@ -1,10 +1,10 @@
-import css from "styles/SimpleSwitch.module.scss";
+import css from "styles/Switch.module.scss";
 
-type SimpleSwitchProps ={
+type SwitchProps ={
     night: boolean
 };
 
-export default function SimpleSwitch({ night }: SimpleSwitchProps) {
+export default function Switch({ night }: SwitchProps) {
     return (
         <label className={ css.toggle_control }>
             <input type="checkbox" checked={night} />

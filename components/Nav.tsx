@@ -1,7 +1,7 @@
 import { useState } from "react";
 import css from "styles/Nav.module.scss";
 import NavButton from "./NavButton";
-import SimpleSwitch from "./SimpleSwitch";
+import SimpleSwitch from "./Switch";
 
 type NavProps = {
     night: boolean
@@ -16,7 +16,7 @@ export default function Nav({ night, setNight }: NavProps) {
             <NavButton open={open} setOpen={setOpen} />
             <ul>
                 <li className={ css.darkmode } onClick={() => setNight(!night)} >
-                    <span>Dark Mode</span>
+                    <span>Toggle Dark Mode</span>
                     <SimpleSwitch night={night}/>
                 </li>
                 <li>All Recipes</li>

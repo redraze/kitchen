@@ -15,12 +15,9 @@ $toggle-radius: $toggle-height / 2;
 $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
 
 .toggle_control {
-  display: block;
   position: relative;
-  padding-left: $toggle-width;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 22px;
   user-select: none;
 
   input {
@@ -48,8 +45,8 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
 
   .control {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 5px;
+    left: calc(50% - $toggle-width/2);
     height: $toggle-height;
     width: $toggle-width;
     border-radius: $toggle-radius;
