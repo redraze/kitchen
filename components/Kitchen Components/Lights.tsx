@@ -10,6 +10,10 @@ type LightsProps = {
 export default function Lights({ positions, night }: LightsProps) {
   const [intensity, setIntensity] = useState(1);
   const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
+  const lightMap = positions.map((position, index) => (
+    <Light position={position} key={index}intensity={intensity}/>
+  ));
+
   useFrame(() => {
     setIntensity(lerp(
       intensity, 
@@ -18,15 +22,5 @@ export default function Lights({ positions, night }: LightsProps) {
     ));
   });
   
-  return (<>
-    {positions.map((position, index) => {
-      return(
-        <Light 
-        position={position}
-        key={index}
-        intensity={intensity}
-        />
-      );
-    })};
-  </>);
+  return(<>{ lightMap }</>);
 };
