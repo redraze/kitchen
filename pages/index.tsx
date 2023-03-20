@@ -9,7 +9,7 @@ type IndexProps = {
     id: string
     name: string
     refrigerated: boolean
-  }
+  }[]
 };
 
 export default function Index({ ingredients }: IndexProps) {
@@ -26,6 +26,6 @@ export const getStaticProps = async () => {
   const res = await fetch(`${server}/api/ingredients`);
   const ingredients = await res.json();
   return {
-    props: { ingredients }
+    props: {ingredients: ingredients.data}
   };
 };

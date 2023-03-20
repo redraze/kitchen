@@ -1,4 +1,7 @@
 import IngredientModel from 'models/Ingredient';
+import dbConnect from 'config/dbConnect';
+
+dbConnect();
 
 export default async function handler(_req: any, res: any) {
     try {

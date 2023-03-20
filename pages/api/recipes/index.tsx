@@ -1,4 +1,7 @@
 import RecipeModel from 'models/Recipe';
+import dbConnect from 'config/dbConnect';
+
+dbConnect();
 
 export default async function handler(_req: any, res: any) {
     try {
