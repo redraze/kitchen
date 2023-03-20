@@ -21,11 +21,7 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
   user-select: none;
 
   input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+    display: none;
   }
 
   input:checked ~ .control {
