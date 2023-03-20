@@ -1,5 +1,5 @@
 import { useState } from "react";
-import css from "styles/Index.module.css";
+import css from "styles/Index.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Scene from "components/Kitchen Components/Scene";
 import { server } from 'config/index';
@@ -16,8 +16,8 @@ export default function Index({ ingredients }: IndexProps) {
   const [night, setNight] = useState(false);
   return (
     <div className={ css.scene }>
-      <HUD night={night} setNight={setNight} />
-      <Scene night={night} setNight={setNight} />
+      <HUD night={night} setNight={setNight}/>
+      <Scene night={night} setNight={setNight}/>
     </div>
   );
 };
