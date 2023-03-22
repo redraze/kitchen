@@ -1,31 +1,17 @@
-import { useState } from "react";
-import css from "styles/Index.module.scss";
-import HUD from "components/HUD Components/HUD";
-import Scene from "components/Kitchen Components/Scene";
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import Scene from "components/Scene";
 import { server } from 'config/index';
 
-type IndexProps = {
-  ingredients: {
-    id: string
-    name: string
-    refrigerated: boolean
-  }[]
-};
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  uri: `${server}/api/graphql`,
+  cache
+});
 
-export default function Index({ ingredients }: IndexProps) {
-  const [night, setNight] = useState(false);
-  return (
-    <div className={ css.scene }>
-      <HUD night={night} setNight={setNight}/>
-      <Scene night={night} setNight={setNight}/>
-    </div>
-  );
-};
-
-export const getStaticProps = async () => {
-  const res = await fetch(`${server}/api/ingredients`);
-  const ingredients = await res.json();
-  return {
-    props: {ingredients: ingredients.data}
-  };
+export default function Index() {
+  return (<>
+    <ApolloProvider client={client}>
+      <Scene/>
+    </ApolloProvider>
+  </>);
 };

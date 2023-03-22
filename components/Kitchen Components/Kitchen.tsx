@@ -14,7 +14,7 @@ type KitchenProps = {
     setNight: (params: boolean) => void
 }
 
-export default function Scene({ night, setNight }: KitchenProps) {
+export default function Kitchen({ night, setNight }: KitchenProps) {
     const initFov = 50;
     const initPos = new Vector3(0,7,13);
     const initRot = new Euler(0,Math.PI/4,0);
