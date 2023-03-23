@@ -1,13 +1,14 @@
+import { NightStateType } from "lib/commonPropTypes";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Vector3 } from "three";
 
 export type UniverseProps = {
-    night: boolean
-    setNight: (params: boolean) => void
+    nightState: NightStateType
 }
 
-export default function Universe({ night, setNight }: UniverseProps) {
+export default function Universe({ nightState }: UniverseProps) {
+    const {night, setNight} = nightState;
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     // TS 'any' usage here              ---------------------------------
     const bg: any = useRef<THREE.Color>();

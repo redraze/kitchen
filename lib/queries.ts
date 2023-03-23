@@ -10,6 +10,16 @@ const GET_INGREDIENTS = gql`
     }
 `;
 
+const GET_INGREDIENT = gql`
+    query getIngredient($id: ID!) {
+        ingredient(id: $id) {
+            id
+            name
+            refrigerated
+        }
+    }
+`;
+
 const GET_RECIPES = gql`
     query getRecipes {
         recipes {
@@ -30,7 +40,6 @@ const GET_RECIPE = gql`
             meal
         }
     }
-
 `;
 
-export { GET_INGREDIENTS, GET_RECIPES, GET_RECIPE };
+export { GET_INGREDIENTS, GET_INGREDIENT, GET_RECIPES, GET_RECIPE };

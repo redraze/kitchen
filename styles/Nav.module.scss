@@ -15,18 +15,19 @@ $crossPositionalFactor: 1.75;
 
     ul {
         justify-content: left;        
-        height: 80%;
-        margin: auto 0 auto 35px;
+        height: 100%;
+        width: 100%;
         display: flex;
         flex-flow: column;
     
         li {
             width: 100%;
             display: flex;
-            margin: auto;
             font-family: calibri;
             font-size: 30px;
             cursor: pointer;
+            margin: auto;
+            margin-left: 30px;
         }
     }
 }

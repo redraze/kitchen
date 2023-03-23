@@ -1,17 +1,18 @@
+import { NightStateType, IngredientType } from "lib/commonPropTypes";
 import css from "styles/HUD.module.scss";
 import Nav from "./Nav";
 import Ingredients from "./Ingredients";
 
 type HUDProps = {
-    night: boolean
-    setNight: (params: boolean) => void
+    nightState: NightStateType
+    ingredients: IngredientType[]
 };
 
-export default function HUD({ night, setNight }: HUDProps) {
+export default function HUD({ nightState, ingredients }: HUDProps) {
     return(
         <div className={ css.HUD }>
-            <Nav night={night} setNight={setNight} />
-            <Ingredients />
+            <Nav nightState={nightState}/>
+            <Ingredients ingredients={ingredients}/>
         </div>
     );
 };

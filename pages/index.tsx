@@ -1,17 +1,28 @@
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { client } from 'config/client';
+import { GET_INGREDIENTS } from 'lib/queries';
+import { IngredientType } from 'lib/commonPropTypes';
+import { ApolloProvider } from '@apollo/client';
 import Scene from "components/Scene";
-import { server } from 'config/index';
 
-const cache = new InMemoryCache();
-const client = new ApolloClient({
-  uri: `${server}/api/graphql`,
-  cache
-});
+export async function getStaticProps() {
+  const { data } = await client.query({
+      query: GET_INGREDIENTS
+  });
+  return {
+    props: {
+      ingredients: data.ingredients
+    }
+  }
+}; 
 
-export default function Index() {
-  return (<>
+type IndexProps = {
+  ingredients: IngredientType[]
+}
+
+export default function Index({ ingredients }: IndexProps) {
+  return (
     <ApolloProvider client={client}>
-      <Scene/>
+      <Scene ingredients={ingredients} />
     </ApolloProvider>
-  </>);
+  );
 };

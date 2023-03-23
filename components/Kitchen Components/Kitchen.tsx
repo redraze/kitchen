@@ -1,3 +1,4 @@
+import { NightStateType, IngredientType } from "lib/commonPropTypes";
 import { Suspense, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
@@ -10,11 +11,11 @@ import Pantry from "./Pantry";
 import Universe from "./Universe";
 
 type KitchenProps = {
-    night: boolean
-    setNight: (params: boolean) => void
+    nightState: NightStateType
+    ingredients: IngredientType[]
 }
 
-export default function Kitchen({ night, setNight }: KitchenProps) {
+export default function Kitchen({ nightState, ingredients }: KitchenProps) {
     const initFov = 50;
     const initPos = new Vector3(0,7,13);
     const initRot = new Euler(0,Math.PI/4,0);
@@ -54,7 +55,7 @@ export default function Kitchen({ night, setNight }: KitchenProps) {
                     >
                         <Level onClick={ (e) => toggleFocus(e) }/>
                         <Lights 
-                            night={night}
+                            nightState={nightState}
                             positions={[
                                 new Vector3(-5,7,2),
                                 new Vector3(2,7,-4),
@@ -77,7 +78,7 @@ export default function Kitchen({ night, setNight }: KitchenProps) {
                     </ControlGroup>
                 </Suspense>
             </Controls>
-            <Universe night={night} setNight={setNight} />
+            <Universe nightState={nightState}/>
         </Canvas>
     );
 };
