@@ -1,0 +1,40 @@
+@use 'foundation/buttonVariables' as bv;
+@use 'foundation/navVariables' as nv;
+
+.button {
+    height: bv.$buttonSize;
+    width: bv.$buttonSize/2;
+    background: nv.$navBackground;
+    position: absolute;
+    top: calc(50% - bv.$buttonSize/2);
+    left: bv.$buttonSize/-2;
+    border-top-left-radius: bv.$buttonSize;
+    border-bottom-left-radius: bv.$buttonSize;
+    cursor: pointer;
+}
+
+.cross {
+    position: relative;
+    top: 50%;
+    width: bv.$crossWidth;
+    transition: margin 0.5s;
+    will-change: margin;
+    
+    > * {
+        background-color: white;
+        border: bv.$borderThickness white solid;
+        border-radius: 10px;
+        width: 100%;
+        position: absolute;
+        transition: rotate 0.5s;
+        will-change: rotate;
+    }
+
+    :first-child {
+        top: calc(bv.$crossWidth/2*sin(90) - bv.$crossPositionalFactor*bv.$borderThickness);
+    }
+    
+    :last-child {
+        top: calc(bv.$crossWidth/2*sin(90)*-1 + bv.$crossPositionalFactor*bv.$borderThickness);
+    }
+}

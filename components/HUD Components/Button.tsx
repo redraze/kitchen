@@ -1,13 +1,21 @@
-import css from "styles/Nav.module.scss";
+import css from "styles/Button.module.scss";
 
-type NavButtonProps = {
+type ButtonProps = {
     open: boolean
     setOpen: (params: boolean) => void
+    left?: boolean
 }
 
-export default function NavButton({ open, setOpen }: NavButtonProps) {
+export default function Button({ open, setOpen, left }: ButtonProps) {
     return (
-        <div className={ css.button } onClick={() => setOpen(!open)}>
+        <div 
+            className={ css.button } 
+            onClick={() => setOpen(!open)}
+            style={{
+                rotate: left ? '180deg' : '0deg',
+                left: left ? '100%' : ''
+            }}
+        >
             <div 
                 className={ css.cross } 
                 onClick={() => setOpen(!open)}

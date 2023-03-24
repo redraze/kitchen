@@ -1,7 +1,7 @@
 import { NightStateType, IngredientType } from "lib/commonPropTypes";
 import css from "styles/HUD.module.scss";
 import Nav from "./Nav";
-import Ingredients from "./Ingredients";
+import IngredientsNav from "./IngredientsNav";
 
 type HUDProps = {
     nightState: NightStateType
@@ -12,7 +12,7 @@ export default function HUD({ nightState, ingredients }: HUDProps) {
     return(
         <div className={ css.HUD }>
             <Nav nightState={nightState}/>
-            <Ingredients ingredients={ingredients}/>
+            <IngredientsNav ingredients={ingredients}/>
         </div>
     );
 };

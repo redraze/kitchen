@@ -1,0 +1,11 @@
+@use 'foundation/navVariables' as nv;
+
+.ingredientsNav {
+    position: fixed;
+    height: 100vh;
+    width: 20vw;
+    display: flex;
+    background: nv.$navBackground;
+    transition: right 0.5s;
+    will-change: right;
+}
