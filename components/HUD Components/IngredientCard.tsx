@@ -6,17 +6,11 @@ type IngredientCardType = {
 };
 
 export default function IngredientCard({ ingredient }: IngredientCardType) {
-    const handleClick = () => {
-        ingredient.setBool(!ingredient.bool);
-        console.log(ingredient.name, !ingredient.bool)
-    };
-
-    return(<div className={ css.IngredientCard } onClick={() => handleClick()}>
+    return(<div className={ css.IngredientCard }>
         <label>
             <input
                 type="checkbox"
-                checked={ingredient.bool}
-                onChange={() => {}}
+                onClick={ () => {ingredient.setBool(!ingredient.bool)} }
                 />
             <span>{ingredient.name}</span>
         </label>

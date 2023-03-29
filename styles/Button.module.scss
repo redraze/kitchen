@@ -15,7 +15,7 @@
 
 .cross {
     position: relative;
-    top: 50%;
+    top: calc(50% - bv.$borderThickness);
     width: bv.$crossWidth;
     transition: margin 0.5s;
     will-change: margin;

@@ -38,6 +38,7 @@ export default function Kitchen({ nightState, ingredients }: KitchenProps) {
     };
     return (
         <Canvas 
+            dpr={0.8}
             camera={{
                 fov: initFov, 
                 position: initPos, 

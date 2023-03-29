@@ -1,4 +1,6 @@
 @use 'foundation/navVariables' as nv;
+$navMargin: 10px;
+$transitionTime: 0.4s;
 
 .nav {
     position: fixed;
@@ -6,24 +8,46 @@
     width: 20vw;
     display: flex;
     background: nv.$navBackground;
-    transition: left 0.5s;
+    transition: left $transitionTime;
     will-change: left;
 
     ul {
-        justify-content: left;        
-        height: 100%;
         width: 100%;
         display: flex;
-        flex-flow: column;
+        flex-direction: column;
+        justify-content: space-evenly;
+        margin: $navMargin;
+
+        li:hover {
+            background-color: black;
+
+            span {
+                background-size: 75% 0.1em;
+            }
+        }
     
         li {
-            width: 100%;
             display: flex;
-            font-family: calibri;
-            font-size: 30px;
             cursor: pointer;
-            margin: auto;
-            margin-left: 30px;
+            height: 100%;
+            border-radius: 5px;
+            margin: $navMargin;
+            background-color: nv.$navBackground;
+            border: outset 5px grey;
+            transition: background-color $transitionTime ease-out;
+            will-change: background-color;
+                
+            span {
+                font-family: calibri;
+                font-size: 30px;
+                margin: auto;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                background: linear-gradient(white, white) bottom / 0.1em no-repeat;
+                background-size: 0% 0.1em;
+                transition: background-size $transitionTime;
+            }
         }
     }
 }

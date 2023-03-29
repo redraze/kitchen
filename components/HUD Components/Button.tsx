@@ -7,14 +7,15 @@ type ButtonProps = {
 }
 
 export default function Button({ open, setOpen, left }: ButtonProps) {
+    const style = left ? 
+        { rotate: '180deg', left: '100%' } :
+        { rotate: '0deg' }
+    
     return (
         <div 
             className={ css.button } 
             onClick={() => setOpen(!open)}
-            style={{
-                rotate: left ? '180deg' : '0deg',
-                left: left ? '100%' : ''
-            }}
+            style={style}
         >
             <div 
                 className={ css.cross } 

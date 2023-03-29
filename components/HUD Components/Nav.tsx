@@ -10,6 +10,7 @@ type NavProps = {
 export default function Nav({ nightState }: NavProps) {
     const {night, setNight} = nightState;
     const [open, setOpen] = useState(false);
+
     return (
         <div className={ css.nav } style={{left: open ? '80%' : '100%'}}>
             <NavButton open={open} setOpen={setOpen}/>
@@ -17,8 +18,8 @@ export default function Nav({ nightState }: NavProps) {
                 <li onClick={() => setNight(!night)}>
                     <span>Toggle Dark Mode</span>
                 </li>
-                <li>All Recipes</li>
-                <li>About</li>
+                <li><span>All Recipes</span></li>
+                <li><span>About</span></li>
             </ul>
         </div>
     );

@@ -22,8 +22,8 @@ type IndexProps = {
 };
 
 export default function Index({ ingredientProps }: IndexProps) {
-  let ingredients: any = [];
-  ingredientProps.map((ingredient: any) => {
+  let ingredients: IngredientType[] = [];
+  ingredientProps.map((ingredient) => {
     const [bool, setBool] = useState(false)
     ingredients = [...ingredients, {...ingredient, bool, setBool}]
   });
