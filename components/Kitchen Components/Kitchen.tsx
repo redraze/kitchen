@@ -1,6 +1,7 @@
-import { boolStateType, IngredientType } from "lib/commonPropTypes";
+import { numStateType, boolStateType, IngredientType } from "lib/commonPropTypes";
+import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
 import { Suspense, useState } from "react";
-import { Euler, Vector3 } from "three";
+import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "./Controls"
 import ControlGroup from "./ControlGroup";
@@ -11,49 +12,41 @@ import Pantry from "./Pantry";
 import Universe from "./Universe";
 
 type KitchenProps = {
+    focusState: numStateType
     nightState: boolStateType
     ingredients: IngredientType[]
-}
+};
 
-export default function Kitchen({ nightState, ingredients }: KitchenProps) {
-    const initFov = 50;
-    const initPos = new Vector3(0,7,13);
-    const initRot = new Euler(0,Math.PI/4,0);
-    const [pos, setPos] = useState(initPos);
-    const [rot, setRot] = useState(initRot);
-    const [focus, setFocus] = useState(-1);
-    let i = 1;
-    const index = (n: number) => { i = n; return n };
-    const toggleFocus = (e: THREE.Object3D<THREE.Event> | undefined) => {
-        if (e !== undefined && e.userData.index !== focus) {
-            setFocus(e.userData.index);
-            setPos(e.position);
-            setRot(e.rotation);
-        } else {
-            setFocus(-1);
-            setPos(initPos);
-            setRot(initRot);
-        };
+export default function Kitchen({ focusState, nightState, ingredients }: KitchenProps) {
+    const [pos, setPos] = useState(initSettings.pos);
+    const [rot, setRot] = useState(initSettings.rot);
+    const {num: focus, setNum: setFocus} = focusState;
+    const changeSettings = (settings: componentSettings) => {
+        setFocus(settings.focus)
+        setPos(settings.pos)
+        setRot(settings.rot)
     };
+    
     return (
         <Canvas 
             dpr={0.8}
             camera={{
-                fov: initFov, 
-                position: initPos, 
+                fov: initSettings.fov, 
+                position: initSettings.pos, 
                 rotation: [-Math.PI / 10, 0, 0]
             }}
-            onPointerMissed={() => toggleFocus(undefined)}
+            onPointerMissed={() => changeSettings(initSettings)}
         >
-            <Controls rotation={rot} focus={focus} >
+            <Controls 
+                rotation={rot}
+                snap={focus === initSettings.focus ? true : false}
+            >
                 <Suspense>
                     <ControlGroup
                         pos={pos}
-                        initPos={initPos}
-                        initFov={initFov}
                         focus={focus}
                     >
-                        <Level onClick={(e) => toggleFocus(e.eventObject)}/>
+                        <Level/>
                         <Lights 
                             nightState={nightState}
                             positions={[
@@ -62,18 +55,16 @@ export default function Kitchen({ nightState, ingredients }: KitchenProps) {
                             ]}
                         />
                         <Fridge
-                            position={new Vector3(-5.4,2.3,-5.4)}
-                            rotation={new Euler(0,Math.PI/4,0)}
-                            userData={{index: index(i + 1)}}
-                            focus={focus}
-                            onClick={(e) => toggleFocus(e.eventObject)}
+                            position={fridgeSettings.pos}
+                            rotation={fridgeSettings.rot}
+                            onClick={() => changeSettings(fridgeSettings)}
+                            active={focus === fridgeSettings.focus ? true : false}
                         />
                         <Pantry
-                            position={new Vector3(-6.7,2.6,4.4)}
-                            rotation={new Euler(0,Math.PI/2,0)}
-                            userData={{index: index(i + 1)}}
-                            focus={focus}
-                            onClick={(e) => toggleFocus(e.eventObject)}
+                            position={pantrySettings.pos}
+                            rotation={pantrySettings.rot}
+                            onClick={() => changeSettings(pantrySettings)}
+                            active={focus === pantrySettings.focus ? true : false}
                         />
                     </ControlGroup>
                 </Suspense>

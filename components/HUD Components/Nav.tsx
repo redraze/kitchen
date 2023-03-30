@@ -1,19 +1,20 @@
-import { boolStateType } from "lib/commonPropTypes";
+import { numStateType, boolStateType } from "lib/commonPropTypes";
 import { useState } from "react";
 import css from "styles/Nav.module.scss";
-import NavButton from "./Button";
+import Button from "./Button";
 
 type NavProps = {
+    focusState: numStateType
     nightState: boolStateType
 }
 
-export default function Nav({ nightState }: NavProps) {
+export default function Nav({ focusState, nightState }: NavProps) {
     const {bool: night, setBool: setNight} = nightState;
     const [open, setOpen] = useState(false);
 
     return (
         <div className={ css.nav } style={{left: open ? '80%' : '100%'}}>
-            <NavButton open={open} setOpen={setOpen}/>
+            <Button openState={{bool: open, setBool: setOpen}}/>
             <ul>
                 <li onClick={() => setNight(!night)}>
                     <span>Toggle Dark Mode</span>

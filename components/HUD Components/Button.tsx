@@ -1,12 +1,13 @@
+import { boolStateType } from "lib/commonPropTypes";
 import css from "styles/Button.module.scss";
 
 type ButtonProps = {
-    open: boolean
-    setOpen: (params: boolean) => void
+    openState: boolStateType
     left?: boolean
 }
 
-export default function Button({ open, setOpen, left }: ButtonProps) {
+export default function Button({ openState, left }: ButtonProps) {
+    const {bool: open, setBool: setOpen} = openState;
     const style = left ? 
         { rotate: '180deg', left: '100%' } :
         { rotate: '0deg' }

@@ -30,12 +30,9 @@ type GLTFResult = GLTF & {
 
 type FridgeProps = {
   position: THREE.Vector3
-  rotation: THREE.Euler | undefined
-  userData: {
-    index?: number
-  }
-  focus?: number
+  rotation: THREE.Euler
   onClick?: (param: any) => void
+  active: boolean
 };
 
 const url = 'objects/fridge.gltf';
@@ -54,7 +51,7 @@ export default function Fridge(props: FridgeProps) {
   const fadeTimer = 0.8;
   useEffect(() => {
     if (
-      props.focus === props.userData.index && 
+      props.active && 
       actions.openRight &&
       actions.openLeft
     ) {
@@ -68,7 +65,7 @@ export default function Fridge(props: FridgeProps) {
       actions.openLeft?.fadeOut(fadeTimer);
       actions.openRight?.fadeOut(fadeTimer);
     }
-  }, [props.focus]);
+  }, [props.active]);
 
   return (
     <group ref={group} {...props} dispose={null}>

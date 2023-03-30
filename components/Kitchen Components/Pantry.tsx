@@ -1,4 +1,4 @@
-import { Vector3, Euler, LoopOnce } from 'three';
+import { LoopOnce } from 'three';
 import { GLTF } from 'three-stdlib';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
@@ -17,13 +17,10 @@ type GLTFResult = GLTF & {
 };
 
 type PantryProps = {
-  position: Vector3
-  rotation: Euler
-  userData: {
-    index?: number
-  }
-  focus?: number
+  position: THREE.Vector3
+  rotation: THREE.Euler
   onClick?: (param: any) => void
+  active: boolean
 };
 
 const url = 'objects/pantry.gltf';
@@ -36,7 +33,7 @@ export default function Pantry(props: PantryProps) {
   const fadeTimer = 0.8;
   useEffect(() => {
     if (
-      props.focus === props.userData.index && 
+      props.active && 
       actions.LLAction &&
       actions.LMAction &&
       actions.RMAction &&
@@ -60,7 +57,7 @@ export default function Pantry(props: PantryProps) {
       actions.RMAction?.fadeOut(fadeTimer);
       actions.RRAction?.fadeOut(fadeTimer);
     }
-  }, [props.focus]);
+  }, [props.active]);
 
   return (
     <group ref={group} {...props} dispose={null}>

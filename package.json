@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "commit": "git commit -F msg.txt"
+    "commit": "git commit -F msg.txt && npm run msg",
+    "msg": "echo 'If you're reading this, then I forgot to write a commit message. Whoops!' > msg.txt"
   },
   "dependencies": {
     "@apollo/client": "^3.7.4",
