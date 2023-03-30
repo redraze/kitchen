@@ -31,8 +31,10 @@ type GLTFResult = GLTF & {
 type FridgeProps = {
   position: THREE.Vector3
   rotation: THREE.Euler | undefined
+  userData: {
+    index?: number
+  }
   focus?: number
-  index?: number
   onClick?: (param: any) => void
 };
 
@@ -46,14 +48,13 @@ const glass = new MeshPhysicalMaterial({
 
 export default function Fridge(props: FridgeProps) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
-  // TS 'any' usage here              ---------------------------------
-  const group: any = useRef<THREE.Group>();
+  const group = useRef<THREE.Group>(null!);
   const { actions } = useAnimations<THREE.AnimationClip>(animations, group);
 
   const fadeTimer = 0.8;
   useEffect(() => {
     if (
-      props.focus === props.index && 
+      props.focus === props.userData.index && 
       actions.openRight &&
       actions.openLeft
     ) {

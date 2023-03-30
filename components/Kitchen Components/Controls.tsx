@@ -1,5 +1,5 @@
 import { PresentationControls } from '@react-three/drei';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 export type ControlsProps = {
     rotation: THREE.Euler

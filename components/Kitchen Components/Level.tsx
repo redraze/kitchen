@@ -41,8 +41,7 @@ const url = 'objects/level.gltf';
 
 export default function Level(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
-  // TS 'any' usage here              ---------------------------------
-  const group: any = useRef<THREE.Group>()
+  const group = useRef<THREE.Group>(null!)
   const { actions } = useAnimations<THREE.AnimationClip>(animations, group)
 
   const [doorPosition, setDoorPosition] = useState(false);

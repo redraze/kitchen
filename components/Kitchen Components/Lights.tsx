@@ -1,15 +1,15 @@
-import { NightStateType } from 'lib/commonPropTypes';
+import { boolStateType } from 'lib/commonPropTypes';
 import { useState } from 'react';
 import { useFrame } from "@react-three/fiber";
 import Light from './Light';
 
 type LightsProps = {
   positions: THREE.Vector3[]
-  nightState: NightStateType
+  nightState: boolStateType
 };
 
 export default function Lights({ positions, nightState }: LightsProps) {
-  const { night } = nightState;
+  const { bool: night } = nightState;
   const [intensity, setIntensity] = useState(1);
   const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
   const lightMap = positions.map((position, index) => (

@@ -1,4 +1,4 @@
-import { NightStateType, IngredientType } from "lib/commonPropTypes";
+import { boolStateType, IngredientType } from "lib/commonPropTypes";
 import { Suspense, useState } from "react";
 import { Euler, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
@@ -11,7 +11,7 @@ import Pantry from "./Pantry";
 import Universe from "./Universe";
 
 type KitchenProps = {
-    nightState: NightStateType
+    nightState: boolStateType
     ingredients: IngredientType[]
 }
 
@@ -24,12 +24,11 @@ export default function Kitchen({ nightState, ingredients }: KitchenProps) {
     const [focus, setFocus] = useState(-1);
     let i = 1;
     const index = (n: number) => { i = n; return n };
-    // TS 'any' usage here              ---------------------------------
-    const toggleFocus = (e: any) => {
-        if (e !== undefined && e.eventObject.index !== focus) {
-            setFocus(e.eventObject.index);
-            setPos(e.eventObject.position);
-            setRot(e.eventObject.rotation);
+    const toggleFocus = (e: THREE.Object3D<THREE.Event> | undefined) => {
+        if (e !== undefined && e.userData.index !== focus) {
+            setFocus(e.userData.index);
+            setPos(e.position);
+            setRot(e.rotation);
         } else {
             setFocus(-1);
             setPos(initPos);
@@ -44,7 +43,7 @@ export default function Kitchen({ nightState, ingredients }: KitchenProps) {
                 position: initPos, 
                 rotation: [-Math.PI / 10, 0, 0]
             }}
-            onPointerMissed={ () => toggleFocus(undefined) }
+            onPointerMissed={() => toggleFocus(undefined)}
         >
             <Controls rotation={rot} focus={focus} >
                 <Suspense>
@@ -54,7 +53,7 @@ export default function Kitchen({ nightState, ingredients }: KitchenProps) {
                         initFov={initFov}
                         focus={focus}
                     >
-                        <Level onClick={ (e) => toggleFocus(e) }/>
+                        <Level onClick={(e) => toggleFocus(e.eventObject)}/>
                         <Lights 
                             nightState={nightState}
                             positions={[
@@ -65,16 +64,16 @@ export default function Kitchen({ nightState, ingredients }: KitchenProps) {
                         <Fridge
                             position={new Vector3(-5.4,2.3,-5.4)}
                             rotation={new Euler(0,Math.PI/4,0)}
-                            index={index(i + 1)}
+                            userData={{index: index(i + 1)}}
                             focus={focus}
-                            onClick={ (e) => toggleFocus(e) }
+                            onClick={(e) => toggleFocus(e.eventObject)}
                         />
                         <Pantry
                             position={new Vector3(-6.7,2.6,4.4)}
                             rotation={new Euler(0,Math.PI/2,0)}
-                            index={index(i + 1)}
+                            userData={{index: index(i + 1)}}
                             focus={focus}
-                            onClick={ (e) => toggleFocus(e) }
+                            onClick={(e) => toggleFocus(e.eventObject)}
                         />
                     </ControlGroup>
                 </Suspense>

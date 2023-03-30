@@ -10,9 +10,8 @@ type IngredientsNavProps = {
 
 export default function IngredientsNav({ ingredients }: IngredientsNavProps) {
     const [open, setOpen] = useState(false);
-    // TS 'any' usage here              ---------------------------------
-    let refrigeratedMap: any[] = [];
-    let nonRefrigeratedMap: any[] = [];
+    let refrigeratedMap: JSX.Element[] = [];
+    let nonRefrigeratedMap: JSX.Element[] = [];
     ingredients.map((ingredient, key) => {
         const card = <IngredientCard ingredient={ingredient} key={key}/>;
         ingredient.refrigerated === true ? 

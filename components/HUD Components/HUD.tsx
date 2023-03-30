@@ -1,10 +1,10 @@
-import { NightStateType, IngredientType } from "lib/commonPropTypes";
+import { boolStateType, IngredientType } from "lib/commonPropTypes";
 import css from "styles/HUD.module.scss";
 import Nav from "./Nav";
 import IngredientsNav from "./IngredientsNav";
 
 type HUDProps = {
-    nightState: NightStateType
+    nightState: boolStateType
     ingredients: IngredientType[]
 };
 

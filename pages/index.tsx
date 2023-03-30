@@ -2,7 +2,6 @@ import { client } from 'config/client';
 import { GET_INGREDIENTS } from 'lib/queries';
 import { IngredientType } from 'lib/commonPropTypes';
 import { useState } from 'react';
-import { ApolloProvider } from '@apollo/client';
 import Scene from "components/Scene";
 
 export async function getStaticProps() {
@@ -24,13 +23,11 @@ type IndexProps = {
 export default function Index({ ingredientProps }: IndexProps) {
   let ingredients: IngredientType[] = [];
   ingredientProps.map((ingredient) => {
-    const [bool, setBool] = useState(false)
-    ingredients = [...ingredients, {...ingredient, bool, setBool}]
+    const [bool, setBool] = useState(false);
+    ingredients = [...ingredients, {...ingredient, bool, setBool}];
   });
 
   return (
-    <ApolloProvider client={client}>
       <Scene ingredients={ingredients}/>
-    </ApolloProvider>
   );
 };

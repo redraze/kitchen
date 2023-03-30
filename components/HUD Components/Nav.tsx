@@ -1,14 +1,14 @@
-import { NightStateType } from "lib/commonPropTypes";
+import { boolStateType } from "lib/commonPropTypes";
 import { useState } from "react";
 import css from "styles/Nav.module.scss";
 import NavButton from "./Button";
 
 type NavProps = {
-    nightState: NightStateType
+    nightState: boolStateType
 }
 
 export default function Nav({ nightState }: NavProps) {
-    const {night, setNight} = nightState;
+    const {bool: night, setBool: setNight} = nightState;
     const [open, setOpen] = useState(false);
 
     return (

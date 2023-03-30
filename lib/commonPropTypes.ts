@@ -6,7 +6,7 @@ export type IngredientType = {
   setBool: (params: boolean) => void
 };
 
-export type NightStateType = {
-  night: boolean
-  setNight: (params: boolean) => void
+export type boolStateType = {
+  bool: boolean
+  setBool: (params: boolean) => void
 };

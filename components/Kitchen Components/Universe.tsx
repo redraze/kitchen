@@ -1,19 +1,18 @@
-import { NightStateType } from "lib/commonPropTypes";
+import { boolStateType } from "lib/commonPropTypes";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Vector3 } from "three";
 
 export type UniverseProps = {
-    nightState: NightStateType
+    nightState: boolStateType
 }
 
 export default function Universe({ nightState }: UniverseProps) {
-    const {night, setNight} = nightState;
+    const {bool: night, setBool: setNight} = nightState;
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
-    // TS 'any' usage here              ---------------------------------
-    const bg: any = useRef<THREE.Color>();
-    const amb: any = useRef<THREE.AmbientLight>();
-    const body: any = useRef<THREE.Mesh>();
+    const bg = useRef<THREE.Color>(null!);
+    const amb = useRef<THREE.AmbientLight>(null!);
+    const body = useRef<THREE.Mesh>(null!);
     const bodyInitPos = new Vector3(
         44 * window.innerWidth/window.innerHeight,
         20,
@@ -28,7 +27,8 @@ export default function Universe({ nightState }: UniverseProps) {
 
     useFrame(() => {
         bg.current.lerp(
-            night ? {r:0,g:0,b:0} : {r:.255,g:.678,b:.945},
+            // @ts-ignore
+            night ?  {r:0,g:0,b:0} : {r:.255,g:.678,b:.945},
             night ? 0.04 : 0.008
         );
         amb.current.intensity = lerp(

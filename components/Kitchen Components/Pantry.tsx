@@ -19,8 +19,10 @@ type GLTFResult = GLTF & {
 type PantryProps = {
   position: Vector3
   rotation: Euler
+  userData: {
+    index?: number
+  }
   focus?: number
-  index?: number
   onClick?: (param: any) => void
 };
 
@@ -28,14 +30,13 @@ const url = 'objects/pantry.gltf';
 
 export default function Pantry(props: PantryProps) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
-  // TS 'any' usage here              ---------------------------------
-  const group: any = useRef<THREE.Group>();
+  const group = useRef<THREE.Group>(null!);
   const { actions } = useAnimations<THREE.AnimationClip>(animations, group);
   
   const fadeTimer = 0.8;
   useEffect(() => {
     if (
-      props.focus === props.index && 
+      props.focus === props.userData.index && 
       actions.LLAction &&
       actions.LMAction &&
       actions.RMAction &&

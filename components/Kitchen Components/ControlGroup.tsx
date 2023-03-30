@@ -14,11 +14,10 @@ export default function Group({ pos, initPos, initFov, focus, children }: GroupP
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const ref = useRef<THREE.Group>(null!)
 
-    // TS 'any' usage here              ---------------------------------
-    useFrame((state: any) => {
+    useFrame((state) => {
         // Center focused component of group on camera focal point
         ref.current.position.lerp(
-            focus === -1 ? 
+            focus === -1 ?
                 new Vector3(0,0,0) : 
                 new Vector3(pos['x']*-1,pos['y']*-1,pos['z']*-1),
             0.04);
@@ -28,11 +27,14 @@ export default function Group({ pos, initPos, initFov, focus, children }: GroupP
                 initPos :
                 new Vector3(0,2,7),
             0.04);
+        // @ts-ignore
         state.camera.fov = lerp(
-            state.camera.fov, 
+            // @ts-ignore
+            state.camera.fov,
             focus === -1 ? initFov : 50,
             0.05
         );
+        // console.log(state);
         state.camera.updateProjectionMatrix();
     });
 
