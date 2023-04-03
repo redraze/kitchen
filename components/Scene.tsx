@@ -1,4 +1,4 @@
-import { boolStateType, numStateType, IngredientType } from "lib/commonPropTypes";
+import { boolStateType, numStateType } from "lib/commonPropTypes";
 import { useState } from "react";
 import { initSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
@@ -6,7 +6,7 @@ import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
 
 type SceneProps = {
-    ingredients: IngredientType[]
+    ingredients: JSX.Element[]
 };
   
 export default function Scene({ ingredients }: SceneProps) {

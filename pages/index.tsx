@@ -1,33 +1,34 @@
-import { client } from 'config/client';
-import { GET_INGREDIENTS } from 'lib/queries';
+import dbConnect from 'config/dbConnect';
+import Ingredient from 'models/Ingredient';
 import { IngredientType } from 'lib/commonPropTypes';
-import { useState } from 'react';
+import IngredientCard from 'components/HUD Components/IngredientCard';
 import Scene from "components/Scene";
 
 export async function getStaticProps() {
-  const { data } = await client.query({
-      query: GET_INGREDIENTS
-  });
+  await dbConnect();
+  const data = await Ingredient.find();
 
   return {
     props: {
-      ingredientProps: data.ingredients
+      ingredients: JSON.parse(JSON.stringify(data))
     }
   };
 }; 
 
 type IndexProps = {
-  ingredientProps: IngredientType[]
+  ingredients: IngredientType[]
 };
 
-export default function Index({ ingredientProps }: IndexProps) {
-  let ingredients: IngredientType[] = [];
-  ingredientProps.map((ingredient) => {
-    const [bool, setBool] = useState(false);
-    ingredients = [...ingredients, {...ingredient, bool, setBool}];
+export default function Index({ingredients}: IndexProps) {
+  let ingredientsMap: JSX.Element[] = [];
+  ingredients.map((ingredient: IngredientType, idx: number) => {
+    ingredientsMap = [
+      ...ingredientsMap, 
+      <IngredientCard ingredient={ingredient} key={idx}></IngredientCard>
+    ];
   });
 
   return (
-      <Scene ingredients={ingredients}/>
+      <Scene ingredients={ingredientsMap}/>
   );
 };

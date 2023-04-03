@@ -1,12 +1,11 @@
-import { numStateType, IngredientType } from "lib/commonPropTypes";
+import { numStateType } from "lib/commonPropTypes";
 import { useState } from "react";
-import IngredientCard from "./IngredientCard";
 import css from "styles/Ingredients.module.scss";
 import Button from "./Button";
 
 type IngredientsNavProps = {
     focusState: numStateType
-    ingredients: IngredientType[]
+    ingredients: JSX.Element[]
 };
 
 export default function IngredientsNav({ focusState, ingredients }: IngredientsNavProps) {
@@ -14,11 +13,10 @@ export default function IngredientsNav({ focusState, ingredients }: IngredientsN
     let refrigeratedMap: JSX.Element[] = [];
     let nonRefrigeratedMap: JSX.Element[] = [];
     // let spicesMap: JSX.Element[] = [];
-    ingredients.map((ingredient, key) => {
-        const card = <IngredientCard ingredient={ingredient} key={key}/>;
-        ingredient.refrigerated === true ? 
-            refrigeratedMap = [...refrigeratedMap, card] :
-            nonRefrigeratedMap = [...nonRefrigeratedMap, card]
+    ingredients.map((ingredient: JSX.Element) => {
+        ingredient.props.ingredient.refrigerated === true ? 
+            refrigeratedMap = [...refrigeratedMap, ingredient] :
+            nonRefrigeratedMap = [...nonRefrigeratedMap, ingredient]
     });
 
     return(

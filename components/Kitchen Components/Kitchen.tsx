@@ -1,4 +1,4 @@
-import { numStateType, boolStateType, IngredientType } from "lib/commonPropTypes";
+import { numStateType, boolStateType } from "lib/commonPropTypes";
 import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
 import { Suspense, useState } from "react";
 import { Vector3 } from "three";
@@ -14,7 +14,7 @@ import Universe from "./Universe";
 type KitchenProps = {
     focusState: numStateType
     nightState: boolStateType
-    ingredients: IngredientType[]
+    ingredients: JSX.Element[]
 };
 
 export default function Kitchen({ focusState, nightState, ingredients }: KitchenProps) {
