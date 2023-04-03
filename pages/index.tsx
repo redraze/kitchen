@@ -10,18 +10,19 @@ export async function getStaticProps() {
 
   return {
     props: {
-      ingredients: JSON.parse(JSON.stringify(data))
+      ingredients: JSON.stringify(data)
     }
   };
 }; 
 
 type IndexProps = {
-  ingredients: IngredientType[]
+  ingredients: string
 };
 
 export default function Index({ingredients}: IndexProps) {
+  const parsed = JSON.parse(ingredients);
   let ingredientsMap: JSX.Element[] = [];
-  ingredients.map((ingredient: IngredientType, idx: number) => {
+  parsed.map((ingredient: IngredientType, idx: number) => {
     ingredientsMap = [
       ...ingredientsMap, 
       <IngredientCard ingredient={ingredient} key={idx}></IngredientCard>
