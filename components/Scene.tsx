@@ -1,6 +1,6 @@
 import { boolStateType, numStateType } from "lib/commonPropTypes";
 import { useState } from "react";
-import { initSettings } from "lib/componentSettings";
+import { initSettings, componentSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
@@ -21,17 +21,30 @@ export default function Scene({ ingredients }: SceneProps) {
         setNum: setFocus
     };
 
+    // position and rotation for the control group component
+    const [pos, setPos] = useState(initSettings.pos);
+    const [rot, setRot] = useState(initSettings.rot);
+    const changeSettings = (settings: componentSettings) => {
+        setFocus(settings.focus)
+        setPos(settings.pos)
+        setRot(settings.rot)
+    };
+
     return(
         <div className={ css.scene }>
             <HUD 
+                ingredients={ingredients}
                 nightState={nightState}
                 focusState={focusState}
-                ingredients={ingredients}
+                changeSettings={changeSettings}
             />
             <Kitchen 
-                nightState={nightState}
-                focusState={focusState}
                 ingredients={ingredients}
+                nightState={nightState}
+                focus={focus}
+                pos={pos}
+                rot={rot}
+                changeSettings={changeSettings}
             />
         </div>
     );

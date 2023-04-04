@@ -12,21 +12,24 @@ import Pantry from "./Pantry";
 import Universe from "./Universe";
 
 type KitchenProps = {
-    focusState: numStateType
-    nightState: boolStateType
     ingredients: JSX.Element[]
+    nightState: boolStateType
+    focus: number
+    pos: THREE.Vector3
+    rot: THREE.Euler
+    changeSettings: (params: componentSettings) => void
 };
 
-export default function Kitchen({ focusState, nightState, ingredients }: KitchenProps) {
-    const [pos, setPos] = useState(initSettings.pos);
-    const [rot, setRot] = useState(initSettings.rot);
-    const {num: focus, setNum: setFocus} = focusState;
-    const changeSettings = (settings: componentSettings) => {
-        setFocus(settings.focus)
-        setPos(settings.pos)
-        setRot(settings.rot)
-    };
-    
+export default function Kitchen(
+    { 
+        ingredients, 
+        nightState, 
+        focus, 
+        pos, 
+        rot, 
+        changeSettings 
+    }: KitchenProps
+) {
     return (
         <Canvas 
             dpr={0.8}
