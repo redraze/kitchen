@@ -1,6 +1,6 @@
 import { numStateType, boolStateType } from "lib/commonPropTypes";
 import css from "styles/HUD.module.scss";
-import Nav from "./Nav";
+import OptionsNav from "./OptionsNav";
 import IngredientsNav from "./IngredientsNav";
 import { componentSettings } from "lib/componentSettings";
 
@@ -12,7 +12,7 @@ type HUDProps = {
 };
 
 export default function HUD(
-    { 
+    {
         ingredients, 
         focusState, 
         nightState, 
@@ -21,10 +21,8 @@ export default function HUD(
 ) {
     return (
         <div className={ css.HUD }>
-            <Nav
-                focusState={focusState}
+            <OptionsNav
                 nightState={nightState}
-                changeSettings={changeSettings}
             />
             <IngredientsNav
                 ingredients={ingredients}

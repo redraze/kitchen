@@ -1,5 +1,5 @@
-import { useState } from "react";
-import css from "styles/Ingredients.module.scss";
+import { useEffect, useState } from "react";
+import css from "styles/IngredientsNav.module.scss";
 import Button from "./Button";
 import { componentSettings, fridgeSettings, initSettings, pantrySettings } from "lib/componentSettings";
 
@@ -16,15 +16,13 @@ export default function IngredientsNav(
         changeSettings 
     }: IngredientsNavProps
 ) {
-    const [open, setOpen] = useState(false);
     let fridgeMap: JSX.Element[] = [];
     let pantryMap: JSX.Element[] = [];
     ingredients.map((ingredient: JSX.Element) => {
         ingredient.props.ingredient.refrigerated === true ? 
-            fridgeMap = [...fridgeMap, ingredient] :
-            pantryMap = [...pantryMap, ingredient]
+        fridgeMap = [...fridgeMap, ingredient] :
+        pantryMap = [...pantryMap, ingredient]
     });
-
     const toggleSettings = (settings: componentSettings) => {
         if (focus === settings.focus) {
             changeSettings(initSettings);
@@ -32,9 +30,24 @@ export default function IngredientsNav(
             changeSettings(settings);
         };
     };
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        if (focus !== initSettings.focus) {
+            setOpen(true);
+        };
+    }, [focus]);
 
     return(
-        <div className={ css.ingredientsNav } style={{right: open ? '80%' : '100%'}}>
+        <div 
+            className={ css.ingredientsNav } 
+            style={{right: open ? '80%' : '99.9%'}}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => {
+                if (focus === initSettings.focus) {
+                    setOpen(false);
+                };
+            }}
+        >
             <Button openState={{bool: open, setBool: setOpen}} left/>
             <ul>
                 <li className={
@@ -42,7 +55,7 @@ export default function IngredientsNav(
                     css.fridge_focus :
                     css.fridge
                 }
-                onClick={() => toggleSettings(fridgeSettings)}
+                onMouseDown={() => toggleSettings(fridgeSettings)}
                 >
                     <span>Refridgerated Ingredients</span>
                     <div>{fridgeMap}</div>
@@ -52,9 +65,9 @@ export default function IngredientsNav(
                     css.pantry_focus :
                     css.pantry
                 }
-                onClick={() => toggleSettings(pantrySettings)}
+                onMouseDown={() => toggleSettings(pantrySettings)}
                 >
-                    <span>Non-refrigerated Ingredients</span>
+                    <span>Unrefrigerated Ingredients</span>
                     <div>{pantryMap}</div>
                 </li>
             </ul>
