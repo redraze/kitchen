@@ -1,13 +1,13 @@
 @use 'foundation/navVariables' as nv;
 
-.nav {
+.ingredientsNav {
     position: fixed;
     height: 100vh;
     width: 20vw;
     display: flex;
     background: nv.$navBackground;
-    transition: left nv.$transitionTime;
-    will-change: left;
+    transition: right nv.$transitionTime;
+    will-change: right;
 
     ul {
         width: 100%;
@@ -19,10 +19,10 @@
             background-color: black;
 
             span {
-                background-size: 75% 0.1em;
+                background-size: 40% 0.1em;
             }
         }
-    
+
         li {
             display: flex;
             cursor: pointer;
@@ -41,6 +41,10 @@
                 background: linear-gradient(white, white) bottom / 0.1em no-repeat;
                 background-size: 0% 0.1em;
                 transition: background-size nv.$transitionTime;
+            }
+
+            div {
+                display: none;
             }
         }
     }

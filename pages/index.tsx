@@ -19,7 +19,7 @@ type IndexProps = {
   ingredients: string
 };
 
-export default function Index({ingredients}: IndexProps) {
+export default function Index({ ingredients }: IndexProps) {
   const parsed = JSON.parse(ingredients);
   let ingredientsMap: JSX.Element[] = [];
   parsed.map((ingredient: IngredientType, idx: number) => {

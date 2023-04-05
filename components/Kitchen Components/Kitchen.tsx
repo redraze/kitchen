@@ -1,6 +1,6 @@
-import { numStateType, boolStateType } from "lib/commonPropTypes";
+import { boolStateType } from "lib/commonPropTypes";
 import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "./Controls"
@@ -32,7 +32,7 @@ export default function Kitchen(
 ) {
     return (
         <Canvas 
-            dpr={0.8}
+            dpr={0.6}
             camera={{
                 fov: initSettings.fov, 
                 position: initSettings.pos, 

@@ -6,7 +6,7 @@ type IngredientCardProps = {
     ingredient: IngredientType
 }
 
-export default function IngredientCard({ingredient}: IngredientCardProps) {
+export default function IngredientCard({ ingredient }: IngredientCardProps) {
     const [bool, setBool] = useState(false);
     return(<div className={ css.IngredientCard }>
         <label>
