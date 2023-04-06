@@ -8,24 +8,31 @@ type ButtonProps = {
 
 export default function Button({ openState, left }: ButtonProps) {
     const {bool: open, setBool: setOpen} = openState;
-    const style = left ? 
-        { rotate: '180deg', left: '100%' } :
-        { rotate: '0deg' }
     
-    return (
+    return (<>
         <div 
             className={ css.button } 
             onClick={() => setOpen(!open)}
-            style={style}
+            style={
+                left ? 
+                    { rotate: '180deg', left: '100%'} :
+                    { rotate: '0deg' }}
         >
             <div 
                 className={ css.cross } 
                 onClick={() => setOpen(!open)}
                 style={{margin: open ? '0 30%' : '0 20%'}}
-            >
+                >
                 <div style={{rotate: open ? '-45deg' : '45deg'}}></div>
                 <div style={{rotate: open ? '45deg' : '-45deg'}}></div>
             </div>
         </div>
-    );
+        <div 
+            className={ css.line }
+            style={
+                left ? 
+                    { rotate: '180deg', left: 'calc(100% - 1px)', width: '1.5px'} :
+                    { rotate: '0deg' }}
+        ></div>
+    </>);
 };
