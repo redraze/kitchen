@@ -38,3 +38,11 @@
         top: calc(bv.$crossWidth/2*sin(90)*-1 + bv.$crossPositionalFactor*bv.$borderThickness);
     }
 }
+
+.line {
+    height: 100%;
+    width: 1px;
+    background: nv.$navBackground;
+    left: -1px;
+    position: absolute;
+}

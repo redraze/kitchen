@@ -1,5 +1,5 @@
 import { boolStateType, numStateType } from "lib/commonPropTypes";
-import { useState } from "react";
+import { ReactEventHandler, useState } from "react";
 import { initSettings, componentSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
@@ -30,8 +30,19 @@ export default function Scene({ ingredients }: SceneProps) {
         setRot(settings.rot)
     };
 
-    return(
-        <div className={ css.scene }>
+    // ts any usage here        -----------------------------
+    const handleKeyPress = (e: any) => {
+        if (e.key === 'Escape') {
+            changeSettings(initSettings);
+        };
+    };
+
+    return (
+        <div 
+            className={ css.scene }
+            onKeyDown={(e) => handleKeyPress(e)}
+            tabIndex={-1}
+        >
             <HUD 
                 ingredients={ingredients}
                 nightState={nightState}

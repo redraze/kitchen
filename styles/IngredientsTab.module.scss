@@ -1,0 +1,9 @@
+@use 'foundation/navVariables' as nv;
+
+.tab {
+    display: flex;
+    flex-flow: row wrap;
+    transition: height nv.$transitionTime;
+    overflow: auto;
+    direction: rtl;
+}

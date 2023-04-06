@@ -32,7 +32,7 @@ export default function Kitchen(
 ) {
     return (
         <Canvas 
-            dpr={0.6}
+            dpr={0.7}
             camera={{
                 fov: initSettings.fov, 
                 position: initSettings.pos, 
