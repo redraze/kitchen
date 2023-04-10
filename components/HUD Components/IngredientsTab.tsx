@@ -15,30 +15,17 @@ export default function IngredientsTab({ ingredients, focus }: IngredientsTabPro
         pantryMap = [...pantryMap, ingredient]
     });
 
-    if (focus === fridgeSettings.focus) {
-        return (
-            <div 
-                className={ css.tab }
-                style={{height: focus !== initSettings.focus ? '100%' : '0%'}}
-            >
+    return (
+        <div 
+            className={ css.tab }
+            style={{height: focus !== initSettings.focus ? '100%' : '0%'}}
+        >
+            <div className={focus === fridgeSettings.focus ? css.focus : ''}>
                 {fridgeMap}
             </div>
-        );
-    } else if (focus === pantrySettings.focus) {
-        return (
-            <div 
-                className={ css.tab }
-                style={{height: focus !== initSettings.focus ? '100%' : '0%'}}
-            >
+            <div className={focus === pantrySettings.focus ? css.focus : ''}>
                 {pantryMap}
             </div>
-        );
-    } else {
-        return (
-            <div 
-                className={ css.tab }
-                style={{height: focus !== initSettings.focus ? '100%' : '0%'}}
-            ></div>
-        );
-    };
+        </div>
+    );
 };
