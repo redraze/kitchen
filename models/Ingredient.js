@@ -1,12 +1,12 @@
 import { Schema, model, models } from 'mongoose';
 
 const IngredientSchema = new Schema({
-    name: {
-        type: String
+    info: {
+        name: String,
+        refrigerated: Boolean,
+        containerType: String
     },
-    refrigerated: {
-        type: Boolean
-    }
+    recipes: [Schema.Types.ObjectId]
 });
 
 export default models.IngredientModel || model('IngredientModel', IngredientSchema, 'ingredients');

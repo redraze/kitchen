@@ -1,21 +1,23 @@
 import { gql } from '@apollo/client';
 
-const GET_INGREDIENTS = gql`
-    query getIngredients {
-        ingredients {
+const GET_RECIPE = gql`
+    query getRecipe($id: String!) {
+        recipe(id: $id) {
             id
-            name
-            refrigerated
-        }
-    }
-`;
-
-const GET_INGREDIENT = gql`
-    query getIngredient($id: ID!) {
-        ingredient(id: $id) {
-            id
-            name
-            refrigerated
+            info {
+                name
+                description
+                instructions
+            }
+            filters {
+                meal
+                cuisine
+            }
+            ingredients {
+                id
+                name
+                amount
+            }
         }
     }
 `;
@@ -24,20 +26,48 @@ const GET_RECIPES = gql`
     query getRecipes {
         recipes {
             id
-            name
-            description
-            meal
+            info {
+                name
+                description
+                instructions
+            }
+            filters {
+                meal
+                cuisine
+            }
+            ingredients {
+                id
+                name
+                amount
+            }
         }
     }
 `;
 
-const GET_RECIPE = gql`
-    query getRecipe($id: ID!) {
-        recipe(id: $id) {
+const GET_INGREDIENT = gql`
+    query getIngredient($id: String!) {
+        ingredient(id: $id) {
             id
-            name
-            description
-            meal
+            info {
+                name
+                refrigerated
+                containerType
+            }
+            recipes
+        }
+    }
+`;
+
+const GET_INGREDIENTS = gql`
+    query getIngredients {
+        ingredients {
+            id
+            info {
+                name
+                refrigerated
+                containerType
+            }
+            recipes
         }
     }
 `;

@@ -1,45 +1,42 @@
-import gql from 'graphql-tag'
+import { gql } from '@apollo/client';
 
-const typeDefs = gql(`
-  type RecipeType {
-    id: ID!
-    name: String!
-    description: String!
-    meal: String!
+const typeDefs = gql`
+  type recipeInfoOutput {
+    name: String
+    description: String
+    instructions: [String]
   }
-  type IngredientType {
-    id: ID!
-    name: String!
-    refrigerated: Boolean!
+  type recipeFiltersOutput {
+    meal: String
+    cuisine: String
+  }
+  type recipeIngredientsOutput {
+    id: String
+    name: String
+    amount: String
+  }
+  type RecipeTypeOutput {
+    id: String!
+    info: recipeInfoOutput
+    filters: recipeFiltersOutput
+    ingredients: [recipeIngredientsOutput]
+  }
+  type ingredientInfoOutput {
+    name: String
+    refrigerated: Boolean
+    containerType: String
+  }
+  type IngredientTypeOutput {
+    id: String
+    info: ingredientInfoOutput
+    recipes: [String]
   }
   type Query {
-    recipe(id: ID!): RecipeType!
-    recipes: [RecipeType!]!
-    ingredient(id: ID!): IngredientType!
-    ingredients: [IngredientType!]!
+    recipe(id: String!): RecipeTypeOutput
+    recipes: [RecipeTypeOutput]
+    ingredient(id: String!): IngredientTypeOutput
+    ingredients: [IngredientTypeOutput]
   }
-  type Mutation {
-    addRecipe(
-        name: String!, 
-        description: String!, 
-        meal: String!
-        ): RecipeType!
-    editRecipe(
-        name: String
-        description: String
-        meal: String
-    ): RecipeType!
-    deleteRecipe(id: ID!): ID!
-    addIngredient(
-        name: String!
-        refrigerated: Boolean!
-    ): IngredientType!
-    editIngredient(
-        name: String
-        refrigerated: Boolean
-    ): IngredientType!
-    deleteIngredient(id: ID!): ID!
-  }
-`)
+`
 
 export default typeDefs
