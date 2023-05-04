@@ -10,7 +10,7 @@ export default function IngredientCard({ ingredient }: IngredientCardProps) {
     const [bool, setBool] = useState(false);
     return(<div className={ css.IngredientCard }>
         <label>
-            <span>{ingredient.name}</span>
+            <span>{ingredient.info.name}</span>
             <input
                 type="checkbox"
                 onClick={() => setBool(!bool)}

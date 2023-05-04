@@ -1,15 +1,20 @@
 import { Schema, models, model } from 'mongoose';
 
 const RecipeSchema = new Schema({
-    name: {
-        type: String
+    info: {
+        name: String,
+        description: String,
+        instructions: [String]
     },
-    description: {
-        type: String
+    filters: {
+        meal: String,
+        cuisine: String
     },
-    meal: {
-        type: String
-    }
+    ingredients: [{
+        id: Schema.Types.ObjectId,
+        name: String,
+        amount: String
+    }]
 });
 
 export default models.RecipeModel || model('RecipeModel', RecipeSchema, 'recipes');

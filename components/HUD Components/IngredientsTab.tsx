@@ -10,7 +10,7 @@ export default function IngredientsTab({ ingredients, focus }: IngredientsTabPro
     let fridgeMap: JSX.Element[] = [];
     let pantryMap: JSX.Element[] = [];
     ingredients.map((ingredient: JSX.Element) => {
-        ingredient.props.ingredient.refrigerated === true ? 
+        ingredient.props.ingredient.info.refrigerated === true ? 
         fridgeMap = [...fridgeMap, ingredient] :
         pantryMap = [...pantryMap, ingredient]
     });

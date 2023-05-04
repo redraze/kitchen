@@ -1,5 +1,5 @@
 import { boolStateType, numStateType } from "lib/commonPropTypes";
-import { ReactEventHandler, useState } from "react";
+import { useState } from "react";
 import { initSettings, componentSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
