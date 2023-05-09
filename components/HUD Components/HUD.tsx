@@ -9,7 +9,7 @@ type HUDProps = {
     focusState: numStateType
     nightState: boolStateType
     changeSettings: (params: componentSettings) => void
-    clientIngredientData: String[]
+    clientIngredientData: object
 };
 
 export default function HUD(

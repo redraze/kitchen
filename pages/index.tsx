@@ -3,7 +3,7 @@ import Ingredient from 'models/Ingredient';
 import { IngredientType } from 'lib/commonPropTypes';
 import IngredientCard from 'components/HUD Components/IngredientCard';
 import Scene from "components/Scene";
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export async function getStaticProps() {
   await dbConnect();
@@ -22,58 +22,70 @@ type IndexProps = {
 };
 
 export default function Index({ ingredients }: IndexProps) {
-  const parsed = JSON.parse(ingredients);
-  // ts any usage here        -----------------------------
-  const clientIngredientData: any = useRef([])
+  const parsed = JSON.parse(ingredients);  
+  const clientIngredientData = useRef({})
   const clientRecipeData = useRef({})
-
-  //  TODO
-  //  check browser cache for existing list of ingredient ID's
-  //  iterate through ingredient ID's and re-compile recipeData
 
   const updateData = (id: string, value: boolean, recipes: string[]) => {
     if (value) {
-      clientIngredientData.current.push(id)
+      //  @ts-ignore
+      clientIngredientData.current[id as keyof object] = 1;
       recipes.map((item: string) => {
         if (clientRecipeData.current[item as keyof object]) {
-          clientRecipeData.current[item as keyof object]++
+          clientRecipeData.current[item as keyof object]++;
         } else {
           //  @ts-ignore
-          clientRecipeData.current[item as keyof object] = 1
-        }
-      })
+          clientRecipeData.current[item as keyof object] = 1;
+        };
+      });
     } else {
-      clientIngredientData.current = clientIngredientData.current.filter((item: any) => {
-        return item !== id
-      })
+      delete clientIngredientData.current[id as keyof object];
       recipes.map((item: string) => {
         if (clientRecipeData.current[item as keyof object] == 1) {
-          delete clientRecipeData.current[item as keyof object]
+          delete clientRecipeData.current[item as keyof object];
         } else {
-          clientRecipeData.current[item as keyof object]--
-        }
-      })
-    }
-    //  updateBrowserCache();
-  }
+          clientRecipeData.current[item as keyof object]--;
+        };
+      });
+    };
+    localStorage['ingredientData'] = JSON.stringify(clientIngredientData.current);
+  };
+  
+  const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
+  useEffect(() => {
+    const localData = localStorage['ingredientData'];
+    if (localData) clientIngredientData.current = JSON.parse(localData);
 
-  let ingredientsMap: JSX.Element[] = [];
-  parsed.map((ingredient: IngredientType, idx: number) => {
-    ingredientsMap = [
-      ...ingredientsMap, 
-      <IngredientCard 
-        key={idx}
-        ingredient={ingredient}
-        active={ clientIngredientData[ingredient._id] ? true : false }
-        updateData={updateData}
-      ></IngredientCard>
-    ];
-  });
+    let temp: JSX.Element[] = []
+    parsed.map((ingredient: IngredientType, idx: number) => {
+      if (clientIngredientData.current[ingredient._id as keyof object]) {
+        ingredient.recipes.map((item: string) => {
+          if (clientRecipeData.current[item as keyof object]) {
+            clientRecipeData.current[item as keyof object]++;
+          } else {
+            //  @ts-ignore
+            clientRecipeData.current[item as keyof object] = 1;
+          };
+        })
+      }
 
+      temp = [
+        ...temp,
+        <IngredientCard
+          key={idx}
+          ingredient={ingredient}
+          active={ clientIngredientData.current[ingredient._id as keyof object] ? true : false }
+          updateData={updateData}
+        ></IngredientCard>
+      ];
+    });
+    setIngredientsMap(temp)
+  }, [ingredients]);
+ 
   return (
-      <Scene 
-        ingredients={ingredientsMap}
-        clientIngredientData={clientIngredientData}
-      />
+    <Scene 
+      ingredients={ingredientsMap}
+      clientIngredientData={clientIngredientData.current}
+    />
   );
 };
