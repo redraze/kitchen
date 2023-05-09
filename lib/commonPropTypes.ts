@@ -1,11 +1,11 @@
 export type IngredientType = {
-  id: string
+  _id: string
   info: {
-    name: String
-    refrigerated: Boolean
-    containerType: String
+    name: string
+    refrigerated: boolean
+    containerType: string
   }
-  recipes: [String]
+  recipes: [string]
 };
 
 export type boolStateType = {
