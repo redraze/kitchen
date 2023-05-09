@@ -7,9 +7,10 @@ import Kitchen from "components/Kitchen Components/Kitchen";
 
 type SceneProps = {
     ingredients: JSX.Element[]
+    clientIngredientData: Array<String>
 };
   
-export default function Scene({ ingredients }: SceneProps) {
+export default function Scene({ ingredients, clientIngredientData }: SceneProps) {
     const [night, setNight] = useState(false);
     const nightState: boolStateType = {
         bool: night,
@@ -48,6 +49,7 @@ export default function Scene({ ingredients }: SceneProps) {
                 nightState={nightState}
                 focusState={focusState}
                 changeSettings={changeSettings}
+                clientIngredientData={clientIngredientData}
             />
             <Kitchen 
                 ingredients={ingredients}
