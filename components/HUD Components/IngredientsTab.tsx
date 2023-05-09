@@ -1,5 +1,6 @@
 import css from "styles/IngredientsTab.module.scss";
 import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSettings";
+import { useEffect, useRef, useState } from "react";
 
 type IngredientsTabProps = {
     ingredients: JSX.Element[]
@@ -7,13 +8,22 @@ type IngredientsTabProps = {
 }
 
 export default function IngredientsTab({ ingredients, focus }: IngredientsTabProps) {
-    let fridgeMap: JSX.Element[] = [];
-    let pantryMap: JSX.Element[] = [];
-    ingredients.map((ingredient: JSX.Element) => {
-        ingredient.props.ingredient.info.refrigerated === true ? 
-        fridgeMap = [...fridgeMap, ingredient] :
-        pantryMap = [...pantryMap, ingredient]
-    });
+    const [render, setRender] = useState(0);
+    const fridgeMap = useRef<JSX.Element[]>([]);
+    const pantryMap = useRef<JSX.Element[]>([]);
+    useEffect(() => {
+        // console.log(ingredients)
+        setRender(render + 1)
+        fridgeMap.current = []
+        pantryMap.current = []
+        // console.log(ingredients)
+        ingredients.map((ingredient: JSX.Element) => {
+            ingredient.props.ingredient.info.refrigerated === true ? 
+            fridgeMap.current.push(ingredient) :
+            pantryMap.current.push(ingredient)
+        });
+        // console.log(fridgeMap.current)
+    }, [ingredients]);
 
     return (
         <div 
@@ -21,10 +31,10 @@ export default function IngredientsTab({ ingredients, focus }: IngredientsTabPro
             style={{height: focus !== initSettings.focus ? '100%' : '0%'}}
         >
             <div className={focus === fridgeSettings.focus ? css.focus : ''}>
-                {fridgeMap}
+                {fridgeMap.current}
             </div>
             <div className={focus === pantrySettings.focus ? css.focus : ''}>
-                {pantryMap}
+                {pantryMap.current}
             </div>
         </div>
     );

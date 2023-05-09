@@ -24,6 +24,7 @@ export default function OptionsNav({ nightState }: OptionsNavProps) {
                 <li onClick={() => setNight(!night)}>
                     <span>Toggle Dark Mode</span>
                 </li>
+                <li><span>Reset Ingredients</span></li>
                 <li><span>Free Camera Mode</span></li>
                 <li><span>About</span></li>
             </ul>

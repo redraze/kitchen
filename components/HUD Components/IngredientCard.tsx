@@ -16,6 +16,7 @@ export default function IngredientCard({ ingredient, active, updateData}: Ingred
             <span>{ingredient.info.name}</span>
             <input
                 type="checkbox"
+                defaultChecked={bool}
                 onClick={() => { 
                     setBool(!bool),
                     updateData(ingredient._id, !bool, ingredient.recipes)

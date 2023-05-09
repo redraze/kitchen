@@ -1,5 +1,5 @@
 import { boolStateType, numStateType } from "lib/commonPropTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initSettings, componentSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
@@ -7,7 +7,7 @@ import Kitchen from "components/Kitchen Components/Kitchen";
 
 type SceneProps = {
     ingredients: JSX.Element[]
-    clientIngredientData: Array<String>
+    clientIngredientData: object
 };
   
 export default function Scene({ ingredients, clientIngredientData }: SceneProps) {
