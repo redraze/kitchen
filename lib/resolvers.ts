@@ -1,5 +1,6 @@
 import RecipeModel from 'models/Recipe';
 import IngredientModel from 'models/Ingredient';
+import { Types } from 'mongoose';
 
 const resolvers = {
   Query: {
@@ -8,7 +9,7 @@ const resolvers = {
       return RecipeModel.find();
     },
     // Get recipe by ID
-    recipe(parent: undefined, args: any) {
+    recipe(_parent: undefined, args: any) {
       return RecipeModel.findById(args.id);
     },
     // Get all ingredients
@@ -16,10 +17,22 @@ const resolvers = {
       return IngredientModel.find();
     },
     // Get ingredient by ID
-    ingredient(parent: undefined, args: any) {
+    ingredient(_parent: undefined, args: any) {
       return IngredientModel.findById(args.id);
     }
   },
+  Mutation: {
+    // Get recipes by multiple ID's
+    recipeSearch(_parent: undefined, args: any) {
+      return RecipeModel.find({
+        '_id': { $in:
+          args.recipeData.map((recipe: any) => {
+            return new Types.ObjectId(recipe.id)
+          })
+        }
+      })
+    }
+  }
 };
 
 export default resolvers;

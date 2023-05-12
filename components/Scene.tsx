@@ -1,5 +1,5 @@
 import { boolStateType, numStateType } from "lib/commonPropTypes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { initSettings, componentSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
@@ -7,10 +7,10 @@ import Kitchen from "components/Kitchen Components/Kitchen";
 
 type SceneProps = {
     ingredients: JSX.Element[]
-    clientIngredientData: object
+    clientRecipeData: object
 };
   
-export default function Scene({ ingredients, clientIngredientData }: SceneProps) {
+export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
     const [night, setNight] = useState(false);
     const nightState: boolStateType = {
         bool: night,
@@ -49,7 +49,7 @@ export default function Scene({ ingredients, clientIngredientData }: SceneProps)
                 nightState={nightState}
                 focusState={focusState}
                 changeSettings={changeSettings}
-                clientIngredientData={clientIngredientData}
+                clientRecipeData={clientRecipeData}
             />
             <Kitchen 
                 ingredients={ingredients}
