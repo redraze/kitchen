@@ -1,0 +1,12 @@
+@use 'foundation/navVariables' as nv;
+
+.search {
+    position: fixed;
+    font-size: 30px;
+    padding: 10px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    will-change: transform;
+    transition: transform nv.$transitionTime;
+}

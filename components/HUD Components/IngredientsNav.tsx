@@ -8,18 +8,21 @@ import {
     pantrySettings
 } from "lib/componentSettings";
 import IngredientsTab from "./IngredientsTab";
+import RecipeRequestNav from "./RecipeRequestNav";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
     focus: number
     changeSettings: (params: componentSettings) => void
+    clientRecipeData: object
 };
 
 export default function IngredientsNav(
     { 
         ingredients, 
         focus, 
-        changeSettings 
+        changeSettings,
+        clientRecipeData
     }: IngredientsNavProps
 ) {
     const toggleSettings = (settings: componentSettings) => {
@@ -37,7 +40,17 @@ export default function IngredientsNav(
         };
     }, [focus]);
 
-    return (
+    //  Force RecipeRequestNav to re-render when clientRecipeData changes
+    const [visible, setVisible] = useState(false);
+    const forceReRender = () => {
+        if (JSON.stringify(clientRecipeData) !== JSON.stringify({})) {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        };
+    };
+
+    return (<>
         <div 
             className={ css.ingredientsNav } 
             style={{ right: open ? '80%' : '100%' }}
@@ -47,6 +60,7 @@ export default function IngredientsNav(
                     setOpen(false);
                 };
             }}
+            onClick={() => forceReRender()}
             // onKeyDown={(e) => handleKeyPress(e)}
         >
             <Button openState={{bool: open, setBool: setOpen}} left/>
@@ -77,5 +91,6 @@ export default function IngredientsNav(
                 focus={focus}
             />
         </div>
-    );
+        <RecipeRequestNav clientRecipeData={clientRecipeData} visible={visible} />
+    </>);
 };

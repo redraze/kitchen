@@ -4,12 +4,12 @@ import css from 'styles/IngredientCard.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
-    active: boolean
+    active: boolean | undefined
     updateData: (arg1: string, arg2: boolean, args3: string[]) => void
 }
 
-export default function IngredientCard({ ingredient, active, updateData}: IngredientCardProps) {
-    const [bool, setBool] = useState(active);
+export default function IngredientCard({ ingredient, active, updateData }: IngredientCardProps) {
+    const [bool, setBool] = useState(active ? true : false);
 
     return(<div className={ css.IngredientCard }>
         <label>

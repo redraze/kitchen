@@ -9,7 +9,7 @@ type HUDProps = {
     focusState: numStateType
     nightState: boolStateType
     changeSettings: (params: componentSettings) => void
-    clientIngredientData: object
+    clientRecipeData: object
 };
 
 export default function HUD(
@@ -18,7 +18,7 @@ export default function HUD(
         focusState, 
         nightState, 
         changeSettings,
-        clientIngredientData
+        clientRecipeData,
     }: HUDProps
 ) {
     return (
@@ -30,6 +30,7 @@ export default function HUD(
                 ingredients={ingredients}
                 focus={focusState.num}
                 changeSettings={changeSettings}
+                clientRecipeData={clientRecipeData}
             />
         </div>
     );

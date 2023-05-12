@@ -53,12 +53,16 @@ export default function Index({ ingredients }: IndexProps) {
   
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
   useEffect(() => {
-    const localData = localStorage['ingredientData'];
-    if (localData) clientIngredientData.current = JSON.parse(localData);
+    const localData = JSON.parse(localStorage['ingredientData']);
+    if (localData) clientIngredientData.current = localData;
 
-    let temp: JSX.Element[] = []
+    //  Overwrite variables to prevent double appending
+    //  (since dev/strict mode calls this useEffect twice)
+    let temp: JSX.Element[] = [];
+    clientRecipeData.current = {};
+    
     parsed.map((ingredient: IngredientType, idx: number) => {
-      if (clientIngredientData.current[ingredient._id as keyof object]) {
+      if (localData[ingredient._id as keyof object]) {
         ingredient.recipes.map((item: string) => {
           if (clientRecipeData.current[item as keyof object]) {
             clientRecipeData.current[item as keyof object]++;
@@ -74,18 +78,18 @@ export default function Index({ ingredients }: IndexProps) {
         <IngredientCard
           key={idx}
           ingredient={ingredient}
-          active={ clientIngredientData.current[ingredient._id as keyof object] ? true : false }
+          active={ localData[ingredient._id as keyof object] ? true : false }
           updateData={updateData}
         ></IngredientCard>
       ];
     });
     setIngredientsMap(temp)
-  }, [ingredients]);
+  }, []);
  
   return (
     <Scene 
       ingredients={ingredientsMap}
-      clientIngredientData={clientIngredientData.current}
+      clientRecipeData={clientRecipeData.current}
     />
   );
 };
