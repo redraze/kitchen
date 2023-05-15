@@ -1,14 +1,22 @@
 import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
-import css from 'styles/RecipeRequestNav.module.scss';
-import RecipeData from "./RecipeData";
+import css from 'styles/RecipeRequestTab.module.scss';
+import RecipeDataContainer from "./RecipeDataContainer";
+import { boolStateType } from "lib/commonPropTypes";
 
-type RecipeRequestNavProps = {
+type RecipeRequestTabProps = {
     clientRecipeData: object
-    visible: boolean
+    buttonVisibility: boolean
+    recipeDataVisibility: boolStateType
 };
 
-export default function RecipeRequestNav({ clientRecipeData, visible }: RecipeRequestNavProps) {
+export default function RecipeRequestTab(
+    { 
+        clientRecipeData, 
+        buttonVisibility,
+        recipeDataVisibility
+    }: RecipeRequestTabProps
+) {
     //  useMutation is used here instead of useQuery in order to make
     //  available a function, recipeSearch, that can be called at will
     const [recipeSearch, { error, data, loading }] = useMutation(
@@ -22,12 +30,13 @@ export default function RecipeRequestNav({ clientRecipeData, visible }: RecipeRe
             onError: (error) => {
                 console.log('type 0 error', JSON.stringify(error))
             },
-            onCompleted: (data) => {
-                console.log('success', data)
-            }
+            // onCompleted: (data) => {
+            //     console.log('success', data)
+            // }
         }
     );
     const handler = () => {
+        recipeDataVisibility.setBool(true)
         try {
             recipeSearch();
         } catch {
@@ -37,7 +46,7 @@ export default function RecipeRequestNav({ clientRecipeData, visible }: RecipeRe
 
     return (<>
         <button
-            style={ visible ?
+            style={ buttonVisibility ?
                 {transform: 'translateX(-50%) translateY(-20%)'} :
                 {transform: 'translateX(-50%) translateY(100%)'} }
             className={ css.search }
@@ -45,10 +54,12 @@ export default function RecipeRequestNav({ clientRecipeData, visible }: RecipeRe
         >
             Find Recipes!
         </button>
-        <RecipeData 
-            error={error} 
-            data={data} 
+        <RecipeDataContainer
+            clientRecipeData={clientRecipeData}
+            error={error}
+            data={data?.recipeSearch}
             loading={loading}
+            recipeDataVisibility={recipeDataVisibility}
         />
     </>)
 }

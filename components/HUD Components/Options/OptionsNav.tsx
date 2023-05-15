@@ -1,7 +1,7 @@
 import { boolStateType } from "lib/commonPropTypes";
 import { useState } from "react";
 import css from "styles/OptionsNav.module.scss";
-import Button from "./Button";
+import Button from "../Button";
 
 type OptionsNavProps = {
     nightState: boolStateType

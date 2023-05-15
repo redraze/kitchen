@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import css from "styles/IngredientsNav.module.scss";
-import Button from "./Button";
+import Button from "../Button";
 import {
     componentSettings,
     fridgeSettings,
@@ -8,13 +8,12 @@ import {
     pantrySettings
 } from "lib/componentSettings";
 import IngredientsTab from "./IngredientsTab";
-import RecipeRequestNav from "./RecipeRequestNav";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
     focus: number
     changeSettings: (params: componentSettings) => void
-    clientRecipeData: object
+    forceReRender: (params: void) => void
 };
 
 export default function IngredientsNav(
@@ -22,7 +21,7 @@ export default function IngredientsNav(
         ingredients, 
         focus, 
         changeSettings,
-        clientRecipeData
+        forceReRender
     }: IngredientsNavProps
 ) {
     const toggleSettings = (settings: componentSettings) => {
@@ -40,16 +39,6 @@ export default function IngredientsNav(
         };
     }, [focus]);
 
-    //  Force RecipeRequestNav to re-render when clientRecipeData changes
-    const [visible, setVisible] = useState(false);
-    const forceReRender = () => {
-        if (JSON.stringify(clientRecipeData) !== JSON.stringify({})) {
-            setVisible(true);
-        } else {
-            setVisible(false);
-        };
-    };
-
     return (<>
         <div 
             className={ css.ingredientsNav } 
@@ -61,7 +50,6 @@ export default function IngredientsNav(
                 };
             }}
             onClick={() => forceReRender()}
-            // onKeyDown={(e) => handleKeyPress(e)}
         >
             <Button openState={{bool: open, setBool: setOpen}} left/>
             <ul>
@@ -91,6 +79,5 @@ export default function IngredientsNav(
                 focus={focus}
             />
         </div>
-        <RecipeRequestNav clientRecipeData={clientRecipeData} visible={visible} />
     </>);
 };

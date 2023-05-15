@@ -5,6 +5,7 @@ const typeDefs = gql`
     name: String
     description: String
     instructions: [String]
+    totalIngredients: Int
   }
   type recipeFiltersOutput {
     meal: String
@@ -34,12 +35,12 @@ const typeDefs = gql`
   type RecipeSearchInfoOutput {
     name: String
     description: String
+    totalIngredients: Int
   }
   type RecipeDataTypeOutput {
     id: String
     info: RecipeSearchInfoOutput
     filters: recipeFiltersOutput
-    cookability: Float
   }
   type Query {
     recipe(id: String!): RecipeTypeOutput
