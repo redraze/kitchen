@@ -4,7 +4,8 @@ const RecipeSchema = new Schema({
     info: {
         name: String,
         description: String,
-        instructions: [String]
+        instructions: [String],
+        totalIngredients: Number
     },
     filters: {
         meal: String,

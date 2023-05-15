@@ -8,6 +8,7 @@ const GET_RECIPE = gql`
                 name
                 description
                 instructions
+                totalIngredients
             }
             filters {
                 meal
@@ -30,6 +31,7 @@ const GET_RECIPES = gql`
                 name
                 description
                 instructions
+                totalIngredients
             }
             filters {
                 meal

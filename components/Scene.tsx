@@ -21,6 +21,14 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
         num: focus,
         setNum: setFocus
     };
+    const [
+        recipeDataVisibility, 
+        setRecipeDataVisibility
+    ] = useState(false)
+    const recipeDataVisibilityState = {
+        bool: recipeDataVisibility,
+        setBool: setRecipeDataVisibility
+    }
 
     // position and rotation for the control group component
     const [pos, setPos] = useState(initSettings.pos);
@@ -35,6 +43,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
     const handleKeyPress = (e: any) => {
         if (e.key === 'Escape') {
             changeSettings(initSettings);
+            setRecipeDataVisibility(false);
         };
     };
 
@@ -50,6 +59,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 focusState={focusState}
                 changeSettings={changeSettings}
                 clientRecipeData={clientRecipeData}
+                recipeDataVisibility={recipeDataVisibilityState}
             />
             <Kitchen 
                 ingredients={ingredients}

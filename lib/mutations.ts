@@ -11,12 +11,12 @@ const RECIPE_SEARCH = gql`
             info {
                 name
                 description
+                totalIngredients
             }
             filters {
                 meal
                 cuisine
             }
-            cookability
         }
     }
 `;
