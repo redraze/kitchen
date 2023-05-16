@@ -1,15 +1,36 @@
-.IngredientCard {
-    display: flex;
-    width: 50%;
-    padding: 15px;
-    justify-content: center;
+@use 'foundation/navVariables' as nv;
 
-    label {
-        padding: 20px;
-        margin: auto;
-    }
+.ingredientCard {
+    display: flex;
+    width: calc(50% - nv.$ingredientCardSpacing * 2);
+    padding: nv.$ingredientCardSpacing * 2;
+    margin: nv.$ingredientCardSpacing;
+    justify-content: center;
+    transition: background nv.$transitionTime/4;
+    will-change: background;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 18px;
+    font-family: calibri;
 
     span {
-        padding-left: 10px;
+        width: min-content;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding: 5px;
+        background: linear-gradient(white, white) bottom / 0.1em no-repeat;
+        background-size: 0% 0.1em;
+        transition: background-size nv.$transitionTime/2;
+    }
+}
+
+.active {
+    background-color: nv.$navHoverBG;
+}
+
+.ingredientCard:hover {
+    span {
+        background-size: 75% 0.1em;
     }
 }

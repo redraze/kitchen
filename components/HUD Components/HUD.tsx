@@ -13,6 +13,7 @@ type HUDProps = {
     changeSettings: (params: componentSettings) => void
     clientRecipeData: object
     recipeDataVisibility: boolStateType
+    ingredientsNavOpen: boolStateType
 };
 
 export default function HUD(
@@ -22,7 +23,8 @@ export default function HUD(
         nightState, 
         changeSettings,
         clientRecipeData,
-        recipeDataVisibility
+        recipeDataVisibility,
+        ingredientsNavOpen
     }: HUDProps
 ) {
     //  Force RecipeNavButton to re-render when clientRecipeData changes
@@ -48,6 +50,7 @@ export default function HUD(
                 focus={focusState.num}
                 changeSettings={changeSettings}
                 forceReRender={forceReRender}
+                ingredientsNavOpen={ingredientsNavOpen}
             />
             <RecipesNav
                 clientRecipeData={clientRecipeData}

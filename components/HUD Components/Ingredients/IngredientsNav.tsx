@@ -8,12 +8,14 @@ import {
     pantrySettings
 } from "lib/componentSettings";
 import IngredientsTab from "./IngredientsTab";
+import { boolStateType } from "lib/commonPropTypes";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
     focus: number
     changeSettings: (params: componentSettings) => void
     forceReRender: (params: void) => void
+    ingredientsNavOpen: boolStateType
 };
 
 export default function IngredientsNav(
@@ -21,7 +23,8 @@ export default function IngredientsNav(
         ingredients, 
         focus, 
         changeSettings,
-        forceReRender
+        forceReRender,
+        ingredientsNavOpen
     }: IngredientsNavProps
 ) {
     const toggleSettings = (settings: componentSettings) => {
@@ -32,7 +35,7 @@ export default function IngredientsNav(
         };
     };
 
-    const [open, setOpen] = useState(false);
+    const {bool: open, setBool: setOpen} = ingredientsNavOpen;
     useEffect(() => {
         if (focus !== initSettings.focus) {
             setOpen(true);
@@ -51,7 +54,7 @@ export default function IngredientsNav(
             }}
             onClick={() => forceReRender()}
         >
-            <Button openState={{bool: open, setBool: setOpen}} left/>
+            <Button openState={ingredientsNavOpen} left/>
             <ul>
                 <li 
                     onClick={() => toggleSettings(fridgeSettings)}

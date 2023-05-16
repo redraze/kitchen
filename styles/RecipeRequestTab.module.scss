@@ -6,7 +6,28 @@
     padding: 10px;
     left: 50%;
     bottom: 0;
+    border: none;
+    border-radius: 3px;
     transform: translateX(-50%);
-    will-change: transform;
-    transition: transform nv.$transitionTime;
+    background-color: nv.$navBackground;
+    transition: 
+        transform nv.$transitionTime/2,
+        background-color nv.$transitionTime/2;
+    will-change: transform, background-color;
+
+    span {
+        padding: 3px;
+        background: linear-gradient(white, white) bottom / 0.1em no-repeat;
+        background-size: 0% 0.1em;
+        transition: background-size nv.$transitionTime/3;
+        will-change: background-size;
+    }
+}
+
+.search:hover {
+    background-color: black;
+
+    span {
+        background-size: 60% 0.1em;
+    }
 }

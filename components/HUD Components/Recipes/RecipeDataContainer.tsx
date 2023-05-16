@@ -1,8 +1,6 @@
 import css from 'styles/RecipeDataContainer.module.scss';
 import RecipeDataCard from './RecipeDataCard';
-import { useState } from 'react';
 import { boolStateType } from 'lib/commonPropTypes';
-// import Spinner from '...';
 
 type RecipeDataContainerProps = {
     clientRecipeData: object
@@ -21,37 +19,37 @@ export default function RecipeDataContainer(
         recipeDataVisibility
     }: RecipeDataContainerProps
 ) {
-    if (error) {
-        return (
-            <div className={ css.error }>
-
-            </div>
-        )
-    } else if (loading) {
-        return (
-            <div className={ css.loading }>
-                {/* <Spinner/> */}
-            </div>
-        );
-    } else if (data) {
+    if (data) {
         return (
             <div 
+                style={ 
+                    recipeDataVisibility.bool ?
+                        { visibility: 'visible' } :
+                        { visibility: 'hidden' } 
+                    }
                 className={ css.data }
-                style={ recipeDataVisibility.bool ?
-                    { visibility: 'visible' } :
-                    { visibility: 'hidden' } }
             >
-                <div className={ css.container }>{
-                    data.map((item: any, idx: number) => {
-                        return (
-                            <RecipeDataCard
-                                key={idx}
-                                recipe={item}
-                                availableIngredients={clientRecipeData[item.id as keyof object]}
-                            />
-                        )
-                    })
-                }</div>
+                <div 
+                    className={ css.screen }
+                    onClick={ () => 
+                        recipeDataVisibility.setBool(!recipeDataVisibility.bool)
+                    }
+                ></div>
+                <div className={ css.wrapper }>
+                    <div className={ css.container }>{
+                        data.map((item: any, idx: number) => {
+                            return (
+                                <RecipeDataCard
+                                    key={idx}
+                                    recipe={item}
+                                    availableIngredients={
+                                        clientRecipeData[item.id as keyof object]
+                                    }
+                                />
+                            )
+                        })
+                    }</div>
+                </div>
             </div>
         );
     } else {
