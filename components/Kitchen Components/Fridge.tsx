@@ -65,7 +65,7 @@ export default function Fridge(props: FridgeProps) {
       actions.openLeft?.fadeOut(fadeTimer);
       actions.openRight?.fadeOut(fadeTimer);
     }
-  }, [props.active]);
+  }, [props.active, actions.openLeft, actions.openRight]);
 
   return (
     <group ref={group} {...props} dispose={null}>

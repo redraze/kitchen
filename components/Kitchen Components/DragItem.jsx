@@ -21,7 +21,7 @@ export default function DragItem(props) {
         controlsRef.current.addEventListener("hoveroff", () => {
         scene.orbitControls.enabled = true;
         });
-    }, [objects]);
+    }, [objects, scene.orbitControls]);
     
     return (
         <group ref={groupRef}>

@@ -58,7 +58,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
     } else {
       actions.ovenDoorAction?.fadeOut(fadeTimer);
     }
-  }, [doorPosition]);
+  }, [doorPosition, actions.ovenDoorAction]);
 
   const glass = new MeshPhysicalMaterial({
     metalness: 0.5,

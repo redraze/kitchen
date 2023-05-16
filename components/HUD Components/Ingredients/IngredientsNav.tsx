@@ -40,7 +40,7 @@ export default function IngredientsNav(
         if (focus !== initSettings.focus) {
             setOpen(true);
         };
-    }, [focus]);
+    }, [focus, setOpen]);
 
     return (<>
         <div 

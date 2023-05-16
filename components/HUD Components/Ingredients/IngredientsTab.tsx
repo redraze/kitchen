@@ -12,17 +12,14 @@ export default function IngredientsTab({ ingredients, focus }: IngredientsTabPro
     const fridgeMap = useRef<JSX.Element[]>([]);
     const pantryMap = useRef<JSX.Element[]>([]);
     useEffect(() => {
-        // console.log(ingredients)
         setRender(render + 1)
         fridgeMap.current = []
         pantryMap.current = []
-        // console.log(ingredients)
         ingredients.map((ingredient: JSX.Element) => {
             ingredient.props.ingredient.info.refrigerated === true ? 
             fridgeMap.current.push(ingredient) :
             pantryMap.current.push(ingredient)
         });
-        // console.log(fridgeMap.current)
     }, [ingredients]);
 
     return (

@@ -57,7 +57,7 @@ export default function Pantry(props: PantryProps) {
       actions.RMAction?.fadeOut(fadeTimer);
       actions.RRAction?.fadeOut(fadeTimer);
     }
-  }, [props.active]);
+  }, [props.active, actions.LLAction, actions.LMAction, actions.RMAction, actions.RRAction]);
 
   return (
     <group ref={group} {...props} dispose={null}>
