@@ -21,8 +21,8 @@ export default function RecipeDataCard({ recipe, availableIngredients }: RecipeD
             rel="noopener noreferrer"
         >
             <div className={ css.info }>
-                <h2>{recipe.info.name}</h2>
-                <h4>{recipe.info.description}</h4>
+                <h1>{recipe.info.name}</h1>
+                <h3>{recipe.info.description}</h3>
             </div>
             <div className={ css.score }>
                 Cookability: { parseFloat(cookabilityScore.toString()).toFixed(0) + '%' }

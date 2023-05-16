@@ -19,26 +19,23 @@ export default function RecipeRequestTab(
 ) {
     //  useMutation is used here instead of useQuery in order to make
     //  available a function, recipeSearch, that can be called at will
-    const [recipeSearch, { error, data, loading }] = useMutation(
-        RECIPE_SEARCH, 
-        { 
-            variables: { 
-                recipeData: Object.entries(clientRecipeData).map((item) => {
-                    return ({id: item[0], amount: item[1]});
-                })
-            },
-            onError: (error) => {
-                console.log('type 0 error', JSON.stringify(error))
-            },
-            // onCompleted: (data) => {
-            //     console.log('success', data)
-            // }
-        }
-    );
-    const handler = () => {
+    const [recipeSearch, { error, data, loading }] = useMutation(RECIPE_SEARCH);
+    const handler = async () => {
         recipeDataVisibility.setBool(true)
         try {
-            recipeSearch();
+            await recipeSearch({ 
+                variables: { 
+                    recipeData: Object.entries(clientRecipeData).map((item) => {
+                        return ({id: item[0], amount: item[1]});
+                    })
+                },
+                onError: (error) => {
+                    console.log('type 0 error', JSON.stringify(error))
+                },
+                // onCompleted: (data) => {
+                //     console.log('success', data)
+                // }
+            });
         } catch {
             console.log('type 1 error', error);
         };
@@ -52,7 +49,7 @@ export default function RecipeRequestTab(
             className={ css.search }
             onClick={() => handler()}
         >
-            Find Recipes!
+            <span>Find Recipes!</span>
         </button>
         <RecipeDataContainer
             clientRecipeData={clientRecipeData}

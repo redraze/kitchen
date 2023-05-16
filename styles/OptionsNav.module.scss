@@ -27,7 +27,7 @@
             display: flex;
             cursor: pointer;
             height: 100%;
-            transition: background-color nv.$transitionTime ease-out;
+            transition: background-color nv.$transitionTime/2 ease-out;
             will-change: background-color;
                 
             span {

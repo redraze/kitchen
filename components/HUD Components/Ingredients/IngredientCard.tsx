@@ -10,18 +10,27 @@ type IngredientCardProps = {
 
 export default function IngredientCard({ ingredient, active, updateData }: IngredientCardProps) {
     const [bool, setBool] = useState(active ? true : false);
+    const [className, setClassName] = useState(
+        active ? 
+            [css.ingredientCard , css.active].join(' ') :
+            [css.ingredientCard , css.inactive].join(' ')
+    );
 
-    return(<div className={ css.IngredientCard }>
-        <label>
+    const handler = () => {
+        setClassName(
+            bool ?
+            [css.ingredientCard , css.inactive].join(' ') :
+            [css.ingredientCard , css.active].join(' ')
+        );
+        setBool(!bool);
+        updateData(ingredient._id, !bool, ingredient.recipes);
+    };
+    return(
+        <div 
+            className={className}
+            onClick={ () => handler() }
+        >
             <span>{ingredient.info.name}</span>
-            <input
-                type="checkbox"
-                defaultChecked={bool}
-                onClick={() => { 
-                    setBool(!bool),
-                    updateData(ingredient._id, !bool, ingredient.recipes)
-                }}
-            />
-        </label>
-    </div>);
+        </div>
+    );
 };

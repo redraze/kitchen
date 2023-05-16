@@ -30,9 +30,10 @@
             display: flex;
             cursor: pointer;
             height: 100%;
-            transition: background-color nv.$transitionTime ease-out;
-            transition: border-left nv.$transitionTime/2 ease-out;
-            will-change: background-color border-left;
+            transition: 
+                background-color nv.$transitionTime/2 ease-out,
+                border-left nv.$transitionTime/2 ease-out;
+            will-change: background-color, border-left;
         
             span {
                 font-family: calibri;
