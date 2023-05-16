@@ -22,7 +22,6 @@ type IndexProps = {
 };
 
 export default function Index({ ingredients }: IndexProps) {
-  const parsed = JSON.parse(ingredients);  
   const clientIngredientData = useRef({})
   const clientRecipeData = useRef({})
 
@@ -61,6 +60,7 @@ export default function Index({ ingredients }: IndexProps) {
     let temp: JSX.Element[] = [];
     clientRecipeData.current = {};
     
+    const parsed = JSON.parse(ingredients);
     parsed.map((ingredient: IngredientType, idx: number) => {
       if (localData[ingredient._id as keyof object]) {
         ingredient.recipes.map((item: string) => {
@@ -84,7 +84,7 @@ export default function Index({ ingredients }: IndexProps) {
       ];
     });
     setIngredientsMap(temp)
-  }, []);
+  }, [ingredients]);
  
   return (
     <Scene 
