@@ -55,32 +55,18 @@ export default function IngredientsNav(
             onClick={() => forceReRender()}
         >
             <Button openState={ingredientsNavOpen} left/>
-            <ul>
-                <li 
-                    onClick={() => toggleSettings(fridgeSettings)}
-                    style={{ borderLeft:
-                        focus === fridgeSettings.focus ?
-                            'solid 8px white' :
-                            'solid 0px white'
-                    }}
-                >
-                    <span>Refridgerated Ingredients</span>
-                </li>
-                <li
-                    onClick={() => toggleSettings(pantrySettings)}
-                    style={{ borderLeft:
-                        focus === pantrySettings.focus ?
-                            'solid 8px white' :
-                            'solid 0px white'
-                    }}
-                >
-                    <span>Unrefrigerated Ingredients</span>
-                </li>
-            </ul>
             <IngredientsTab 
                 ingredients={ingredients}
                 focus={focus}
             />
+            <ul>
+                <li onClick={() => toggleSettings(fridgeSettings)}>
+                    <span>Refridgerated Ingredients</span>
+                </li>
+                <li onClick={() => toggleSettings(pantrySettings)}>
+                    <span>Unrefrigerated Ingredients</span>
+                </li>
+            </ul>
         </div>
     </>);
 };

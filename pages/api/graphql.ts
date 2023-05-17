@@ -19,4 +19,4 @@ export const config = {
 export default createYoga({
     schema,
     graphqlEndpoint: '/api/graphql',
-  });
+});
