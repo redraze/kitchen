@@ -88,8 +88,8 @@ export default function Index({ ingredients }: IndexProps) {
  
   return (
     <Scene 
-      // ingredients={ingredientsMap}
-      // clientRecipeData={clientRecipeData.current}
+      ingredients={ingredientsMap}
+      clientRecipeData={clientRecipeData.current}
     />
   );
 };

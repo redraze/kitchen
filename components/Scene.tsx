@@ -5,14 +5,12 @@ import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
 
-// type SceneProps = {
-//     ingredients: JSX.Element[]
-//     clientRecipeData: object
-// };
+type SceneProps = {
+    ingredients: JSX.Element[]
+    clientRecipeData: object
+};
   
-export default function Scene(
-    // { ingredients, clientRecipeData }: SceneProps
-) {
+export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
     const [night, setNight] = useState(false);
     const nightState: boolStateType = {
         bool: night,
@@ -70,7 +68,7 @@ export default function Scene(
             onKeyDown={(e) => handleKeyPress(e)}
             tabIndex={-1}
         >
-            {/* <HUD 
+            <HUD 
                 ingredients={ingredients}
                 nightState={nightState}
                 focusState={focusState}
@@ -86,7 +84,7 @@ export default function Scene(
                 pos={pos}
                 rot={rot}
                 changeSettings={changeSettings}
-            /> */}
+            />
         </div>
     );
 };
