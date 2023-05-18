@@ -52,29 +52,29 @@ export default function Index({ ingredients }: IndexProps) {
   
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
   useEffect(() => {
-    const localData = JSON.parse(localStorage['ingredientData']);
-    if (localData) clientIngredientData.current = localData;
+    // const localData = JSON.parse(localStorage['ingredientData']);
+    // if (localData) clientIngredientData.current = localData;
 
     const parsed = JSON.parse(ingredients);
     let temp: JSX.Element[] = [];
     parsed.map((ingredient: IngredientType, idx: number) => {
-      if (localData[ingredient._id as keyof object]) {
-        ingredient.recipes.map((item: string) => {
-          if (clientRecipeData.current[item as keyof object]) {
-            clientRecipeData.current[item as keyof object]++;
-          } else {
-            //  @ts-ignore
-            clientRecipeData.current[item as keyof object] = 1;
-          };
-        })
-      }
+      // if (localData[ingredient._id as keyof object]) {
+      //   ingredient.recipes.map((item: string) => {
+      //     if (clientRecipeData.current[item as keyof object]) {
+      //       clientRecipeData.current[item as keyof object]++;
+      //     } else {
+      //       //  @ts-ignore
+      //       clientRecipeData.current[item as keyof object] = 1;
+      //     };
+      //   })
+      // }
 
       temp = [
         ...temp,
         <IngredientCard
           key={idx}
           ingredient={ingredient}
-          active={ localData[ingredient._id as keyof object] ? true : false }
+          // active={ localData[ingredient._id as keyof object] ? true : false }
           updateData={updateData}
         ></IngredientCard>
       ];
