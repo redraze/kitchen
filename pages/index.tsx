@@ -52,6 +52,7 @@ export default function Index({ ingredients }: IndexProps) {
   
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
   useEffect(() => {
+    console.log(localStorage['ingredientData'])
     // const localData = JSON.parse(localStorage['ingredientData']);
     // if (localData) clientIngredientData.current = localData;
 
