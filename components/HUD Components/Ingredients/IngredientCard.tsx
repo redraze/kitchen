@@ -4,20 +4,15 @@ import css from 'styles/IngredientCard.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
-    // active: boolean | undefined
+    active: boolean | undefined
     updateData: (arg1: string, arg2: boolean, args3: string[]) => void
 }
 
-export default function IngredientCard({ ingredient, 
-    // active, 
-    updateData 
-}: IngredientCardProps) {
-    const [bool, setBool] = useState(
-        // active ? true : 
-        false);
+export default function IngredientCard({ ingredient, active, updateData }: IngredientCardProps) {
+    const [bool, setBool] = useState(active ? true : false);
     const [className, setClassName] = useState(
-        // active ? 
-        //     [css.ingredientCard , css.active].join(' ') :
+        active ? 
+            [css.ingredientCard , css.active].join(' ') :
             [css.ingredientCard , css.inactive].join(' ')
     );
 
