@@ -52,8 +52,8 @@ export default function Index({ ingredients }: IndexProps) {
   
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
   useEffect(() => {
-    console.log(ingredients)
-    // const localData = JSON.parse(localStorage['ingredientData']);
+    const localData = JSON.parse(localStorage['ingredientData']);
+    console.log(localData)
     // if (localData) clientIngredientData.current = localData;
 
     //  Overwrite variables to prevent double appending
