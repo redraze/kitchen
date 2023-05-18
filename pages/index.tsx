@@ -57,21 +57,22 @@ export default function Index({ ingredients }: IndexProps) {
 
     //  Overwrite variables to prevent double appending
     //  (since dev/strict mode calls this useEffect twice)
-    // let temp: JSX.Element[] = [];
+    let temp: JSX.Element[] = [];
     clientRecipeData.current = {};
     
     const parsed = JSON.parse(ingredients);
-    parsed.map((ingredient: IngredientType, idx: number) => {
-      if (localData[ingredient._id as keyof object]) {
-        ingredient.recipes.map((item: string) => {
-          if (clientRecipeData.current[item as keyof object]) {
-            clientRecipeData.current[item as keyof object]++;
-          } else {
-            //  @ts-ignore
-            clientRecipeData.current[item as keyof object] = 1;
-          };
-        })
-      }
+    console.log(parsed)
+    // parsed.map((ingredient: IngredientType, idx: number) => {
+    //   if (localData[ingredient._id as keyof object]) {
+    //     ingredient.recipes.map((item: string) => {
+    //       if (clientRecipeData.current[item as keyof object]) {
+    //         clientRecipeData.current[item as keyof object]++;
+    //       } else {
+    //         //  @ts-ignore
+    //         clientRecipeData.current[item as keyof object] = 1;
+    //       };
+    //     })
+    //   }
 
     //   temp = [
     //     ...temp,
@@ -82,7 +83,7 @@ export default function Index({ ingredients }: IndexProps) {
     //       updateData={updateData}
     //     ></IngredientCard>
     //   ];
-    });
+    // });
     // setIngredientsMap(temp)
   }, [ingredients]);
  
