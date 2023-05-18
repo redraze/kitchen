@@ -52,16 +52,17 @@ export default function Index({ ingredients }: IndexProps) {
   
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
   useEffect(() => {
-    const localData = JSON.parse(localStorage['ingredientData']);
-    if (localData) clientIngredientData.current = localData;
+    console.log(ingredients)
+    // const localData = JSON.parse(localStorage['ingredientData']);
+    // if (localData) clientIngredientData.current = localData;
 
     //  Overwrite variables to prevent double appending
     //  (since dev/strict mode calls this useEffect twice)
-    let temp: JSX.Element[] = [];
-    clientRecipeData.current = {};
+    // let temp: JSX.Element[] = [];
+    // clientRecipeData.current = {};
     
-    const parsed = JSON.parse(ingredients);
-    console.log(parsed)
+    // const parsed = JSON.parse(ingredients);
+    // console.log(parsed)
     // parsed.map((ingredient: IngredientType, idx: number) => {
     //   if (localData[ingredient._id as keyof object]) {
     //     ingredient.recipes.map((item: string) => {
