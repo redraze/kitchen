@@ -68,7 +68,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
             onKeyDown={(e) => handleKeyPress(e)}
             tabIndex={-1}
         >
-            <HUD 
+            {/* <HUD 
                 ingredients={ingredients}
                 nightState={nightState}
                 focusState={focusState}
@@ -76,7 +76,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 clientRecipeData={clientRecipeData}
                 recipeDataVisibility={recipeDataVisibilityState}
                 ingredientsNavOpen={ingredientsNavOpenState}
-            />
+            /> */}
             <Kitchen 
                 ingredients={ingredients}
                 nightState={nightState}
