@@ -5,12 +5,14 @@ import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
 
-type SceneProps = {
-    ingredients: JSX.Element[]
-    clientRecipeData: object
-};
+// type SceneProps = {
+//     ingredients: JSX.Element[]
+//     clientRecipeData: object
+// };
   
-export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
+export default function Scene(
+    // { ingredients, clientRecipeData }: SceneProps
+) {
     const [night, setNight] = useState(false);
     const nightState: boolStateType = {
         bool: night,
@@ -76,7 +78,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 clientRecipeData={clientRecipeData}
                 recipeDataVisibility={recipeDataVisibilityState}
                 ingredientsNavOpen={ingredientsNavOpenState}
-            /> */}
+            />
             <Kitchen 
                 ingredients={ingredients}
                 nightState={nightState}
@@ -84,7 +86,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 pos={pos}
                 rot={rot}
                 changeSettings={changeSettings}
-            />
+            /> */}
         </div>
     );
 };
