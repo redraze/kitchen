@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import css from "styles/IngredientsNav.module.scss";
 import Button from "../Button";
 import {
