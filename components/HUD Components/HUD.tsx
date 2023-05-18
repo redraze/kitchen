@@ -52,11 +52,11 @@ export default function HUD(
                 forceReRender={forceReRender}
                 ingredientsNavOpen={ingredientsNavOpen}
             />
-            {/* <RecipesNav
+            <RecipesNav
                 clientRecipeData={clientRecipeData}
                 buttonVisibility={buttonVisibility}
                 recipeDataVisibility={recipeDataVisibility}
-            /> */}
+            />
         </div>
     );
 };
