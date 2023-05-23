@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import css from "styles/IngredientsNav.module.scss";
+import { useEffect, useState } from "react";
+import css from "styles/HUD/Ingredients/Nav.module.scss";
 import Button from "../Button";
 import {
     componentSettings,
@@ -7,15 +7,16 @@ import {
     initSettings,
     pantrySettings
 } from "lib/componentSettings";
-import IngredientsTab from "./IngredientsTab";
-import { boolStateType } from "lib/commonPropTypes";
+import IngredientsTab from "./Tab";
+import { stateType } from "lib/commonPropTypes";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
     focus: number
     changeSettings: (params: componentSettings) => void
     forceReRender: (params: void) => void
-    ingredientsNavOpen: boolStateType
+    ingredientsNavOpen: stateType<boolean>
+    userInputState: stateType<string>
 };
 
 export default function IngredientsNav(
@@ -24,7 +25,8 @@ export default function IngredientsNav(
         focus, 
         changeSettings,
         forceReRender,
-        ingredientsNavOpen
+        ingredientsNavOpen,
+        userInputState
     }: IngredientsNavProps
 ) {
     const toggleSettings = (settings: componentSettings) => {
@@ -35,12 +37,18 @@ export default function IngredientsNav(
         };
     };
 
-    const {bool: open, setBool: setOpen} = ingredientsNavOpen;
+    const {value: open, setValue: setOpen} = ingredientsNavOpen;
     useEffect(() => {
         if (focus !== initSettings.focus) {
             setOpen(true);
         };
     }, [focus]);
+
+    const {value: userInput, setValue: setUserInput} = userInputState;
+    const handleClick = (settings: componentSettings) => {
+        toggleSettings(settings);
+        setUserInput('');
+    };
 
     return (<>
         <div 
@@ -48,7 +56,7 @@ export default function IngredientsNav(
             style={{ right: open ? '80%' : '100%' }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
-                if (focus === initSettings.focus) {
+                if (focus === initSettings.focus && !userInput) {
                     setOpen(false);
                 };
             }}
@@ -58,12 +66,14 @@ export default function IngredientsNav(
             <IngredientsTab 
                 ingredients={ingredients}
                 focus={focus}
+                userInputState={userInputState}
+                changeSettings={changeSettings}
             />
             <ul>
-                <li onClick={() => toggleSettings(fridgeSettings)}>
+                <li onClick={() => handleClick(fridgeSettings)}>
                     <span>Refridgerated Ingredients</span>
                 </li>
-                <li onClick={() => toggleSettings(pantrySettings)}>
+                <li onClick={() => handleClick(pantrySettings)}>
                     <span>Unrefrigerated Ingredients</span>
                 </li>
             </ul>

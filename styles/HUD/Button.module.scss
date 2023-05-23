@@ -1,5 +1,5 @@
-@use 'foundation/buttonVariables' as bv;
-@use 'foundation/navVariables' as nv;
+@use 'styles/foundation/buttonVariables' as bv;
+@use 'styles/foundation/navVariables' as nv;
 
 .button {
     height: bv.$buttonSize;

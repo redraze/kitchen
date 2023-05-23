@@ -1,14 +1,14 @@
-import { boolStateType } from "lib/commonPropTypes";
+import { stateType } from "lib/commonPropTypes";
 import { useState } from "react";
-import css from "styles/OptionsNav.module.scss";
+import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
 
 type OptionsNavProps = {
-    nightState: boolStateType
+    nightState: stateType<boolean>
 };
 
 export default function OptionsNav({ nightState }: OptionsNavProps) {
-    const { bool: night, setBool: setNight } = nightState;
+    const { value: night, setValue: setNight } = nightState;
     const [open, setOpen] = useState(false);
 
     return (
@@ -18,7 +18,7 @@ export default function OptionsNav({ nightState }: OptionsNavProps) {
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}    
         >
-            <Button openState={{bool: open, setBool: setOpen}}/>
+            <Button openState={{value: open, setValue: setOpen}}/>
             <ul>
                 <li><span>All Recipes</span></li>
                 <li onClick={() => setNight(!night)}>

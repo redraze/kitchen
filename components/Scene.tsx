@@ -1,4 +1,4 @@
-import { boolStateType, numStateType } from "lib/commonPropTypes";
+import { stateType } from "lib/commonPropTypes";
 import { useState } from "react";
 import { initSettings, componentSettings } from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
@@ -12,30 +12,35 @@ type SceneProps = {
   
 export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
     const [night, setNight] = useState(false);
-    const nightState: boolStateType = {
-        bool: night,
-        setBool: setNight
+    const nightState: stateType<boolean> = {
+        value: night,
+        setValue: setNight
     };
     const [focus, setFocus] = useState(initSettings.focus);
-    const focusState: numStateType = {
-        num: focus,
-        setNum: setFocus
+    const focusState: stateType<number> = {
+        value: focus,
+        setValue: setFocus
     };
     const [
         recipeDataVisibility, 
         setRecipeDataVisibility
     ] = useState(false);
-    const recipeDataVisibilityState = {
-        bool: recipeDataVisibility,
-        setBool: setRecipeDataVisibility
+    const recipeDataVisibilityState: stateType<boolean> = {
+        value: recipeDataVisibility,
+        setValue: setRecipeDataVisibility
     };
     const [
         ingredientsNavOpen, 
         setIngredientsNavOpen
     ] = useState(false);
-    const ingredientsNavOpenState = {
-        bool: ingredientsNavOpen,
-        setBool: setIngredientsNavOpen
+    const ingredientsNavOpenState: stateType<boolean> = {
+        value: ingredientsNavOpen,
+        setValue: setIngredientsNavOpen
+    };
+    const [userInput, setUserInput] = useState('')
+    const userInputState: stateType<string> = {
+        value: userInput,
+        setValue: setUserInput
     };
 
     // position and rotation for the control group component
@@ -52,6 +57,10 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
         if (e.key === 'Escape') {
             if (recipeDataVisibility) {
                 setRecipeDataVisibility(false);
+                return;
+            };
+            if (userInput) {
+                setUserInput('');
                 return;
             };
             if (focus !== initSettings.focus) {
@@ -76,6 +85,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 clientRecipeData={clientRecipeData}
                 recipeDataVisibility={recipeDataVisibilityState}
                 ingredientsNavOpen={ingredientsNavOpenState}
+                userInputState={userInputState}
             />
             <Kitchen 
                 ingredients={ingredients}
@@ -84,6 +94,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 pos={pos}
                 rot={rot}
                 changeSettings={changeSettings}
+                userInputState={userInputState}
             />
         </div>
     );

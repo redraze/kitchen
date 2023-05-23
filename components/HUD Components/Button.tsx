@@ -1,13 +1,13 @@
-import { boolStateType } from "lib/commonPropTypes";
-import css from "styles/Button.module.scss";
+import { stateType } from "lib/commonPropTypes";
+import css from "styles/HUD/Button.module.scss";
 
 type ButtonProps = {
-    openState: boolStateType
+    openState: stateType<boolean>
     left?: boolean
 }
 
 export default function Button({ openState, left }: ButtonProps) {
-    const {bool: open, setBool: setOpen} = openState;
+    const {value: open, setValue: setOpen} = openState;
     
     return (<>
         <div 

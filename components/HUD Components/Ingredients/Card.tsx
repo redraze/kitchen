@@ -1,6 +1,6 @@
 import { IngredientType } from "lib/commonPropTypes";
 import { useState } from "react";
-import css from 'styles/IngredientCard.module.scss';
+import css from 'styles/HUD/Ingredients/Card.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType

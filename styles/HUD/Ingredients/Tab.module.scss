@@ -1,0 +1,61 @@
+@use 'styles/foundation/navVariables' as nv;
+
+//  this particular value of 57px minimizes searchbar 
+//  height change when focus changes
+$barHeight: 57px;
+.search {
+    padding: 5px;
+    height: $barHeight;
+
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+
+        input {
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: solid 2px;
+            width: 100%;
+            height: 100%;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            height: 100%;
+            padding: 10px;
+            font-size: 20px;
+
+            i {
+                font-style: normal;
+            }
+        }
+    }
+}
+
+.tab {
+    display: flex;
+    transition: height nv.$transitionTime;
+    height: 0%;
+    
+    > * {
+        flex-flow: row wrap;
+        overflow: auto;
+        direction: rtl;
+        display: none;
+    }
+}
+
+.tab_focus {
+    height: calc(100% - $barHeight);
+}
+
+.focus {
+    display: flex;
+}

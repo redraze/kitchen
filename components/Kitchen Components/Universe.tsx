@@ -1,14 +1,14 @@
-import { boolStateType } from "lib/commonPropTypes";
+import { stateType } from "lib/commonPropTypes";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Vector3 } from "three";
 
 export type UniverseProps = {
-    nightState: boolStateType
+    nightState: stateType<boolean>
 }
 
 export default function Universe({ nightState }: UniverseProps) {
-    const {bool: night, setBool: setNight} = nightState;
+    const {value: night, setValue: setNight} = nightState;
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const bg = useRef<THREE.Color>(null!);
     const amb = useRef<THREE.AmbientLight>(null!);

@@ -1,5 +1,5 @@
-import css from 'styles/RecipeDataContainer.module.scss';
-import RecipeDataCard from './RecipeDataCard';
+import css from 'styles/HUD/Recipes/Container.module.scss';
+import RecipeDataCard from './Card';
 import { boolStateType } from 'lib/commonPropTypes';
 
 type RecipeDataContainerProps = {
