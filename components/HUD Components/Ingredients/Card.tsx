@@ -19,12 +19,13 @@ export default function IngredientCard({ ingredient, active, updateData }: Ingre
     const handler = () => {
         setClassName(
             bool ?
-            [css.ingredientCard , css.inactive].join(' ') :
-            [css.ingredientCard , css.active].join(' ')
+                [css.ingredientCard , css.inactive].join(' ') :
+                [css.ingredientCard , css.active].join(' ')
         );
         setBool(!bool);
         updateData(ingredient._id, !bool, ingredient.recipes);
     };
+
     return(
         <div 
             className={className}

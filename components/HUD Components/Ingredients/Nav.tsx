@@ -53,7 +53,7 @@ export default function IngredientsNav(
     return (<>
         <div 
             className={ css.ingredientsNav } 
-            style={{ right: open ? '80%' : '100%' }}
+            style={{ left: open ? '0' : '-300px' }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
                 if (focus === initSettings.focus && !userInput) {

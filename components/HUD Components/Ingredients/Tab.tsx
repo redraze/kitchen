@@ -35,25 +35,29 @@ export default function IngredientsTab(
         });
     }, [ingredients]);
 
-    const [dataList, setDataList] = useState([])
+    const [dataList, setDataList] = useState<JSX.Element[]>([]);
     const {value: userInput, setValue: setUserInput} = userInputState;
     const handler = (e: any) => {
         setUserInput(e.target.value);
         changeSettings(initSettings);
 
-        //  TODO: compile ingredients search results
+        let temp: JSX.Element[] = [];
+        ingredients.map(item => {
+            if (item.props.ingredient.info.name.includes(e.target.value)) {
+                temp = [...temp, item];
+            };
+        });
+        return temp;
     };
 
     return (<>
         <div className={ css.search }>
-            <form onSubmit={e => {e.preventDefault()}}>
-                <input 
-                    placeholder="Search all ingredients..."
-                    onChange={e => handler(e)}
-                    value={userInput}
-                />
-                <button onClick={() => setUserInput('')}>Clear</button>
-            </form>
+            <input 
+                placeholder="Search all ingredients..."
+                onChange={e => setDataList(handler(e))}
+                value={userInput}
+            />
+            <button onClick={() => setUserInput('')}>Clear</button>
         </div>
         <div 
             className={ 
@@ -62,14 +66,35 @@ export default function IngredientsTab(
                     css.tab
             }
         >
-            <div className={userInput !== '' ? css.focus : ''}>
-                {dataList}
+            <div className={
+                userInput !== '' ? 
+                    [css.data, css.focus].join(' ') :
+                    css.data
+                }
+            >
+                <div className={ css.wrapper }>
+                    {dataList}
+                </div>
             </div>
-            <div className={focus === fridgeSettings.focus ? css.focus : ''}>
-                {fridgeMap.current}
+            <div className={
+                focus === fridgeSettings.focus ? 
+                    [css.data, css.focus].join(' ') :
+                    css.data
+                }
+            >
+                <div className={ css.wrapper }>
+                    {fridgeMap.current}
+                </div>
             </div>
-            <div className={focus === pantrySettings.focus ? css.focus : ''}>
-                {pantryMap.current}
+            <div className={
+                focus === pantrySettings.focus ? 
+                    [css.data, css.focus].join(' ') :
+                    css.data
+                }
+            >
+                <div className={ css.wrapper }>
+                    {pantryMap.current}
+                </div>
             </div>
         </div>
     </>);

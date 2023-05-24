@@ -14,7 +14,7 @@ export default function OptionsNav({ nightState }: OptionsNavProps) {
     return (
         <div 
             className={ css.nav } 
-            style={{left: open ? '80%' : '100%'}}
+            style={{right: open ? '0' : '-300px'}}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}    
         >

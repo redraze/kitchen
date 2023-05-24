@@ -3,12 +3,12 @@
 .ingredientsNav {
     position: fixed;
     height: 100vh;
-    width: 20vw;
+    width: nv.$navWidth;
     display: flex;
     flex-direction: column;
     background: nv.$navBackground;
-    transition: right nv.$transitionTime;
-    will-change: right;
+    transition: left nv.$transitionTime;
+    will-change: left;
 
     ul {
         width: 100%;

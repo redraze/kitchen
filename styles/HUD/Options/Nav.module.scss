@@ -3,11 +3,11 @@
 .nav {
     position: fixed;
     height: 100vh;
-    width: 20vw;
+    width: nv.$navWidth;
     display: flex;
     background: nv.$navBackground;
-    transition: left nv.$transitionTime;
-    will-change: left;
+    transition: right nv.$transitionTime;
+    will-change: right;
 
     ul {
         width: 100%;

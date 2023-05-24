@@ -6,56 +6,67 @@ $barHeight: 57px;
 .search {
     padding: 5px;
     height: $barHeight;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: $barHeight;
 
-    form {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    input {
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: solid 2px;
         width: 100%;
         height: 100%;
+    }
 
-        input {
-            font-size: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            border: solid 2px;
-            width: 100%;
-            height: 100%;
-        }
+    input:focus {
+        outline: none;
+    }
 
-        input:focus {
-            outline: none;
-        }
+    button {
+        height: 100%;
+        padding: 10px;
+        font-size: 20px;
 
-        button {
-            height: 100%;
-            padding: 10px;
-            font-size: 20px;
-
-            i {
-                font-style: normal;
-            }
+        i {
+            font-style: normal;
         }
     }
 }
 
 .tab {
     display: flex;
+    flex-flow: column;
     transition: height nv.$transitionTime;
     height: 0%;
     
     > * {
         flex-flow: row wrap;
         overflow: auto;
-        direction: rtl;
         display: none;
     }
 }
 
 .tab_focus {
-    height: calc(100% - $barHeight);
+    height: calc(100vh);
+}
+
+.data {
+    display: flex;
+    height: 0;
+    transition: height 0.4s;
+    width: 100%;
+
+    .wrapper {
+        width: 100%;
+        display: flex;
+        flex-flow: wrap;
+        height: min-content;
+    }
 }
 
 .focus {
-    display: flex;
+    height: calc(100vh - $barHeight);
 }
