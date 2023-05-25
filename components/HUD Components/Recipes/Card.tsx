@@ -1,5 +1,5 @@
 import Link from "next/link"
-import css from 'styles/RecipeDataCard.module.scss';
+import css from 'styles/HUD/Recipes/Card.module.scss';
 
 type RecipeDataCardProps = {
     recipe: any

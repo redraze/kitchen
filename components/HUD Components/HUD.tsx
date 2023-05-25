@@ -1,19 +1,20 @@
-import { numStateType, boolStateType } from "lib/commonPropTypes";
-import css from "styles/HUD.module.scss";
-import OptionsNav from "./Options/OptionsNav";
-import IngredientsNav from "./Ingredients/IngredientsNav";
+import { stateType } from "lib/commonPropTypes";
+import css from "styles/HUD/HUD.module.scss";
+import OptionsNav from "./Options/Nav";
+import IngredientsNav from "./Ingredients/Nav";
 import { componentSettings } from "lib/componentSettings";
-import RecipesNav from "./Recipes/RecipesNav";
+import RecipesNav from "./Recipes/Nav";
 import { useState } from "react";
 
 type HUDProps = {
     ingredients: JSX.Element[]
-    focusState: numStateType
-    nightState: boolStateType
+    focusState: stateType<number>
+    nightState: stateType<boolean>
     changeSettings: (params: componentSettings) => void
     clientRecipeData: object
-    recipeDataVisibility: boolStateType
-    ingredientsNavOpen: boolStateType
+    recipeDataVisibility: stateType<boolean>
+    ingredientsNavOpen: stateType<boolean>
+    userInputState: stateType<string>
 };
 
 export default function HUD(
@@ -24,7 +25,8 @@ export default function HUD(
         changeSettings,
         clientRecipeData,
         recipeDataVisibility,
-        ingredientsNavOpen
+        ingredientsNavOpen,
+        userInputState
     }: HUDProps
 ) {
     //  Force RecipeNavButton to re-render when clientRecipeData changes
@@ -47,10 +49,11 @@ export default function HUD(
             />
             <IngredientsNav
                 ingredients={ingredients}
-                focus={focusState.num}
+                focus={focusState.value}
                 changeSettings={changeSettings}
                 forceReRender={forceReRender}
                 ingredientsNavOpen={ingredientsNavOpen}
+                userInputState={userInputState}
             />
             <RecipesNav
                 clientRecipeData={clientRecipeData}

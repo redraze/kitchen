@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
-import css from 'styles/RecipeRequestTab.module.scss';
-import RecipeDataContainer from "./RecipeDataContainer";
+import css from 'styles/HUD/Recipes/Nav.module.scss';
+import RecipeDataContainer from "./Container";
 import { boolStateType } from "lib/commonPropTypes";
 
 type RecipeRequestTabProps = {

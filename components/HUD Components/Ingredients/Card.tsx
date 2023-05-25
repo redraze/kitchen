@@ -1,6 +1,6 @@
 import { IngredientType } from "lib/commonPropTypes";
 import { useState } from "react";
-import css from 'styles/IngredientCard.module.scss';
+import css from 'styles/HUD/Ingredients/Card.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
@@ -19,12 +19,13 @@ export default function IngredientCard({ ingredient, active, updateData }: Ingre
     const handler = () => {
         setClassName(
             bool ?
-            [css.ingredientCard , css.inactive].join(' ') :
-            [css.ingredientCard , css.active].join(' ')
+                [css.ingredientCard , css.inactive].join(' ') :
+                [css.ingredientCard , css.active].join(' ')
         );
         setBool(!bool);
         updateData(ingredient._id, !bool, ingredient.recipes);
     };
+
     return(
         <div 
             className={className}

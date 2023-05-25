@@ -8,12 +8,7 @@ export type IngredientType = {
   recipes: [string]
 };
 
-export type boolStateType = {
-  bool: boolean
-  setBool: (params: boolean) => void
-};
-
-export type numStateType = {
-  num: number
-  setNum: (params: number) => void
+export type stateType<T> = {
+  value: T
+  setValue: (params: T) => void
 };

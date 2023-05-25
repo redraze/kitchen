@@ -1,11 +1,10 @@
-@use 'foundation/navVariables' as nv;
+@use 'styles/foundation/navVariables' as nv;
 
-.ingredientsNav {
+.nav {
     position: fixed;
     height: 100vh;
-    width: 20vw;
+    width: nv.$navWidth;
     display: flex;
-    flex-direction: column;
     background: nv.$navBackground;
     transition: right nv.$transitionTime;
     will-change: right;
@@ -15,26 +14,22 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        flex: 0 5 100%;
-        transition: flex nv.$transitionTime;
 
         li:hover {
             background-color: black;
 
             span {
-                background-size: 40% 0.1em;
+                background-size: 75% 0.1em;
             }
         }
-
+    
         li {
             display: flex;
             cursor: pointer;
             height: 100%;
-            transition: 
-                background-color nv.$transitionTime/2 ease-out,
-                border-left nv.$transitionTime/2 ease-out;
-            will-change: background-color, border-left;
-        
+            transition: background-color nv.$transitionTime/2 ease-out;
+            will-change: background-color;
+                
             span {
                 font-family: calibri;
                 font-size: 25px;

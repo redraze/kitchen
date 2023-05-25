@@ -1,17 +1,23 @@
-@use 'foundation/navVariables' as nv;
+@use 'styles/foundation/navVariables' as nv;
 
+//  this particular value of minimizes searchbar 
+//  height change when focus changes
+$cardDimensions: 116px;
 .ingredientCard {
     display: flex;
     width: calc(50% - nv.$ingredientCardSpacing * 2);
     padding: nv.$ingredientCardSpacing * 2;
     margin: nv.$ingredientCardSpacing;
     justify-content: center;
-    transition: background nv.$transitionTime/4;
-    will-change: background;
+    transition: background-color nv.$transitionTime/4;
+    will-change: background-color;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 10px;
     font-size: 18px;
     font-family: calibri;
+    border: solid 2px;
+    max-width: $cardDimensions;
+    min-height: $cardDimensions;
 
     span {
         width: min-content;

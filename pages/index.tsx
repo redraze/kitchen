@@ -1,7 +1,7 @@
 import dbConnect from 'config/dbConnect';
 import Ingredient from 'models/Ingredient';
 import { IngredientType } from 'lib/commonPropTypes';
-import IngredientCard from 'components/HUD Components/Ingredients/IngredientCard';
+import IngredientCard from 'components/HUD Components/Ingredients/Card';
 import Scene from "components/Scene";
 import { useEffect, useRef, useState } from 'react';
 

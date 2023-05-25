@@ -1,4 +1,4 @@
-import { boolStateType } from "lib/commonPropTypes";
+import { stateType } from "lib/commonPropTypes";
 import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
 import { Suspense } from "react";
 import { Vector3 } from "three";
@@ -13,11 +13,12 @@ import Universe from "./Universe";
 
 type KitchenProps = {
     ingredients: JSX.Element[]
-    nightState: boolStateType
+    nightState: stateType<boolean>
     focus: number
     pos: THREE.Vector3
     rot: THREE.Euler
     changeSettings: (params: componentSettings) => void
+    userInputState: stateType<string>
 };
 
 export default function Kitchen(
@@ -27,9 +28,15 @@ export default function Kitchen(
         focus, 
         pos, 
         rot, 
-        changeSettings 
+        changeSettings,
+        userInputState
     }: KitchenProps
 ) {
+    const handler = (settings: componentSettings) => {
+        changeSettings(settings);
+        userInputState.setValue('');
+    };
+
     return (
         <Canvas 
             dpr={0.7}
@@ -60,13 +67,13 @@ export default function Kitchen(
                         <Fridge
                             position={fridgeSettings.pos}
                             rotation={fridgeSettings.rot}
-                            onClick={() => changeSettings(fridgeSettings)}
+                            onClick={() => handler(fridgeSettings)}
                             active={focus === fridgeSettings.focus ? true : false}
                         />
                         <Pantry
                             position={pantrySettings.pos}
                             rotation={pantrySettings.rot}
-                            onClick={() => changeSettings(pantrySettings)}
+                            onClick={() => handler(pantrySettings)}
                             active={focus === pantrySettings.focus ? true : false}
                         />
                     </ControlGroup>
