@@ -2,12 +2,12 @@ import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
 import css from 'styles/HUD/Recipes/Nav.module.scss';
 import RecipeDataContainer from "./Container";
-import { boolStateType } from "lib/commonPropTypes";
+import { stateType } from "lib/commonPropTypes";
 
 type RecipeRequestTabProps = {
     clientRecipeData: object
     buttonVisibility: boolean
-    recipeDataVisibility: boolStateType
+    recipeDataVisibility: stateType<boolean>
 };
 
 export default function RecipeRequestTab(
@@ -21,7 +21,7 @@ export default function RecipeRequestTab(
     //  available a function, recipeSearch, that can be called at will
     const [recipeSearch, { error, data, loading }] = useMutation(RECIPE_SEARCH);
     const handler = async () => {
-        recipeDataVisibility.setBool(true)
+        recipeDataVisibility.setValue(true)
         try {
             await recipeSearch({ 
                 variables: { 

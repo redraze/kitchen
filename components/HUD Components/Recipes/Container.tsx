@@ -1,13 +1,13 @@
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
-import { boolStateType } from 'lib/commonPropTypes';
+import { stateType } from 'lib/commonPropTypes';
 
 type RecipeDataContainerProps = {
     clientRecipeData: object
     error?: any
     loading?: any
     data?: []
-    recipeDataVisibility: boolStateType
+    recipeDataVisibility: stateType<boolean>
 };
 
 export default function RecipeDataContainer(
@@ -23,7 +23,7 @@ export default function RecipeDataContainer(
         return (
             <div 
                 style={ 
-                    recipeDataVisibility.bool ?
+                    recipeDataVisibility.value ?
                         { visibility: 'visible' } :
                         { visibility: 'hidden' } 
                     }
@@ -32,7 +32,7 @@ export default function RecipeDataContainer(
                 <div 
                     className={ css.screen }
                     onClick={ () => 
-                        recipeDataVisibility.setBool(!recipeDataVisibility.bool)
+                        recipeDataVisibility.setValue(!recipeDataVisibility.value)
                     }
                 ></div>
                 <div className={ css.wrapper }>
