@@ -1,6 +1,10 @@
-import { stateType } from "lib/commonPropTypes";
-import { useState } from "react";
-import { initSettings, componentSettings } from "lib/componentSettings";
+import { useState, useEffect, useRef } from "react";
+import { 
+    initSettings, 
+    componentSettings, 
+    fridgeSettings, 
+    pantrySettings 
+} from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
@@ -12,36 +16,10 @@ type SceneProps = {
   
 export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
     const [night, setNight] = useState(false);
-    const nightState: stateType<boolean> = {
-        value: night,
-        setValue: setNight
-    };
     const [focus, setFocus] = useState(initSettings.focus);
-    const focusState: stateType<number> = {
-        value: focus,
-        setValue: setFocus
-    };
-    const [
-        recipeDataVisibility, 
-        setRecipeDataVisibility
-    ] = useState(false);
-    const recipeDataVisibilityState: stateType<boolean> = {
-        value: recipeDataVisibility,
-        setValue: setRecipeDataVisibility
-    };
-    const [
-        ingredientsNavOpen, 
-        setIngredientsNavOpen
-    ] = useState(false);
-    const ingredientsNavOpenState: stateType<boolean> = {
-        value: ingredientsNavOpen,
-        setValue: setIngredientsNavOpen
-    };
+    const [recipeDataVisibility, setRecipeDataVisibility] = useState(false);
+    const [ingredientsNavOpen, setIngredientsNavOpen] = useState(false);
     const [userInput, setUserInput] = useState('')
-    const userInputState: stateType<string> = {
-        value: userInput,
-        setValue: setUserInput
-    };
 
     // position and rotation for the control group component
     const [pos, setPos] = useState(initSettings.pos);
@@ -71,6 +49,31 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
         };
     };
 
+    const fridgeMap = useRef<JSX.Element[]>([]);
+    const pantryMap = useRef<JSX.Element[]>([]);
+    useEffect(() => {
+        fridgeMap.current = []
+        pantryMap.current = []
+        ingredients.map((ingredient: JSX.Element) => {
+            ingredient.props.ingredient.info.refrigerated === true ? 
+            fridgeMap.current.push(ingredient) :
+            pantryMap.current.push(ingredient)
+        });
+    }, [ingredients]);
+
+    const [dataList, setDataList] = useState<JSX.Element[]>([]);
+    const clickHandler = (settings: componentSettings) => {
+        setUserInput('');
+        if (focus === settings.focus) {
+            changeSettings(initSettings);
+        } else {
+            changeSettings(settings);
+        };
+
+        if (settings === fridgeSettings) setDataList(fridgeMap.current);
+        if (settings === pantrySettings) setDataList(pantryMap.current);
+    }
+
     return (
         <div 
             className={ css.scene }
@@ -79,22 +82,30 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
         >
             <HUD 
                 ingredients={ingredients}
-                nightState={nightState}
-                focusState={focusState}
+                nightState={{value: night, setValue: setNight}}
+                focusState={{value: focus, setValue: setFocus}}
                 changeSettings={changeSettings}
                 clientRecipeData={clientRecipeData}
-                recipeDataVisibility={recipeDataVisibilityState}
-                ingredientsNavOpen={ingredientsNavOpenState}
-                userInputState={userInputState}
+                recipeDataVisibility={{
+                    value: recipeDataVisibility, 
+                    setValue: setRecipeDataVisibility
+                }}
+                ingredientsNavOpen={{
+                    value: ingredientsNavOpen,
+                    setValue: setIngredientsNavOpen
+                }}
+                userInputState={{value: userInput, setValue: setUserInput}}
+                dataListState={{value: dataList, setValue: setDataList}}
+                clickHandler={clickHandler}
             />
             <Kitchen 
                 ingredients={ingredients}
-                nightState={nightState}
+                nightState={{value: night, setValue: setNight}}
                 focus={focus}
                 pos={pos}
                 rot={rot}
                 changeSettings={changeSettings}
-                userInputState={userInputState}
+                clickHandler={clickHandler}
             />
         </div>
     );

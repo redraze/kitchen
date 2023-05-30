@@ -1,11 +1,8 @@
 import css from "styles/HUD/Ingredients/Tab.module.scss";
 import { 
     initSettings, 
-    fridgeSettings, 
-    pantrySettings, 
     componentSettings 
 } from "lib/componentSettings";
-import { useEffect, useRef, useState } from "react";
 import { stateType } from "lib/commonPropTypes";
 
 type IngredientsTabProps = {
@@ -13,87 +10,57 @@ type IngredientsTabProps = {
     focus: number
     userInputState: stateType<string>
     changeSettings: (params: componentSettings) => void
+    dataListState: stateType<any>
 }
 
 export default function IngredientsTab(
     { 
-        ingredients, 
+        ingredients,
         focus,
         userInputState,
-        changeSettings
+        changeSettings,
+        dataListState
     }: IngredientsTabProps
 ) {
-    const fridgeMap = useRef<JSX.Element[]>([]);
-    const pantryMap = useRef<JSX.Element[]>([]);
-    useEffect(() => {
-        fridgeMap.current = []
-        pantryMap.current = []
-        ingredients.map((ingredient: JSX.Element) => {
-            ingredient.props.ingredient.info.refrigerated === true ? 
-            fridgeMap.current.push(ingredient) :
-            pantryMap.current.push(ingredient)
-        });
-    }, [ingredients]);
-
-    const [dataList, setDataList] = useState<JSX.Element[]>([]);
     const {value: userInput, setValue: setUserInput} = userInputState;
+    const {value: dataList, setValue: setDataList} = dataListState;
+    
     const handler = (e: any) => {
         setUserInput(e.target.value);
         changeSettings(initSettings);
 
-        let temp: JSX.Element[] = [];
-        ingredients.map(item => {
-            if (item.props.ingredient.info.name.includes(e.target.value)) {
-                temp = [...temp, item];
-            };
+        setDataList(() => {
+            return ingredients.map(item => {
+                if (item.props.ingredient.info.name.includes(
+                    e.target.value.toLowerCase()
+                )) {
+                    return item;
+                };
+            });
         });
-        return temp;
+    };
+
+    const concatClassName = (name: string) => {
+        if (focus !== initSettings.focus || userInput) {
+            return [css[name], css[name + '_focus']].join(' ')
+        }
+        return css[name]
     };
 
     return (<>
         <div className={ css.search }>
             <input 
                 placeholder="Search all ingredients..."
-                onChange={e => setDataList(handler(e))}
+                onChange={e => handler(e)}
                 value={userInput}
             />
             <button onClick={() => setUserInput('')}>Clear</button>
         </div>
         <div 
-            className={ 
-                focus !== initSettings.focus || userInput ? 
-                    [css.tab, css.tab_focus].join(' ') : 
-                    css.tab
-            }
-        >
-            <div className={
-                userInput !== '' ? 
-                    [css.data, css.focus].join(' ') :
-                    css.data
-                }
-            >
+            className={concatClassName('tab')}>
+            <div className={concatClassName('data')}>
                 <div className={ css.wrapper }>
                     {dataList}
-                </div>
-            </div>
-            <div className={
-                focus === fridgeSettings.focus ? 
-                    [css.data, css.focus].join(' ') :
-                    css.data
-                }
-            >
-                <div className={ css.wrapper }>
-                    {fridgeMap.current}
-                </div>
-            </div>
-            <div className={
-                focus === pantrySettings.focus ? 
-                    [css.data, css.focus].join(' ') :
-                    css.data
-                }
-            >
-                <div className={ css.wrapper }>
-                    {pantryMap.current}
                 </div>
             </div>
         </div>
