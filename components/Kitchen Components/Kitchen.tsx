@@ -18,7 +18,7 @@ type KitchenProps = {
     pos: THREE.Vector3
     rot: THREE.Euler
     changeSettings: (params: componentSettings) => void
-    userInputState: stateType<string>
+    clickHandler: (params: componentSettings) => void
 };
 
 export default function Kitchen(
@@ -29,14 +29,9 @@ export default function Kitchen(
         pos, 
         rot, 
         changeSettings,
-        userInputState
+        clickHandler
     }: KitchenProps
 ) {
-    const handler = (settings: componentSettings) => {
-        changeSettings(settings);
-        userInputState.setValue('');
-    };
-
     return (
         <Canvas 
             dpr={0.7}
@@ -67,13 +62,13 @@ export default function Kitchen(
                         <Fridge
                             position={fridgeSettings.pos}
                             rotation={fridgeSettings.rot}
-                            onClick={() => handler(fridgeSettings)}
+                            onClick={() => clickHandler(fridgeSettings)}
                             active={focus === fridgeSettings.focus ? true : false}
                         />
                         <Pantry
                             position={pantrySettings.pos}
                             rotation={pantrySettings.rot}
-                            onClick={() => handler(pantrySettings)}
+                            onClick={() => clickHandler(pantrySettings)}
                             active={focus === pantrySettings.focus ? true : false}
                         />
                     </ControlGroup>

@@ -17,6 +17,8 @@ type IngredientsNavProps = {
     forceReRender: (params: void) => void
     ingredientsNavOpen: stateType<boolean>
     userInputState: stateType<string>
+    dataListState: stateType<JSX.Element[]>
+    clickHandler: (params: componentSettings) => void
 };
 
 export default function IngredientsNav(
@@ -26,29 +28,18 @@ export default function IngredientsNav(
         changeSettings,
         forceReRender,
         ingredientsNavOpen,
-        userInputState
+        userInputState,
+        dataListState,
+        clickHandler
     }: IngredientsNavProps
 ) {
-    const toggleSettings = (settings: componentSettings) => {
-        if (focus === settings.focus) {
-            changeSettings(initSettings);
-        } else {
-            changeSettings(settings);
-        };
-    };
-
+    const {value: userInput} = userInputState;
     const {value: open, setValue: setOpen} = ingredientsNavOpen;
     useEffect(() => {
         if (focus !== initSettings.focus) {
             setOpen(true);
         };
     }, [focus, setOpen]);
-
-    const {value: userInput, setValue: setUserInput} = userInputState;
-    const handleClick = (settings: componentSettings) => {
-        toggleSettings(settings);
-        setUserInput('');
-    };
 
     return (<>
         <div 
@@ -68,12 +59,13 @@ export default function IngredientsNav(
                 focus={focus}
                 userInputState={userInputState}
                 changeSettings={changeSettings}
+                dataListState={dataListState}
             />
             <ul>
-                <li onClick={() => handleClick(fridgeSettings)}>
+                <li onClick={() => clickHandler(fridgeSettings)}>
                     <span>Refridgerated Ingredients</span>
                 </li>
-                <li onClick={() => handleClick(pantrySettings)}>
+                <li onClick={() => clickHandler(pantrySettings)}>
                     <span>Unrefrigerated Ingredients</span>
                 </li>
             </ul>

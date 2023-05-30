@@ -22,18 +22,16 @@ type IndexProps = {
 };
 
 export default function Index({ ingredients }: IndexProps) {
-  const clientIngredientData = useRef({})
-  const clientRecipeData = useRef({})
+  const clientIngredientData: any = useRef({});
+  const clientRecipeData: any = useRef({});
 
-  const updateData = (id: string, value: boolean, recipes: string[]) => {
+  const updateData = (id: string, recipes: string[], value: boolean) => {
     if (value) {
-      //  @ts-ignore
       clientIngredientData.current[id as keyof object] = 1;
       recipes.map((item: string) => {
         if (clientRecipeData.current[item as keyof object]) {
           clientRecipeData.current[item as keyof object]++;
         } else {
-          //  @ts-ignore
           clientRecipeData.current[item as keyof object] = 1;
         };
       });
@@ -50,7 +48,7 @@ export default function Index({ ingredients }: IndexProps) {
     localStorage['ingredientData'] = JSON.stringify(clientIngredientData.current);
   };
   
-  const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([])
+  const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([]);
   useEffect(() => {
     let localData = {};
     try {
@@ -61,32 +59,31 @@ export default function Index({ ingredients }: IndexProps) {
     if (localData) clientIngredientData.current = localData;
 
     const parsed = JSON.parse(ingredients);
-    let temp: JSX.Element[] = [];
+    let tempMap: JSX.Element[] = [];
     parsed.map((ingredient: IngredientType, idx: number) => {
       if (localData[ingredient._id as keyof object]) {
         ingredient.recipes.map((item: string) => {
           if (clientRecipeData.current[item as keyof object]) {
             clientRecipeData.current[item as keyof object]++;
           } else {
-            //  @ts-ignore
             clientRecipeData.current[item as keyof object] = 1;
           };
         })
       }
 
-      temp = [
-        ...temp,
+      tempMap = [
+        ...tempMap,
         <IngredientCard
           key={idx}
           ingredient={ingredient}
-          active={ localData[ingredient._id as keyof object] ? true : false }
+          clientIngredientData={clientIngredientData.current}
           updateData={updateData}
         ></IngredientCard>
       ];
     });
-    setIngredientsMap(temp)
+    setIngredientsMap(tempMap);
   }, []);
- 
+
   return (
     <Scene 
       ingredients={ingredientsMap}

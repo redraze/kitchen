@@ -4,31 +4,34 @@ import css from 'styles/HUD/Ingredients/Card.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
-    active: boolean | undefined
-    updateData: (arg1: string, arg2: boolean, args3: string[]) => void
+    clientIngredientData: any
+    updateData: (arg1: string, arg2: string[], args3: boolean) => void
 }
 
-export default function IngredientCard({ ingredient, active, updateData }: IngredientCardProps) {
-    const [bool, setBool] = useState(active ? true : false);
-    const [className, setClassName] = useState(
-        active ? 
-            [css.ingredientCard , css.active].join(' ') :
-            [css.ingredientCard , css.inactive].join(' ')
-    );
-
+export default function IngredientCard(
+    { 
+        ingredient, 
+        clientIngredientData, 
+        updateData,
+    }: IngredientCardProps
+) {
+    const [active, setActive] = useState(clientIngredientData[ingredient._id])
     const handler = () => {
-        setClassName(
-            bool ?
-                [css.ingredientCard , css.inactive].join(' ') :
-                [css.ingredientCard , css.active].join(' ')
+        updateData(
+            ingredient._id, 
+            ingredient.recipes,
+            !clientIngredientData[ingredient._id]
         );
-        setBool(!bool);
-        updateData(ingredient._id, !bool, ingredient.recipes);
+        setActive(clientIngredientData[ingredient._id])
     };
 
     return(
         <div 
-            className={className}
+            className={
+                active ?
+                    [css.ingredientCard , css.active].join(' ') :
+                    [css.ingredientCard , css.inactive].join(' ')
+            }
             onClick={ () => handler() }
         >
             <span>{ingredient.info.name}</span>
