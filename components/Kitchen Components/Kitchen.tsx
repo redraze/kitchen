@@ -1,6 +1,6 @@
 import { stateType } from "lib/commonPropTypes";
 import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "./Controls"
@@ -10,6 +10,8 @@ import Lights from "./Lights";
 import Fridge from "./Fridge";
 import Pantry from "./Pantry";
 import Universe from "./Universe";
+import DragItem from "./DragItem";
+import Box from "./Box";
 
 type KitchenProps = {
     ingredients: JSX.Element[]
@@ -32,6 +34,7 @@ export default function Kitchen(
         clickHandler
     }: KitchenProps
 ) {
+    const [grab, setGrab] = useState(false);
     return (
         <Canvas 
             dpr={0.7}
@@ -45,6 +48,7 @@ export default function Kitchen(
             <Controls 
                 rotation={rot}
                 snap={focus === initSettings.focus ? true : false}
+                enabled={grab}
             >
                 <Suspense>
                     <ControlGroup
@@ -62,15 +66,18 @@ export default function Kitchen(
                         <Fridge
                             position={fridgeSettings.pos}
                             rotation={fridgeSettings.rot}
-                            onClick={() => clickHandler(fridgeSettings)}
+                            onClick={() => {if (grab) clickHandler(fridgeSettings)}}
                             active={focus === fridgeSettings.focus ? true : false}
                         />
                         <Pantry
                             position={pantrySettings.pos}
                             rotation={pantrySettings.rot}
-                            onClick={() => clickHandler(pantrySettings)}
+                            onClick={() => {if (grab) clickHandler(pantrySettings)}}
                             active={focus === pantrySettings.focus ? true : false}
                         />
+                        <DragItem setGrab={setGrab}>
+                            <Box/>
+                        </DragItem>
                     </ControlGroup>
                 </Suspense>
             </Controls>

@@ -7,8 +7,8 @@ extend({ DragControls });
 export default function DragItem(props) {
     const groupRef = useRef();
     const controlsRef = useRef();
-    const [objects, setObjects] = useState();
-    const { camera, gl, scene } = useThree();
+    const [objects, setObjects] = useState([]);
+    const { camera, gl } = useThree();
 
     useEffect(() => {
         setObjects(groupRef.current.children);
@@ -16,17 +16,17 @@ export default function DragItem(props) {
 
     useEffect(() => {
         controlsRef.current.addEventListener("hoveron", () => {
-        scene.orbitControls.enabled = false;
+            props.setGrab(false);
         });
         controlsRef.current.addEventListener("hoveroff", () => {
-        scene.orbitControls.enabled = true;
+            props.setGrab(true);
         });
     }, [objects]);
     
     return (
         <group ref={groupRef}>
-        <dragControls ref={controlsRef} args={[objects, camera, gl.domElement]} />
-        {props.children}
+            <dragControls ref={controlsRef} args={[objects, camera, gl.domElement]} />
+            {props.children}
         </group>
     );
 };
