@@ -1,20 +1,23 @@
 import { stateType } from "lib/commonPropTypes";
 import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useRef, forwardRef } from "react";
 import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
-import Controls from "./Controls"
-import ControlGroup from "./ControlGroup";
-import Level from "./Level";
-import Lights from "./Lights";
-import Fridge from "./Fridge";
-import Pantry from "./Pantry";
-import Universe from "./Universe";
-import DragItem from "./DragItem";
-import Box from "./Box";
+import Controls from "./Wrappers/Controls"
+import ControlGroup from "./Wrappers/ControlGroup";
+import Level from "./Objects/Level";
+import Lights from "./Objects/Lights";
+import Fridge from "./Objects/Fridge";
+import Pantry from "./Objects/Pantry";
+import Universe from "./Objects/Universe";
+import DragItem from "./Wrappers/DragItem";
+import Box from "./Objects/Box";
+import { Physics } from "@react-three/cannon";
+import Plane from "./Objects/Plane";
+import Cursor from "./Objects/Cursor";
+import { Mesh } from 'three'
 
 type KitchenProps = {
-    ingredients: JSX.Element[]
     nightState: stateType<boolean>
     focus: number
     pos: THREE.Vector3
@@ -25,7 +28,6 @@ type KitchenProps = {
 
 export default function Kitchen(
     { 
-        ingredients, 
         nightState, 
         focus, 
         pos, 
@@ -34,7 +36,9 @@ export default function Kitchen(
         clickHandler
     }: KitchenProps
 ) {
-    const [grab, setGrab] = useState(false);
+    const [grab, setGrab] = useState(true);
+    // const [grabTarget, setGrabTarget] = useState([]);
+
     return (
         <Canvas 
             dpr={0.7}
@@ -75,9 +79,17 @@ export default function Kitchen(
                             onClick={() => {if (grab) clickHandler(pantrySettings)}}
                             active={focus === pantrySettings.focus ? true : false}
                         />
-                        <DragItem setGrab={setGrab}>
-                            <Box/>
-                        </DragItem>
+                        <Physics>
+                            <Plane 
+                                position={[0, 0.1, 0]} 
+                                rotation={[-Math.PI / 2, 0, 0]}
+                            />
+                            <Plane 
+                                position={[0, 0.1, 0]} 
+                                rotation={[0, -Math.PI / 2, 0]}
+                            />
+                            <Cursor/>
+                        </Physics>
                     </ControlGroup>
                 </Suspense>
             </Controls>

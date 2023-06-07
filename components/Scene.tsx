@@ -99,7 +99,6 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 clickHandler={clickHandler}
             />
             <Kitchen 
-                ingredients={ingredients}
                 nightState={{value: night, setValue: setNight}}
                 focus={focus}
                 pos={pos}
