@@ -1,6 +1,6 @@
 import { stateType } from "lib/commonPropTypes";
 import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
-import { Suspense, useState, useRef, forwardRef } from "react";
+import { Suspense, useState } from "react";
 import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import Controls from "./Wrappers/Controls"
@@ -10,12 +10,7 @@ import Lights from "./Objects/Lights";
 import Fridge from "./Objects/Fridge";
 import Pantry from "./Objects/Pantry";
 import Universe from "./Objects/Universe";
-import DragItem from "./Wrappers/DragItem";
-import Box from "./Objects/Box";
-import { Physics } from "@react-three/cannon";
-import Plane from "./Objects/Plane";
-import Cursor from "./Objects/Cursor";
-import { Mesh } from 'three'
+import PhysicsGroup from "./Wrappers/PhysicsGroup";
 
 type KitchenProps = {
     nightState: stateType<boolean>
@@ -79,17 +74,7 @@ export default function Kitchen(
                             onClick={() => {if (grab) clickHandler(pantrySettings)}}
                             active={focus === pantrySettings.focus ? true : false}
                         />
-                        <Physics>
-                            <Plane 
-                                position={[0, 0.1, 0]} 
-                                rotation={[-Math.PI / 2, 0, 0]}
-                            />
-                            <Plane 
-                                position={[0, 0.1, 0]} 
-                                rotation={[0, -Math.PI / 2, 0]}
-                            />
-                            <Cursor/>
-                        </Physics>
+                        <PhysicsGroup/>
                     </ControlGroup>
                 </Suspense>
             </Controls>

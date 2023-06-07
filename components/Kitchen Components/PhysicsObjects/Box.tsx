@@ -1,8 +1,8 @@
-import type { BoxProps } from '@react-three/cannon';
-import { useRef } from 'react';
+import { BoxProps } from '@react-three/cannon';
 import { useBox } from '@react-three/cannon';
+import { useRef } from 'react';
 
-export default function Box(props: any) {
+export default function Box(props: BoxProps) {
     const [ref] = useBox(
         () => ({ mass: 1, position: [0, 5, 0], ...props }),
         useRef<THREE.Mesh>(null)
@@ -10,7 +10,7 @@ export default function Box(props: any) {
 
     return (
         <mesh ref={ref}>
-            <boxGeometry />
+            <boxBufferGeometry args={props.args}/>
             <meshBasicMaterial color={'red'} wireframe />
         </mesh>
     )
