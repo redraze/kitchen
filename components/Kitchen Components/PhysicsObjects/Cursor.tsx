@@ -1,59 +1,34 @@
-import { useThree, useFrame } from "@react-three/fiber"
-import * as THREE from 'three';
-import { useBox, useSphere } from '@react-three/cannon';
-import { useRef } from "react";
-import { useDragConstraint } from "lib/customHooks";
+import { useFrame } from "@react-three/fiber"
+import { useSphere } from '@react-three/cannon';
 
-export default function Cursor(props: any) {
-    const { camera, raycaster } = useThree();
+type CursorProps = {
+    fwdRef: any
+    grab: boolean
+    z: number
+};
 
-    const getHitPoint = (clientX:any, clientY:any, mesh:any, camera:any) => {
-        // Get 3D point from the client x y
-        const mouse = new THREE.Vector2()
-        mouse.x = (clientX / window.innerWidth) * 2 - 1
-        mouse.y = -((clientY / window.innerHeight) * 2 - 1)
-
-        // Get the picking ray from the point
-        raycaster.setFromCamera(mouse, camera)
-
-        // Find out if there's a hit
-        const hits = raycaster.intersectObject(mesh)
-
-        // Return the closest hit or undefined
-        return hits.length > 0 ? hits[0].point : undefined
-    } 
-
-    const handler = (event: any) => {
-        // Cast a ray from where the mouse is pointing and
-        // see if we hit something
-        const hitPoint = getHitPoint(event.clientX, event.clientY, ref.current, camera)
-        if (hitPoint) console.log(hitPoint);
-    }
-
-    const [ref] = useBox(
-        () => ({ mass: 1, position: [0, 4.6, 0], args: [1,1,1] }),
-        useRef<THREE.Mesh>(null)
+export default function Cursor({ fwdRef, grab, z }: CursorProps) {
+    const [cursor, api] = useSphere(
+        () => ({ args: [0], type: 'Static' }), 
+        fwdRef
     );
 
-    const [cursor, api] = useSphere(
-        () => ({ type: 'Static' }), 
-        useRef<THREE.Mesh>(null)
-    )
-
     useFrame(({ mouse, viewport: { height, width } }) => {
-      const x = mouse.x * width
-      const y = mouse.y * height
-      api.position.set(x, y, 0)
-    })
+        if (!grab) {
+            // api.position.set(-100, -100, -100);
+            api.sleep
+            return;
+        }
+        const x = mouse.x * width;
+        const y = mouse.y * height;
+        api.position.set(x, y, z);
+    });
 
-    const bind = useDragConstraint({cursor: cursor, child: ref})
-
-    return(<>
-        <mesh ref={cursor}></mesh>
-
-        <mesh ref={ref} onClick={(e) => handler(e)} {...bind}>
-            <boxBufferGeometry args={[1,1,1]}/>
-            <meshBasicMaterial color={'red'} wireframe />
+    return (
+        // @ts-ignore
+        <mesh ref={cursor}>
+            <sphereGeometry args={[0.5, 32, 32]} />
+            <meshBasicMaterial color={'white'} />
         </mesh>
-    </>)
-}
+    );
+};

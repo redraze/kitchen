@@ -31,8 +31,7 @@ export default function Kitchen(
         clickHandler
     }: KitchenProps
 ) {
-    const [grab, setGrab] = useState(true);
-    // const [grabTarget, setGrabTarget] = useState([]);
+    const [grab, setGrab] = useState(false);
 
     return (
         <Canvas 
@@ -47,7 +46,7 @@ export default function Kitchen(
             <Controls 
                 rotation={rot}
                 snap={focus === initSettings.focus ? true : false}
-                enabled={grab}
+                enabled={!grab}
             >
                 <Suspense>
                     <ControlGroup
@@ -65,16 +64,19 @@ export default function Kitchen(
                         <Fridge
                             position={fridgeSettings.pos}
                             rotation={fridgeSettings.rot}
-                            onClick={() => {if (grab) clickHandler(fridgeSettings)}}
+                            onClick={() => {if (!grab) clickHandler(fridgeSettings)}}
                             active={focus === fridgeSettings.focus ? true : false}
                         />
                         <Pantry
                             position={pantrySettings.pos}
                             rotation={pantrySettings.rot}
-                            onClick={() => {if (grab) clickHandler(pantrySettings)}}
+                            onClick={() => {if (!grab) clickHandler(pantrySettings)}}
                             active={focus === pantrySettings.focus ? true : false}
                         />
-                        <PhysicsGroup/>
+                        <PhysicsGroup 
+                            grabState={{ value: grab, setValue: setGrab }} 
+                            rot={rot}
+                        />
                     </ControlGroup>
                 </Suspense>
             </Controls>
