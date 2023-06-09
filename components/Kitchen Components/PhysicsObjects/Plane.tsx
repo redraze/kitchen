@@ -8,5 +8,10 @@ export default function Plane(props: PlaneProps) {
     useRef<THREE.Mesh>(null)
   );
   
-  return <mesh ref={ref}/>;
+  return (
+    <mesh ref={ref}>
+      <boxBufferGeometry args={[16,16, 0.1]} />
+      <meshBasicMaterial color={'black'} wireframe />
+    </mesh>
+  )
 };

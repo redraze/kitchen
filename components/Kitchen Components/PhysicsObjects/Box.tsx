@@ -1,27 +1,28 @@
 import type { RefObject } from 'react';
 import { dragPropsType } from 'lib/commonPropTypes';
-import { useBox } from '@react-three/cannon';
+import { Triplet, PublicApi, useBox } from '@react-three/cannon';
 import { useDragConstraint, usePointerEvents } from "lib/customHooks";
 import { useRef } from 'react';
 
 type BoxProps = {
-    fwdRef: RefObject<THREE.Object3D>
+    fwdRef: RefObject<THREE.Mesh>
     dragProps: dragPropsType
 };
 
 export default function Box({ fwdRef, dragProps }: BoxProps) {
-    const args: any = [1, 1, 1]
-    const [ref]: any = useBox(
-        () => ({ mass: 1, position: [0, 4.6, 0], args: args }),
+    const args: Triplet = [0.5, 0.5, 0.5]
+    const [ref, _api]: [RefObject<THREE.Mesh>, PublicApi] = useBox(
+        () => ({ mass: 1, position: [0, 0.4, 0], args: args }),
         fwdRef
     );
     
     const bind = useDragConstraint({ child: fwdRef, dragProps: dragProps});
     const pointer = usePointerEvents({ 
-        child: fwdRef, 
-        nullTarget: useRef<THREE.Mesh>(null),
+        child: fwdRef,
+        nullTarget: useRef<THREE.Object3D>(null),
         setTarget: dragProps.targetState.setValue,
-        setGrab: dragProps.setGrab
+        setGrab: dragProps.setGrab,
+        drag: dragProps.dragState.value
     })
 
     return (

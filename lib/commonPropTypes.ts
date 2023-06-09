@@ -1,4 +1,5 @@
 import { RefObject } from "react";
+import { Object3D } from "three";
 
 export type IngredientType = {
   _id: string
@@ -17,8 +18,9 @@ export type stateType<T> = {
 
 export type dragPropsType = {
   cursorRef: RefObject<THREE.Mesh>,
-  targetState: stateType<any>,
+  targetState: stateType<RefObject<THREE.Object3D>>,
   setGrab: (params: boolean) => void,
+  dragState: stateType<boolean>
   setZ: (params: number) => void,
   threeObjects: {
     camera: THREE.Camera, 

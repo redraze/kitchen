@@ -76,6 +76,8 @@ export default function Kitchen(
                         <PhysicsGroup 
                             grabState={{ value: grab, setValue: setGrab }} 
                             rot={rot}
+                            pos={pos}
+                            focus={focus}
                         />
                     </ControlGroup>
                 </Suspense>
