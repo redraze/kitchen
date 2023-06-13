@@ -1,99 +1,90 @@
-import type { RefObject } from 'react';
-import  { usePointToPointConstraint } from '@react-three/cannon';
-import { useEffect, useCallback } from 'react';
 import type { ThreeEvent } from '@react-three/fiber';
+import type { clickPropsType, hoverPropsType } from './commonPropTypes';
 import * as THREE from 'three';
-import { dragPropsType } from './commonPropTypes';
+import { RefObject, useCallback } from 'react';
 
 const getHitPoint = (
-  clientX: number, 
-  clientY: number, 
-  mesh: THREE.Object3D | null,
-  threeObjects: {
-    camera: THREE.Camera,
-    raycaster: THREE.Raycaster
-  }
+    clientX: number, 
+    clientY: number, 
+    mesh: THREE.Object3D | null,
+    threeObjects: {
+        camera: THREE.Camera,
+        raycaster: THREE.Raycaster
+    }
 ) => {
-  // Get 3D point from the client x y
-  const mouse = new THREE.Vector2();
-  mouse.x = (clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -((clientY / window.innerHeight) * 2 - 1);
+    // Get 3D point from the client x y
+    const mouse = new THREE.Vector2();
+    mouse.x = (clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -((clientY / window.innerHeight) * 2 - 1);
 
-  // Get the picking ray from the point
-  threeObjects.raycaster.setFromCamera(mouse, threeObjects.camera);
-  
-  try {
-    // Find out if there's a hit
-    const hits = threeObjects.raycaster.intersectObject(mesh!);
+    // Get the picking ray from the point
+    threeObjects.raycaster.setFromCamera(mouse, threeObjects.camera);
 
-    // Return the closest hit or undefined
-    return hits.length > 0 ? hits[0].point : undefined;
-  } catch { return };
+    try {
+        // Find out if there's a hit
+        const hits = threeObjects.raycaster.intersectObject(mesh!);
+
+        // Return the closest hit or undefined
+        return hits.length > 0 ? hits[0].point : undefined;
+    } catch { return };
 };
 
-type useDragConstraintProps = {
-  child: RefObject<THREE.Object3D>
-  dragProps: dragPropsType
+type useClickEventsProps = {
+    clickProps: clickPropsType
+    child: RefObject<THREE.Mesh>
 };
 
-function useDragConstraint({ child, dragProps }: useDragConstraintProps) {
-  //  TODO: grab item where raycasted hitpoint occured
-  // const pivotB = ...
-  const [, , api] = usePointToPointConstraint(
-    dragProps.cursorRef, 
-    child, 
-    { pivotA: [0, 0, 0], pivotB: [0, 0, 0.5] }
-  );
+function useClickEvents({ clickProps, child }: useClickEventsProps) {
+    const onPointerDown = useCallback((e: ThreeEvent<PointerEvent>) => {
+        e.stopPropagation();
+        // @ts-expect-error   Investigate proper types here.
+        e.target.setPointerCapture(e.pointerId);
+        clickProps.constraintApi.enable();
+        clickProps.setDrag(true);
 
-  useEffect(() => void api.disable(), []);
+        const hitPoint = getHitPoint(
+            e.clientX,
+            e.clientY,
+            child.current,
+            clickProps.threeObjects,
+        );
+        if (hitPoint) clickProps.setZ(hitPoint.z);
+    }, [clickProps.constraintApi]);
 
-  const onPointerDown = useCallback((e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    // @ts-expect-error   Investigate proper types here.
-    e.target.setPointerCapture(e.pointerId);
-    api.enable();
-    dragProps.dragState.setValue(true);
+    const onPointerUp = useCallback(() => {
+        clickProps.constraintApi.disable();
+        clickProps.setDrag(false);
+        clickProps.setGrab(false);
+    }, [clickProps.constraintApi]);
 
-    const hitPoint = getHitPoint(
-      e.clientX, 
-      e.clientY, 
-      dragProps.targetState.value.current,
-      dragProps.threeObjects, 
-    );
-    if (hitPoint) dragProps.setZ(hitPoint.z);
-  }, [dragProps.targetState.value]);
-
-  const onPointerUp = useCallback(() => {
-    api.disable();
-    dragProps.dragState.setValue(false);
-    dragProps.setGrab(false);
-  }, []);
-
-  return { onPointerDown, onPointerUp };
+    return { onPointerDown, onPointerUp };
 };
 
-type usePointerEventsProps = {
-  child: RefObject<THREE.Object3D>,
-  nullTarget: RefObject<THREE.Object3D>
-  setTarget: (params: RefObject<THREE.Object3D>) => void,
-  setGrab: (params: boolean) => void,
-  drag: boolean
+type useHoverEventsProps = {
+    hoverProps: hoverPropsType
+    child: RefObject<THREE.Mesh>
 };
 
-function usePointerEvents({ child, nullTarget, setTarget, setGrab, drag }: usePointerEventsProps) {
-  const onPointerEnter = useCallback((e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    setTarget(child);
-    setGrab(true);
-  }, []);
-  const onPointerOut = useCallback((e: ThreeEvent<PointerEvent>) => {
-    if (!drag) {
-      e.stopPropagation();
-      setTarget(nullTarget);
-      setGrab(false);
+function useHoverEvents({ hoverProps, child }: useHoverEventsProps) {
+    const onPointerEnter = (e: ThreeEvent<PointerEvent>) => {
+        e.stopPropagation();
+        if (!hoverProps.drag) {
+            hoverProps.setTarget(child);
+            hoverProps.setGrab(true);
+            return;
+        };
     };
-  }, [drag])
-  return { onPointerEnter, onPointerOut };
+
+    const onPointerOut = (e: ThreeEvent<PointerEvent>) => {
+        e.stopPropagation();
+        if (!hoverProps.drag) {
+            hoverProps.setTarget(hoverProps.nullTarget);
+            hoverProps.setGrab(false);
+            return;
+        };
+    };
+
+    return { onPointerEnter, onPointerOut };
 };
 
-export { useDragConstraint, usePointerEvents };
+export { useClickEvents, useHoverEvents };

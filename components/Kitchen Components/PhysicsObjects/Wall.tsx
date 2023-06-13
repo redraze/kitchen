@@ -10,7 +10,7 @@ export default function Wall(props: BoxProps) {
 
     return (
         <mesh ref={ref}>
-            <boxBufferGeometry args={props.args} />
+            <boxGeometry args={props.args} />
             <meshStandardMaterial transparent opacity={1} color={'black'}/>
         </mesh>
     );

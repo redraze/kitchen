@@ -1,35 +1,32 @@
 import { RefObject } from "react";
-import { PublicApi, Triplet, useSphere } from '@react-three/cannon';
-import { useFrame } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber";
+import * as THREE from 'three';
+import { PublicApi } from "@react-three/cannon";
 
 type CursorProps = {
-    fwdRef: RefObject<THREE.Mesh>
-    grab: boolean
+    api: {
+        cursor: RefObject<THREE.Mesh>,
+        cursorApi: PublicApi
+    }
     z: number
+    grab: boolean
 };
 
-export default function Cursor({ fwdRef, grab, z }: CursorProps) {
-    const initCursorPosition: Triplet = [0, 100, 0];
-
-    const [cursor, api]: [RefObject<THREE.Mesh>, PublicApi] = useSphere(
-        () => ({ args: [0], position: initCursorPosition, type: 'Static' }), 
-        fwdRef
-    );
-
+export default function Cursor({ api, z, grab }: CursorProps) {
     useFrame(({ mouse, viewport: { height, width } }) => {
         if (!grab) {
-            api.position.set(initCursorPosition[0], initCursorPosition[1], initCursorPosition[2]);
+            api.cursorApi.position.set(0, 100, 0);
             return;
         }
         const x = mouse.x * width;
         const y = mouse.y * height;
-        api.position.set(x, y, z);
+        api.cursorApi.position.set(x, y, z);
     });
 
     return (
-        <mesh ref={cursor}>
-            {/* <sphereGeometry args={[0.5, 32, 32]} />
-            <meshBasicMaterial color={'white'} /> */}
+        <mesh ref={api.cursor}>
+            <sphereGeometry args={[0.1]} />
+            <meshBasicMaterial color={'white'} />
         </mesh>
     );
 };

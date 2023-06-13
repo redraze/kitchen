@@ -10,7 +10,7 @@ export default function Plane(props: PlaneProps) {
   
   return (
     <mesh ref={ref}>
-      <boxBufferGeometry args={[16,16, 0.1]} />
+      <boxGeometry args={[16,16, 0.1]} />
       <meshBasicMaterial color={'black'} wireframe />
     </mesh>
   )

@@ -1,5 +1,9 @@
-import { RefObject } from "react";
-import { Object3D } from "three";
+import type { RefObject } from "react";
+
+export type stateType<T> = {
+  value: T
+  setValue: (params: T) => void
+};
 
 export type IngredientType = {
   _id: string
@@ -11,19 +15,28 @@ export type IngredientType = {
   recipes: [string]
 };
 
-export type stateType<T> = {
-  value: T
-  setValue: (params: T) => void
+export type clickPropsType = {
+  constraintApi: {
+      disable: () => void;
+      enable: () => void;
+  }
+  setDrag: (params: boolean) => void
+  threeObjects: { 
+      camera: THREE.Camera, 
+      raycaster: THREE.Raycaster 
+  }
+  setZ: (params: number) => void
+  setGrab: (params: boolean) => void
+};
+
+export type hoverPropsType = {
+  setTarget: (params: RefObject<THREE.Object3D>) => void
+  setGrab: (params: boolean) => void
+  drag: boolean
+  nullTarget: RefObject<THREE.Object3D>
 };
 
 export type dragPropsType = {
-  cursorRef: RefObject<THREE.Mesh>,
-  targetState: stateType<RefObject<THREE.Object3D>>,
-  setGrab: (params: boolean) => void,
-  dragState: stateType<boolean>
-  setZ: (params: number) => void,
-  threeObjects: {
-    camera: THREE.Camera, 
-    raycaster: THREE.Raycaster
-  }
-}
+  click: clickPropsType
+  hover: hoverPropsType
+};

@@ -11,6 +11,7 @@ import Fridge from "./Objects/Fridge";
 import Pantry from "./Objects/Pantry";
 import Universe from "./Objects/Universe";
 import PhysicsGroup from "./Wrappers/PhysicsGroup";
+import { Physics } from "@react-three/cannon";
 
 type KitchenProps = {
     nightState: stateType<boolean>
@@ -73,12 +74,14 @@ export default function Kitchen(
                             onClick={() => {if (!grab) clickHandler(pantrySettings)}}
                             active={focus === pantrySettings.focus ? true : false}
                         />
-                        <PhysicsGroup 
-                            grabState={{ value: grab, setValue: setGrab }} 
-                            rot={rot}
-                            pos={pos}
-                            focus={focus}
-                        />
+                        <Physics>
+                            <PhysicsGroup 
+                                grabState={{ value: grab, setValue: setGrab }} 
+                                rot={rot}
+                                pos={pos}
+                                focus={focus}
+                            />
+                        </Physics>
                     </ControlGroup>
                 </Suspense>
             </Controls>
