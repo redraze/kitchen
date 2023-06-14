@@ -1,4 +1,4 @@
-import { IngredientType } from "lib/commonPropTypes";
+import type { IngredientType } from "lib/commonPropTypes";
 import { useState } from "react";
 import css from 'styles/HUD/Ingredients/Card.module.scss';
 

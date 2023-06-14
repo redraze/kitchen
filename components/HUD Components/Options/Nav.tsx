@@ -1,4 +1,4 @@
-import { stateType } from "lib/commonPropTypes";
+import type { stateType } from "lib/commonPropTypes";
 import { useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";

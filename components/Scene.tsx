@@ -1,13 +1,9 @@
+import type { componentSettings } from "lib/componentSettings";
 import { useState, useEffect, useRef } from "react";
-import { 
-    initSettings, 
-    componentSettings, 
-    fridgeSettings, 
-    pantrySettings 
-} from "lib/componentSettings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
+import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSettings";
 
 type SceneProps = {
     ingredients: JSX.Element[]

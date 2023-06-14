@@ -1,8 +1,9 @@
-import { stateType } from "lib/commonPropTypes";
-import { initSettings, fridgeSettings, pantrySettings, componentSettings } from "lib/componentSettings";
+import type { stateType } from "lib/commonPropTypes";
+import type { componentSettings } from "lib/componentSettings";
 import { Suspense, useState } from "react";
 import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
+import { Physics } from "@react-three/cannon";
 import Controls from "./Wrappers/Controls"
 import ControlGroup from "./Wrappers/ControlGroup";
 import Level from "./Objects/Level";
@@ -11,7 +12,7 @@ import Fridge from "./Objects/Fridge";
 import Pantry from "./Objects/Pantry";
 import Universe from "./Objects/Universe";
 import PhysicsGroup from "./Wrappers/PhysicsGroup";
-import { Physics } from "@react-three/cannon";
+import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSettings";
 
 type KitchenProps = {
     nightState: stateType<boolean>

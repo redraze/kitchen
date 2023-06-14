@@ -1,14 +1,10 @@
+import type { stateType } from "lib/commonPropTypes";
+import type { componentSettings } from "lib/componentSettings";
 import { useEffect } from "react";
 import css from "styles/HUD/Ingredients/Nav.module.scss";
 import Button from "../Button";
-import {
-    componentSettings,
-    fridgeSettings,
-    initSettings,
-    pantrySettings
-} from "lib/componentSettings";
 import IngredientsTab from "./Tab";
-import { stateType } from "lib/commonPropTypes";
+import { fridgeSettings, initSettings, pantrySettings } from "lib/componentSettings";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]

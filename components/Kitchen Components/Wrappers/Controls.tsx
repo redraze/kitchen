@@ -1,5 +1,5 @@
+import type { ReactNode } from 'react';
 import { PresentationControls } from '@react-three/drei';
-import { ReactNode } from 'react';
 
 export type ControlsProps = {
     snap: boolean

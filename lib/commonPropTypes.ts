@@ -15,11 +15,13 @@ export type IngredientType = {
   recipes: [string]
 };
 
+export type constraintApiMethods = {
+  disable: () => void;
+  enable: () => void;
+};
+
 export type clickPropsType = {
-  constraintApi: {
-      disable: () => void;
-      enable: () => void;
-  }
+  constraintApi?: constraintApiMethods
   setDrag: (params: boolean) => void
   threeObjects: { 
       camera: THREE.Camera, 

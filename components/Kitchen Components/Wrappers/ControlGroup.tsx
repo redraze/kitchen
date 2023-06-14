@@ -1,5 +1,6 @@
+import type { ReactNode } from 'react';
 import { Vector3 } from "three";
-import { ReactNode, useRef } from "react"
+import { useRef } from "react"
 import { useFrame } from "@react-three/fiber";
 import { initSettings } from "lib/componentSettings";
 

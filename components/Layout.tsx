@@ -1,5 +1,5 @@
+import type { ReactNode } from "react";
 import Meta from "./Meta";
-import { ReactNode } from "react";
 
 export type LayoutProps = {
     children?: ReactNode

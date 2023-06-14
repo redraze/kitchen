@@ -1,9 +1,7 @@
+import type { stateType } from "lib/commonPropTypes";
+import type { componentSettings } from "lib/componentSettings";
 import css from "styles/HUD/Ingredients/Tab.module.scss";
-import { 
-    initSettings, 
-    componentSettings 
-} from "lib/componentSettings";
-import { stateType } from "lib/commonPropTypes";
+import { initSettings } from "lib/componentSettings";
 
 type IngredientsTabProps = {
     ingredients: JSX.Element[]

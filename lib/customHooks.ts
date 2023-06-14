@@ -1,7 +1,8 @@
 import type { ThreeEvent } from '@react-three/fiber';
 import type { clickPropsType, hoverPropsType } from './commonPropTypes';
+import type { RefObject } from 'react';
+import { useCallback } from 'react';
 import * as THREE from 'three';
-import { RefObject, useCallback } from 'react';
 
 const getHitPoint = (
     clientX: number, 
@@ -39,7 +40,7 @@ function useClickEvents({ clickProps, child }: useClickEventsProps) {
         e.stopPropagation();
         // @ts-expect-error   Investigate proper types here.
         e.target.setPointerCapture(e.pointerId);
-        clickProps.constraintApi.enable();
+        clickProps.constraintApi?.enable();
         clickProps.setDrag(true);
 
         const hitPoint = getHitPoint(
@@ -52,7 +53,7 @@ function useClickEvents({ clickProps, child }: useClickEventsProps) {
     }, [clickProps.constraintApi]);
 
     const onPointerUp = useCallback(() => {
-        clickProps.constraintApi.disable();
+        clickProps.constraintApi?.disable();
         clickProps.setDrag(false);
         clickProps.setGrab(false);
     }, [clickProps.constraintApi]);

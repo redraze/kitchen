@@ -1,4 +1,4 @@
-import { stateType } from "lib/commonPropTypes";
+import type { stateType } from "lib/commonPropTypes";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Vector3 } from "three";

@@ -1,6 +1,6 @@
+import type { stateType } from 'lib/commonPropTypes';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
-import { stateType } from 'lib/commonPropTypes';
 
 type RecipeDataContainerProps = {
     clientRecipeData: object
