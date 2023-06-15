@@ -4,14 +4,14 @@ import { useRef } from 'react';
 
 export default function Wall(props: BoxProps) {
     const [ref] = useBox(
-        () => ({ type: 'Static', ...props }), 
+        () => ({ ...props }), 
         useRef<THREE.Mesh>(null)
     );
 
     return (
         <mesh ref={ref}>
             <boxGeometry args={props.args} />
-            <meshStandardMaterial transparent opacity={1} color={'black'}/>
+            <meshStandardMaterial transparent opacity={0.3} color={'black'}/>
         </mesh>
     );
 };

@@ -1,10 +1,10 @@
 import type { constraintApiMethods, stateType } from "lib/commonPropTypes";
 import { useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
-import Cursor from "../PhysicsObjects/Cursor";
-import Plane from "../PhysicsObjects/Plane";
-import Box from "../PhysicsObjects/Box";
-import { fridgeSettings, initSettings, pantrySettings } from "lib/componentSettings";
+import CursorGroup from "../PhysicsObjects/CursorGroup";
+import StageGroup from "../PhysicsObjects/StageGroup";
+import PantryGroup from "../PhysicsObjects/PantryGroup";
+import FridgeGroup from "../PhysicsObjects/FridgeGroup";
 
 type PhysicsGroupProps = {
     grabState: stateType<boolean>
@@ -20,7 +20,7 @@ export default function PhysicsGroup({ grabState, rot, pos, focus }: PhysicsGrou
     const [z, setZ] = useState(0);
     const [target, setTarget] = useState(useRef<THREE.Object3D>(null));
 
-    //  All the props needed to enable dragging of 3D physics object
+    //  All the props needed to enable dragging of 3D physics objects
     const dragProps = {
         click: {
             constraintApi: constraintApi,
@@ -38,45 +38,20 @@ export default function PhysicsGroup({ grabState, rot, pos, focus }: PhysicsGrou
     };
 
     return(<>
-        {/* Cursor group */}
-        <group 
-            rotation={[0, rot.y, 0]} 
-            position={[
-                focus !== initSettings.focus ? pos.x : 0, 
-                0, 
-                focus !== initSettings.focus ? pos.z : 0
-            ]}
-        >
-            <Cursor
-                setConstraintApi={setConstraintApi}
-                target={target}
-                z={z}
-                grab={grabState.value}
-            />
-            <Plane position={[0, 0.1, 0]} rotation={[-Math.PI / 2, 0, -Math.PI / 4]} />
-        </group>
-        
-        {/* Stage group */}
-        <group rotation={initSettings.rot} >
-            <Box dragProps={dragProps} position={[0, 0.4, 0]} />
-        </group>
-
-        {/* Pantry group */}
-        <group 
-            rotation={pantrySettings.rot} 
-            position={[pantrySettings.pos.x, 0, pantrySettings.pos.z]}
-        >
-            {/* TODO:   <PantryBoundaries /> */}
-            {/* <Box dragProps={dragProps} position={[0, 0.4, 0]} /> */}
-        </group>
-        
-        {/* Fridge group */}
-        <group 
-            rotation={fridgeSettings.rot} 
-            position={[fridgeSettings.pos.x, 0, fridgeSettings.pos.z]}
-        >
-            {/* TODO:   <FridgeBoundaries /> */}
-            {/* <Box dragProps={dragProps} position={[0, 0.4, 0]} /> */}
-        </group>
+        <CursorGroup
+            constraintApiState={{ 
+                value: constraintApi, 
+                setValue: setConstraintApi 
+            }}
+            target={target}
+            z={z}
+            grab={grabState.value}
+            focus={focus}
+            rot={rot} 
+            pos={pos} 
+        />
+        <StageGroup dragProps={dragProps} />
+        <PantryGroup dragProps={dragProps} />
+        <FridgeGroup dragProps={dragProps} />
     </>);
 };

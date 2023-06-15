@@ -16,7 +16,7 @@ export default function Controls({ snap, rotation, enabled, children }: Controls
             enabled={enabled}
             config={{ mass: 1, tension: 30, friction: 10 }}
             zoom={0.8} 
-            polar={[-Math.PI/12, Math.PI / 4]} 
+            polar={[-Math.PI / 12, Math.PI / 4]} 
             azimuth={[-Math.PI / 4, Math.PI / 4]}
             rotation={[
                 rotation['x'] * -1, 
