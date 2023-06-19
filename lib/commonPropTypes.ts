@@ -23,11 +23,6 @@ export type constraintApiMethods = {
 export type clickPropsType = {
   constraintApi?: constraintApiMethods
   setDrag: (params: boolean) => void
-  threeObjects: { 
-      camera: THREE.Camera, 
-      raycaster: THREE.Raycaster 
-  }
-  setZ: (params: number) => void
   setGrab: (params: boolean) => void
 };
 

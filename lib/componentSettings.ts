@@ -1,16 +1,19 @@
+import type { Triplet } from "@react-three/cannon";
 import { Vector3, Euler } from "three";
 
 export type componentSettings = {
     focus: number
     pos: Vector3
     rot: Euler
+    camRot?: Triplet
 };
 
 export const initSettings: componentSettings & {fov: number} = {
     focus: 0,
     pos: new Vector3(0,7,13),
     rot: new Euler(0,Math.PI/4,0),
-    fov: 50
+    fov: 50,
+    camRot: [-Math.PI/10,0,0],
 };
 
 export const fridgeSettings: componentSettings = {

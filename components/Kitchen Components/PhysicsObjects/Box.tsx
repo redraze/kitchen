@@ -18,7 +18,7 @@ export default function Box({ dragProps, position }: BoxProps) {
         useRef<THREE.Mesh>(null)
     );
 
-    const click = useClickEvents({ clickProps: dragProps.click, child: ref});
+    const click = useClickEvents({ clickProps: dragProps.click });
     const hover = useHoverEvents({ hoverProps: dragProps.hover, child: ref});
 
     return (

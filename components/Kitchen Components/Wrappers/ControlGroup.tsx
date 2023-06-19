@@ -2,15 +2,19 @@ import type { ReactNode } from 'react';
 import { Vector3 } from "three";
 import { useRef } from "react"
 import { useFrame } from "@react-three/fiber";
+import { PresentationControls } from '@react-three/drei';
 import { initSettings } from "lib/componentSettings";
 
 export type GroupProps = {
     pos: Vector3
     focus: number
+    snap?: boolean
+    rotation: THREE.Euler
+    enabled: boolean
     children?: ReactNode
 };
 
-export default function Group({ pos, focus, children }: GroupProps) {
+export default function Group({ pos, focus, snap, rotation, enabled, children }: GroupProps) {
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const ref = useRef<THREE.Group>(null!)
 
@@ -38,11 +42,26 @@ export default function Group({ pos, focus, children }: GroupProps) {
     });
 
     return (
-        <group
-            ref={ref}
-            dispose={null} 
+        <PresentationControls
+            global
+            snap
+            enabled={enabled}
+            config={{ mass: 1, tension: 30, friction: 10 }}
+            zoom={0.8}
+            polar={[-Math.PI / 12, Math.PI / 4]}
+            azimuth={[-Math.PI / 4, Math.PI / 4]}
+            rotation={[
+                rotation['x'] * -1,
+                rotation['y'] * -1,
+                rotation['z'] * -1
+            ]}
         >
-            {children}
-        </group>
+            <group
+                ref={ref}
+                dispose={null}
+            >
+                {children}
+            </group>
+        </PresentationControls>
     );
 };

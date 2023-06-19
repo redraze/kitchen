@@ -1,5 +1,5 @@
+import type { GLTF } from 'three-stdlib';
 import { LoopOnce, MeshPhysicalMaterial } from "three";
-import { GLTF } from 'three-stdlib';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 
@@ -29,8 +29,8 @@ type GLTFResult = GLTF & {
 };
 
 type FridgeProps = {
-  position: THREE.Vector3
-  rotation: THREE.Euler
+  position?: THREE.Vector3
+  rotation?: THREE.Euler
   onClick?: (param: any) => void
   active: boolean
 };

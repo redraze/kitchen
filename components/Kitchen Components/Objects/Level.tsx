@@ -1,6 +1,6 @@
-import { useRef, useEffect, useState } from 'react'
-import { useGLTF, useAnimations } from '@react-three/drei'
-import { GLTF } from 'three-stdlib'
+import type { GLTF } from 'three-stdlib';
+import { useRef, useEffect, useState } from 'react';
+import { useGLTF, useAnimations } from '@react-three/drei';
 import { MeshPhysicalMaterial, LoopOnce } from 'three';
 
 type GLTFResult = GLTF & {

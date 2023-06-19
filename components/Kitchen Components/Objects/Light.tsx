@@ -1,5 +1,5 @@
+import type { GLTF } from 'three-stdlib';
 import { useGLTF } from '@react-three/drei';
-import { GLTF } from 'three-stdlib';
 
 type GLTFResult = GLTF & {
   nodes: {
