@@ -28,7 +28,7 @@ export default function Universe({ nightState }: UniverseProps) {
     useFrame(() => {
         bg.current.lerp(
             // @ts-ignore
-            night ?  {r:0,g:0,b:0} : {r:.255,g:.678,b:.945},
+            night ? {r:0,g:0,b:0} : {r:.255,g:.678,b:.945},
             night ? 0.04 : 0.008
         );
         amb.current.intensity = lerp(

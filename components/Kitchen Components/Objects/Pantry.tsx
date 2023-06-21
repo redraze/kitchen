@@ -19,7 +19,7 @@ type GLTFResult = GLTF & {
 type PantryProps = {
   position?: THREE.Vector3
   rotation?: THREE.Euler
-  onClick?: (param: any) => void
+  onClick?: () => void
   active: boolean
 };
 

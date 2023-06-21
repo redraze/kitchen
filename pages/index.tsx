@@ -1,9 +1,9 @@
+import type { IngredientType, clientDataType } from 'lib/commonPropTypes';
+import { useEffect, useRef, useState } from 'react';
 import dbConnect from 'config/dbConnect';
 import Ingredient from 'models/Ingredient';
-import { IngredientType } from 'lib/commonPropTypes';
 import IngredientCard from 'components/HUD Components/Ingredients/Card';
 import Scene from "components/Scene";
-import { useEffect, useRef, useState } from 'react';
 
 export async function getStaticProps() {
   await dbConnect();
@@ -22,8 +22,8 @@ type IndexProps = {
 };
 
 export default function Index({ ingredients }: IndexProps) {
-  const clientIngredientData: any = useRef({});
-  const clientRecipeData: any = useRef({});
+  const clientIngredientData = useRef<clientDataType>({});
+  const clientRecipeData = useRef<clientDataType>({});
 
   const updateData = (id: string, recipes: string[], value: boolean) => {
     if (value) {
@@ -50,7 +50,7 @@ export default function Index({ ingredients }: IndexProps) {
   
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([]);
   useEffect(() => {
-    let localData = {};
+    let localData: clientDataType = {};
     try {
       localData = JSON.parse(localStorage['ingredientData']);
     } catch {

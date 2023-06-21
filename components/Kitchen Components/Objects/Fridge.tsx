@@ -31,7 +31,7 @@ type GLTFResult = GLTF & {
 type FridgeProps = {
   position?: THREE.Vector3
   rotation?: THREE.Euler
-  onClick?: (param: any) => void
+  onClick?: () => void
   active: boolean
 };
 

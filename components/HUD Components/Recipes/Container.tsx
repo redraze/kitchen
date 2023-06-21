@@ -1,12 +1,14 @@
+import type { ApolloError } from '@apollo/client';
+import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
 import type { stateType } from 'lib/commonPropTypes';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
 
 type RecipeDataContainerProps = {
     clientRecipeData: object
-    error?: any
-    loading?: any
-    data?: []
+    error?: ApolloError
+    loading?: boolean
+    data?: RecipeDataTypeOutput[] | undefined
     recipeDataVisibility: stateType<boolean>
 };
 
@@ -37,7 +39,7 @@ export default function RecipeDataContainer(
                 ></div>
                 <div className={ css.wrapper }>
                     <div className={ css.container }>{
-                        data.map((item: any, idx: number) => {
+                        data.map((item: RecipeDataTypeOutput, idx: number) => {
                             return (
                                 <RecipeDataCard
                                     key={idx}

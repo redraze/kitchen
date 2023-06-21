@@ -1,4 +1,6 @@
+import type { clientDataType } from "lib/commonPropTypes";
 import type { componentSettings } from "lib/componentSettings";
+import type { KeyboardEvent } from "react";
 import { useState, useEffect, useRef } from "react";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
@@ -7,7 +9,7 @@ import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSetti
 
 type SceneProps = {
     ingredients: JSX.Element[]
-    clientRecipeData: object
+    clientRecipeData: clientDataType
 };
   
 export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
@@ -26,8 +28,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
         setRot(settings.rot)
     };
 
-    // ts any usage here        -----------------------------
-    const handleKeyPress = (e: any) => {
+    const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Escape') {
             if (recipeDataVisibility) {
                 setRecipeDataVisibility(false);
@@ -57,7 +58,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
         });
     }, [ingredients]);
 
-    const [dataList, setDataList] = useState<JSX.Element[]>([]);
+    const [dataList, setDataList] = useState<(JSX.Element | undefined)[]>([]);
     const clickHandler = (settings: componentSettings) => {
         setUserInput('');
         if (focus === settings.focus) {

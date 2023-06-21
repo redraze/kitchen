@@ -15,7 +15,7 @@ type HUDProps = {
     recipeDataVisibility: stateType<boolean>
     ingredientsNavOpen: stateType<boolean>
     userInputState: stateType<string>
-    dataListState: stateType<JSX.Element[]>
+    dataListState: stateType<(JSX.Element | undefined)[]>
     clickHandler: (params: componentSettings) => void
 };
 

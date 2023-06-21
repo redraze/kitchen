@@ -1,10 +1,10 @@
-import type { IngredientType } from "lib/commonPropTypes";
+import type { IngredientType, clientDataType } from "lib/commonPropTypes";
 import { useState } from "react";
 import css from 'styles/HUD/Ingredients/Card.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
-    clientIngredientData: any
+    clientIngredientData: clientDataType
     updateData: (arg1: string, arg2: string[], args3: boolean) => void
 }
 

@@ -13,7 +13,7 @@ type IngredientsNavProps = {
     forceReRender: (params: void) => void
     ingredientsNavOpen: stateType<boolean>
     userInputState: stateType<string>
-    dataListState: stateType<JSX.Element[]>
+    dataListState: stateType<(JSX.Element | undefined)[]>
     clickHandler: (params: componentSettings) => void
 };
 

@@ -37,3 +37,7 @@ export type dragPropsType = {
   click: clickPropsType
   hover: hoverPropsType
 };
+
+export type clientDataType = { 
+  [key: string] : number
+};

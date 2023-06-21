@@ -1,6 +1,6 @@
-import type { constraintApiMethods, stateType } from "lib/commonPropTypes";
-import { useState, useRef, RefObject } from "react";
-import { useThree } from "@react-three/fiber";
+import type { stateType, constraintApiMethods } from "lib/commonPropTypes";
+import type { RefObject } from "react";
+import { useState, useRef } from "react";
 import Box from "../PhysicsObjects/Box";
 
 type DragGroupProps = {

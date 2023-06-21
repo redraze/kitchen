@@ -1,9 +1,9 @@
-import type { RefObject } from 'react';
 import type { dragPropsType } from 'lib/commonPropTypes';
 import type { Triplet, PublicApi } from '@react-three/cannon';
+import type { RefObject } from 'react';
 import { useBox } from '@react-three/cannon';
-import { useClickEvents, useHoverEvents } from 'lib/customHooks';
 import { useRef } from 'react';
+import { useClickEvents, useHoverEvents } from 'lib/customHooks';
 
 type BoxProps = {
     dragProps: dragPropsType

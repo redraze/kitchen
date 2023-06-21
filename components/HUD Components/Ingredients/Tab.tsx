@@ -8,7 +8,7 @@ type IngredientsTabProps = {
     focus: number
     userInputState: stateType<string>
     changeSettings: (params: componentSettings) => void
-    dataListState: stateType<any>
+    dataListState: stateType<(JSX.Element | undefined)[]>
 }
 
 export default function IngredientsTab(
@@ -23,19 +23,19 @@ export default function IngredientsTab(
     const {value: userInput, setValue: setUserInput} = userInputState;
     const {value: dataList, setValue: setDataList} = dataListState;
     
-    const handler = (e: any) => {
+    const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserInput(e.target.value);
         changeSettings(initSettings);
 
-        setDataList(() => {
-            return ingredients.map(item => {
+        setDataList(
+            ingredients.map((item: JSX.Element) => {
                 if (item.props.ingredient.info.name.includes(
                     e.target.value.toLowerCase()
                 )) {
                     return item;
                 };
-            });
-        });
+            })
+        );
     };
 
     const concatClassName = (name: string) => {

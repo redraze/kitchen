@@ -1,13 +1,14 @@
+import type { RecipeDataTypeOutput } from "lib/typeDefsExports";
 import Link from "next/link"
 import css from 'styles/HUD/Recipes/Card.module.scss';
 
 type RecipeDataCardProps = {
-    recipe: any
+    recipe: RecipeDataTypeOutput
     availableIngredients: number
 }
 
 export default function RecipeDataCard({ recipe, availableIngredients }: RecipeDataCardProps) {
-    const cookabilityScore = availableIngredients/recipe.info.totalIngredients*100
+    const cookabilityScore = availableIngredients / recipe.info.totalIngredients * 100;
     return (<>
         <Link
             className={ css.link } 
