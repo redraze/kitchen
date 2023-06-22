@@ -17,11 +17,7 @@ export async function getStaticProps() {
   };
 }; 
 
-type IndexProps = {
-  ingredients: string
-};
-
-export default function Index({ ingredients }: IndexProps) {
+export default function Index({ ingredients }: { ingredients: string }) {
   const clientIngredientData = useRef<clientDataType>({});
   const clientRecipeData = useRef<clientDataType>({});
 

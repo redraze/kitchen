@@ -1,13 +1,9 @@
 import type { ReactNode } from "react";
 import Meta from "./Meta";
 
-export type LayoutProps = {
-    children?: ReactNode
-}
-
-export default function Layout({ children }: LayoutProps) {
+export default function Layout(props: { children?: ReactNode }) {
     return(<>
         <Meta />
-        <div>{ children }</div>
+        <div>{ props.children }</div>
     </>);
 };

@@ -17,7 +17,7 @@ export type GroupProps = {
 export default function Group({ pos, focus, snap, rotation, enabled, children }: GroupProps) {
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const ref = useRef<THREE.Group>(null!)
-    const { camera } = useThree();
+    const { camera }: { camera: THREE.PerspectiveCamera } = useThree();
 
     useFrame(() => {
         // Center focused component of group on camera focal point
@@ -32,9 +32,7 @@ export default function Group({ pos, focus, snap, rotation, enabled, children }:
                 initSettings.pos :
                 new Vector3(0,2,7),
             0.04);
-        // @ts-ignore
         camera.fov = lerp(
-            // @ts-ignore
             camera.fov,
             focus === initSettings.focus ? initSettings.fov : 45,
             0.05

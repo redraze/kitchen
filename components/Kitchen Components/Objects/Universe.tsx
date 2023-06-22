@@ -1,17 +1,19 @@
 import type { stateType } from "lib/commonPropTypes";
-import { useFrame } from "@react-three/fiber";
+import { Color, Vector3 } from "three";
 import { useRef, useState } from "react";
-import { Vector3 } from "three";
+import { useFrame } from "@react-three/fiber";
 
-export type UniverseProps = {
-    nightState: stateType<boolean>
-}
+export default function Universe(props: { nightState: stateType<boolean> }) {
+    const {value: night, setValue: setNight} = props.nightState;
 
-export default function Universe({ nightState }: UniverseProps) {
-    const {value: night, setValue: setNight} = nightState;
-    const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const bg = useRef<THREE.Color>(null!);
+    const [light, dark] = [new Color, new Color];
+    light.setRGB(0,0,0);
+    dark.setRGB(0.255, 0.678, 0.945);
+
     const amb = useRef<THREE.AmbientLight>(null!);
+    const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
+
     const body = useRef<THREE.Mesh>(null!);
     const bodyInitPos = new Vector3(
         44 * window.innerWidth/window.innerHeight,
@@ -27,8 +29,7 @@ export default function Universe({ nightState }: UniverseProps) {
 
     useFrame(() => {
         bg.current.lerp(
-            // @ts-ignore
-            night ? {r:0,g:0,b:0} : {r:.255,g:.678,b:.945},
+            night ? light : dark,
             night ? 0.04 : 0.008
         );
         amb.current.intensity = lerp(

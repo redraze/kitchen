@@ -3,12 +3,8 @@ import { useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
 
-type OptionsNavProps = {
-    nightState: stateType<boolean>
-};
-
-export default function OptionsNav({ nightState }: OptionsNavProps) {
-    const { value: night, setValue: setNight } = nightState;
+export default function OptionsNav(props: { nightState: stateType<boolean> }) {
+    const { value: night, setValue: setNight } = props.nightState;
     const [open, setOpen] = useState(false);
 
     return (
