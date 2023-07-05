@@ -27,3 +27,6 @@ export const pantrySettings: componentSettings = {
     pos: new Vector3(-6.7,2.6,4.4),
     rot: new Euler(0,Math.PI/2,0)
 };
+
+// Limit the number of containers rendered within each physics instance
+export const containerLimit: number = 10;

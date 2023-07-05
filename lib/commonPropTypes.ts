@@ -39,5 +39,14 @@ export type dragPropsType = {
 };
 
 export type clientDataType = { 
-  [key: string] : number
+  [key: string]: number
+};
+
+export type categoryContainerDataType = {
+  [key: string]: string
+};
+
+export type containerDataType = {
+  refrigerated: categoryContainerDataType
+  nonRefrigerated: categoryContainerDataType
 };

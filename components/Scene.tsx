@@ -1,4 +1,4 @@
-import type { clientDataType } from "lib/commonPropTypes";
+import type { clientDataType, containerDataType } from "lib/commonPropTypes";
 import type { componentSettings } from "lib/componentSettings";
 import type { KeyboardEvent } from "react";
 import { useState, useEffect, useRef } from "react";
@@ -10,9 +10,10 @@ import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSetti
 type SceneProps = {
     ingredients: JSX.Element[]
     clientRecipeData: clientDataType
+    clientContainerData: containerDataType
 };
   
-export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
+export default function Scene({ ingredients, clientRecipeData, clientContainerData }: SceneProps) {
     const [night, setNight] = useState(false);
     const [focus, setFocus] = useState(initSettings.focus);
     const [recipeDataVisibility, setRecipeDataVisibility] = useState(false);
@@ -102,6 +103,7 @@ export default function Scene({ ingredients, clientRecipeData }: SceneProps) {
                 rot={rot}
                 changeSettings={changeSettings}
                 clickHandler={clickHandler}
+                clientContainerData={clientContainerData}
             />
         </div>
     );

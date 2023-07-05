@@ -1,4 +1,4 @@
-import type { stateType } from "lib/commonPropTypes";
+import type { containerDataType, stateType } from "lib/commonPropTypes";
 import type { componentSettings } from "lib/componentSettings";
 import { useState, useRef, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -19,6 +19,7 @@ type KitchenProps = {
     rot: THREE.Euler
     changeSettings: (params: componentSettings) => void
     clickHandler: (params: componentSettings) => void
+    clientContainerData: containerDataType
 };
 
 export default function Kitchen(
@@ -28,7 +29,8 @@ export default function Kitchen(
         pos, 
         rot, 
         changeSettings,
-        clickHandler
+        clickHandler,
+        clientContainerData
     }: KitchenProps
 ) {
     const [grab, setGrab] = useState(false);
@@ -65,6 +67,7 @@ export default function Kitchen(
                             active={focus === fridgeSettings.focus ? true : false}
                             grabState={{ value: grab, setValue: setGrab }}
                             cursorPlane={cursorPlane}
+                            containerData={clientContainerData.refrigerated}
                         />
                     </Physics>
                     <Physics>
@@ -73,6 +76,7 @@ export default function Kitchen(
                             active={focus === pantrySettings.focus ? true : false}
                             grabState={{ value: grab, setValue: setGrab }}
                             cursorPlane={cursorPlane}
+                            containerData={clientContainerData.refrigerated}
                         />
                     </Physics>
                 </ControlGroup>

@@ -5,7 +5,15 @@ import css from 'styles/HUD/Ingredients/Card.module.scss';
 type IngredientCardProps = {
     ingredient: IngredientType
     clientIngredientData: clientDataType
-    updateData: (arg1: string, arg2: string[], args3: boolean) => void
+    updateData: (
+        arg1: string, 
+        arg2: string[], 
+        arg3: {
+            container: string,
+            refrigerated: boolean
+        },
+        arg4: boolean
+    ) => void
 }
 
 export default function IngredientCard(
@@ -20,6 +28,10 @@ export default function IngredientCard(
         updateData(
             ingredient._id, 
             ingredient.recipes,
+            {
+                container: ingredient.info.containerType,
+                refrigerated: ingredient.info.refrigerated
+            },
             !clientIngredientData[ingredient._id]
         );
         setActive(clientIngredientData[ingredient._id])

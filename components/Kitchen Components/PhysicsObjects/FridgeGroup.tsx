@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import type { stateType } from "lib/commonPropTypes";
+import type { categoryContainerDataType, stateType } from "lib/commonPropTypes";
 import type { componentSettings } from "lib/componentSettings";
 import { useThree, useFrame } from "@react-three/fiber";
 import { useParticle, usePlane, usePointToPointConstraint } from "@react-three/cannon";
@@ -14,6 +14,7 @@ type FridgeGroupProps = {
     cursorPlane: RefObject<THREE.Object3D>
     grabState: stateType<boolean>
     clickHandler: (params: componentSettings) => void
+    containerData: categoryContainerDataType
 };
 
 export default function FridgeGroup(
@@ -21,7 +22,8 @@ export default function FridgeGroup(
         active,
         cursorPlane, 
         grabState, 
-        clickHandler 
+        clickHandler,
+        containerData
     }: FridgeGroupProps
 ) {
     const [cursor, cursorApi] = useParticle(() => ({}), useRef<THREE.Mesh>(null))
@@ -85,6 +87,7 @@ export default function FridgeGroup(
                 grabState={grabState}
                 constraintApi={constraintApi}
                 targetState={{ value: target, setValue: setTarget }}
+                containerData={containerData}
             />
         </group>
     </>);

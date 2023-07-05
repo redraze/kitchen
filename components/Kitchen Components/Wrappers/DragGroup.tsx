@@ -1,4 +1,8 @@
-import type { stateType, constraintApiMethods } from "lib/commonPropTypes";
+import type { 
+    stateType, 
+    constraintApiMethods, 
+    categoryContainerDataType 
+} from "lib/commonPropTypes";
 import type { RefObject } from "react";
 import { useState, useRef } from "react";
 import Box from "../PhysicsObjects/Box";
@@ -7,9 +11,17 @@ type DragGroupProps = {
     grabState: stateType<boolean>
     constraintApi: constraintApiMethods
     targetState: stateType<RefObject<THREE.Object3D>>
+    containerData?: categoryContainerDataType
 };
 
-export default function DragGroup({ grabState, constraintApi, targetState }: DragGroupProps) {
+export default function DragGroup(
+    { 
+        grabState, 
+        constraintApi, 
+        targetState, 
+        containerData 
+    }: DragGroupProps
+) {
     //  All the props needed to enable dragging of 3D physics objects
     const [drag, setDrag] = useState(false);
     const dragProps = {
