@@ -5,7 +5,7 @@ import type {
 } from "lib/commonPropTypes";
 import type { RefObject } from "react";
 import { useState, useRef } from "react";
-import Box from "../PhysicsObjects/Box";
+import Container from "../PhysicsObjects/Container";
 
 type DragGroupProps = {
     grabState: stateType<boolean>
@@ -38,7 +38,11 @@ export default function DragGroup(
         }
     };
 
-    return(<>
-        <Box dragProps={dragProps} position={[0, 0, 0]} />
+    return (<>
+        <Container
+            dragProps={dragProps}
+            position={[0,0,0]}
+            // containerType={"TODO"}
+        />
     </>);
 };

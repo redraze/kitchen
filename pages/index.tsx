@@ -26,8 +26,8 @@ export default function Index({ ingredients }: { ingredients: string }) {
   const clientIngredientData = useRef<clientDataType>({});
   const clientRecipeData = useRef<clientDataType>({});
   const clientContainerData = useRef<containerDataType>({ 
-    refrigerated: {}, 
-    nonRefrigerated: {} 
+    refrigerated: [], 
+    nonRefrigerated: [] 
   });
 
   const updateData = (
@@ -49,17 +49,37 @@ export default function Index({ ingredients }: { ingredients: string }) {
         };
       });
       if (info.refrigerated) {
-        const keys = Object.keys(clientContainerData.current.refrigerated);
-        if (keys.length > containerLimit) {
-          delete clientContainerData.current.refrigerated[keys[0] as keyof object];
-        };
-        clientContainerData.current.refrigerated[id as keyof object] = info.container;
+        clientContainerData.current.refrigerated.map((item, idx) => {
+          if (item.id == undefined) {
+            clientContainerData.current.refrigerated[idx] = {
+              id: id,
+              containerType: info.container
+            };
+            return;
+          };
+          if (idx == containerLimit - 1) {
+            clientContainerData.current.refrigerated[idx] = {
+              id: id,
+              containerType: info.container
+            };
+          };
+        });
       } else {
-        const keys = Object.keys(clientContainerData.current.nonRefrigerated);
-        if (keys.length > containerLimit) {
-          delete clientContainerData.current.nonRefrigerated[keys[0] as keyof object];
-        };
-        clientContainerData.current.nonRefrigerated[id as keyof object] = info.container;
+        clientContainerData.current.nonRefrigerated.map((item, idx) => {
+          if (item.id == undefined) {
+            clientContainerData.current.nonRefrigerated[idx] = {
+              id: id,
+              containerType: info.container
+            };
+            return;
+          };
+          if (idx == containerLimit - 1) {
+            clientContainerData.current.nonRefrigerated[idx] = {
+              id: id,
+              containerType: info.container
+            };
+          };
+        });
       };
     } else {
       delete clientIngredientData.current[id as keyof object];
@@ -71,9 +91,23 @@ export default function Index({ ingredients }: { ingredients: string }) {
         };
       });
       if (info.refrigerated) {
-        delete clientContainerData.current.refrigerated[id as keyof object];
+        clientContainerData.current.refrigerated.map((item, idx) => {
+          if (item.id == id) {
+            clientContainerData.current.refrigerated[idx] = {
+              id: undefined,
+              containerType: undefined
+            }
+          } 
+        })
       } else {
-        delete clientContainerData.current.nonRefrigerated[id as keyof object];
+        clientContainerData.current.nonRefrigerated.map((item, idx) => {
+          if (item.id == id) {
+            clientContainerData.current.nonRefrigerated[idx] = {
+              id: undefined,
+              containerType: undefined
+            }
+          } 
+        })
       };
     };
     localStorage['ingredientData'] = JSON.stringify(clientIngredientData.current);
@@ -91,7 +125,6 @@ export default function Index({ ingredients }: { ingredients: string }) {
 
     const parsed = JSON.parse(ingredients);
     let tempMap: JSX.Element[] = [];
-    let count = 0;
     parsed.map((ingredient: IngredientType, idx: number) => {
       if (localData[ingredient._id as keyof object]) {
         ingredient.recipes.map((item: string) => {
@@ -102,17 +135,22 @@ export default function Index({ ingredients }: { ingredients: string }) {
           };
         })
 
-        if (count < containerLimit) {
-          if (ingredient.info.refrigerated) {
-            clientContainerData.current.refrigerated[
-              ingredient._id as keyof object
-            ] = ingredient.info.containerType;
-          } else {
-            clientContainerData.current.nonRefrigerated[
-              ingredient._id as keyof object
-            ] = ingredient.info.containerType;
-          }
-          count++
+        if (
+          ingredient.info.refrigerated 
+          && clientContainerData.current.refrigerated.length < containerLimit
+        ) {
+          clientContainerData.current.refrigerated.push({ 
+            id: ingredient._id,
+            containerType: ingredient.info.containerType
+          })
+        } else if (
+          !ingredient.info.refrigerated &&
+          clientContainerData.current.nonRefrigerated.length < containerLimit
+        ) {
+          clientContainerData.current.nonRefrigerated.push({
+            id: ingredient._id,
+            containerType: ingredient.info.containerType
+          })
         }
       }
 
@@ -127,6 +165,19 @@ export default function Index({ ingredients }: { ingredients: string }) {
       ];
     });
     setIngredientsMap(tempMap);
+
+    while (clientContainerData.current.refrigerated.length < containerLimit) {
+      clientContainerData.current.refrigerated.push({
+        id: undefined,
+        containerType: undefined
+      });
+    }
+    while (clientContainerData.current.nonRefrigerated.length < containerLimit) {
+      clientContainerData.current.nonRefrigerated.push({
+        id: undefined,
+        containerType: undefined
+      });
+    }
   }, []);
 
   return (

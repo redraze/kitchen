@@ -43,10 +43,11 @@ export type clientDataType = {
 };
 
 export type categoryContainerDataType = {
-  [key: string]: string
+  id: string | undefined
+  containerType: string | undefined
 };
 
 export type containerDataType = {
-  refrigerated: categoryContainerDataType
-  nonRefrigerated: categoryContainerDataType
+  refrigerated: categoryContainerDataType[]
+  nonRefrigerated: categoryContainerDataType[]
 };
