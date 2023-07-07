@@ -42,12 +42,23 @@ export type clientDataType = {
   [key: string]: number
 };
 
-export type categoryContainerDataType = {
-  id: string | undefined
-  containerType: string | undefined
+export type categoryContainerDataType = undefined | {
+  id: string
+  containerType: string
 };
 
 export type containerDataType = {
   refrigerated: categoryContainerDataType[]
   nonRefrigerated: categoryContainerDataType[]
+};
+
+type extremums = {
+  min: number,
+  max: number
+};
+
+export type containerBoundariesType = {
+  x: extremums,
+  y: extremums,
+  z: extremums
 };

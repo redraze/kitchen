@@ -1,4 +1,4 @@
-import type { stateType } from "lib/commonPropTypes";
+import type { stateType } from "lib/commonTypes";
 import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
 import css from 'styles/HUD/Recipes/Nav.module.scss';

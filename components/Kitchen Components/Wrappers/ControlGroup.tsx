@@ -3,7 +3,7 @@ import { Vector3 } from "three";
 import { useRef } from "react"
 import { useFrame, useThree } from "@react-three/fiber";
 import { PresentationControls } from '@react-three/drei';
-import { initSettings } from "lib/componentSettings";
+import { initSettings } from "lib/settings";
 
 export type GroupProps = {
     pos: Vector3

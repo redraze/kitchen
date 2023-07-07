@@ -1,5 +1,5 @@
-import type { containerDataType, stateType } from "lib/commonPropTypes";
-import type { componentSettings } from "lib/componentSettings";
+import type { stateType, containerDataType } from "lib/commonTypes";
+import type { componentSettings } from "lib/settings";
 import { useState, useRef, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Vector3 } from "three";
@@ -9,7 +9,7 @@ import Level from "./Objects/Level";
 import Lights from "./Objects/Lights";
 import FridgeGroup from "./PhysicsObjects/FridgeGroup";
 import Universe from "./Objects/Universe";
-import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSettings";
+import { initSettings, fridgeSettings, pantrySettings } from "lib/settings";
 import PantryGroup from "./PhysicsObjects/PantryGroup";
 
 type KitchenProps = {
@@ -76,7 +76,7 @@ export default function Kitchen(
                             active={focus === pantrySettings.focus ? true : false}
                             grabState={{ value: grab, setValue: setGrab }}
                             cursorPlane={cursorPlane}
-                            containerData={clientContainerData.refrigerated}
+                            containerData={clientContainerData.nonRefrigerated}
                         />
                     </Physics>
                 </ControlGroup>

@@ -1,4 +1,4 @@
-import type { dragPropsType } from 'lib/commonPropTypes';
+import type { dragPropsType } from 'lib/commonTypes';
 import type { Triplet, PublicApi } from '@react-three/cannon';
 import type { RefObject } from 'react';
 import { useBox } from '@react-three/cannon';

@@ -1,10 +1,10 @@
-import type { stateType } from "lib/commonPropTypes";
+import type { stateType } from "lib/commonTypes";
 import { useState } from "react";
 import css from "styles/HUD/HUD.module.scss";
 import OptionsNav from "./Options/Nav";
 import IngredientsNav from "./Ingredients/Nav";
 import RecipesNav from "./Recipes/Nav";
-import { componentSettings } from "lib/componentSettings";
+import { componentSettings } from "lib/settings";
 
 type HUDProps = {
     ingredients: JSX.Element[]

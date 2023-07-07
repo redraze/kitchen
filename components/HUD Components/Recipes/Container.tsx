@@ -1,6 +1,6 @@
 import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
-import type { stateType } from 'lib/commonPropTypes';
+import type { stateType } from 'lib/commonTypes';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
 

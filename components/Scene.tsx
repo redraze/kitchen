@@ -1,11 +1,11 @@
-import type { clientDataType, containerDataType } from "lib/commonPropTypes";
-import type { componentSettings } from "lib/componentSettings";
+import type { clientDataType, containerDataType } from "lib/commonTypes";
+import type { componentSettings } from "lib/settings";
 import type { KeyboardEvent } from "react";
 import { useState, useEffect, useRef } from "react";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
-import { initSettings, fridgeSettings, pantrySettings } from "lib/componentSettings";
+import { initSettings, fridgeSettings, pantrySettings } from "lib/settings";
 
 type SceneProps = {
     ingredients: JSX.Element[]

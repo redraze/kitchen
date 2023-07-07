@@ -1,4 +1,4 @@
-import type { stateType } from "lib/commonPropTypes";
+import type { stateType } from "lib/commonTypes";
 import css from "styles/HUD/Button.module.scss";
 
 type ButtonProps = {

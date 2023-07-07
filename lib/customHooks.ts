@@ -1,5 +1,5 @@
 import type { ThreeEvent } from '@react-three/fiber';
-import type { clickPropsType, hoverPropsType } from './commonPropTypes';
+import type { clickPropsType, hoverPropsType } from './commonTypes';
 import type { RefObject } from 'react';
 import { useCallback } from 'react';
 import * as THREE from 'three';

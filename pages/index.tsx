@@ -2,11 +2,11 @@ import type {
   IngredientType, 
   clientDataType, 
   containerDataType 
-} from 'lib/commonPropTypes';
+} from 'lib/commonTypes';
 import { useEffect, useRef, useState } from 'react';
 import dbConnect from 'config/dbConnect';
 import Ingredient from 'models/Ingredient';
-import { containerLimit } from 'lib/componentSettings';
+import { containerLimit } from 'lib/settings';
 import IngredientCard from 'components/HUD Components/Ingredients/Card';
 import Scene from "components/Scene";
 
@@ -49,38 +49,38 @@ export default function Index({ ingredients }: { ingredients: string }) {
         };
       });
       if (info.refrigerated) {
-        clientContainerData.current.refrigerated.map((item, idx) => {
-          if (item.id == undefined) {
-            clientContainerData.current.refrigerated[idx] = {
+        for (let i = 0; i < containerLimit; i++) {
+          if (clientContainerData.current.refrigerated[i]?.id == undefined) {
+            clientContainerData.current.refrigerated[i] = {
               id: id,
               containerType: info.container
             };
-            return;
+            break;
           };
-          if (idx == containerLimit - 1) {
-            clientContainerData.current.refrigerated[idx] = {
+          if (i == containerLimit - 1) {
+            clientContainerData.current.refrigerated[i] = {
               id: id,
               containerType: info.container
             };
           };
-        });
+        }
       } else {
-        clientContainerData.current.nonRefrigerated.map((item, idx) => {
-          if (item.id == undefined) {
-            clientContainerData.current.nonRefrigerated[idx] = {
+        for (let i = 0; i < containerLimit; i++) {
+          if (clientContainerData.current.nonRefrigerated[i]?.id == undefined) {
+            clientContainerData.current.nonRefrigerated[i] = {
               id: id,
               containerType: info.container
             };
-            return;
+            break;
           };
-          if (idx == containerLimit - 1) {
-            clientContainerData.current.nonRefrigerated[idx] = {
+          if (i == containerLimit - 1) {
+            clientContainerData.current.nonRefrigerated[i] = {
               id: id,
               containerType: info.container
             };
           };
-        });
-      };
+        };
+      }
     } else {
       delete clientIngredientData.current[id as keyof object];
       recipes.map((item: string) => {
@@ -91,23 +91,17 @@ export default function Index({ ingredients }: { ingredients: string }) {
         };
       });
       if (info.refrigerated) {
-        clientContainerData.current.refrigerated.map((item, idx) => {
-          if (item.id == id) {
-            clientContainerData.current.refrigerated[idx] = {
-              id: undefined,
-              containerType: undefined
-            }
+        for (let i = 0; i < containerLimit; i++) {
+          if (clientContainerData.current.refrigerated[i]?.id == id) {
+            clientContainerData.current.refrigerated[i] = undefined
           } 
-        })
+        }
       } else {
-        clientContainerData.current.nonRefrigerated.map((item, idx) => {
-          if (item.id == id) {
-            clientContainerData.current.nonRefrigerated[idx] = {
-              id: undefined,
-              containerType: undefined
-            }
+        for (let i = 0; i < containerLimit; i++) {
+          if (clientContainerData.current.nonRefrigerated[i]?.id == id) {
+            clientContainerData.current.nonRefrigerated[i] = undefined
           } 
-        })
+        }
       };
     };
     localStorage['ingredientData'] = JSON.stringify(clientIngredientData.current);
@@ -167,17 +161,11 @@ export default function Index({ ingredients }: { ingredients: string }) {
     setIngredientsMap(tempMap);
 
     while (clientContainerData.current.refrigerated.length < containerLimit) {
-      clientContainerData.current.refrigerated.push({
-        id: undefined,
-        containerType: undefined
-      });
-    }
+      clientContainerData.current.refrigerated.push(undefined);
+    };
     while (clientContainerData.current.nonRefrigerated.length < containerLimit) {
-      clientContainerData.current.nonRefrigerated.push({
-        id: undefined,
-        containerType: undefined
-      });
-    }
+      clientContainerData.current.nonRefrigerated.push(undefined);
+    };
   }, []);
 
   return (

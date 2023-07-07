@@ -1,20 +1,24 @@
 import type { RefObject } from "react";
-import type { categoryContainerDataType, stateType } from "lib/commonPropTypes";
-import type { componentSettings } from "lib/componentSettings";
+import type { 
+    stateType, 
+    categoryContainerDataType, 
+    containerBoundariesType 
+} from "lib/commonTypes";
+import type { componentSettings } from "lib/settings";
 import { useThree, useFrame } from "@react-three/fiber";
 import { useParticle, usePlane, usePointToPointConstraint } from "@react-three/cannon";
 import { useRef, useState, useEffect } from "react";
 import Pantry from "../Objects/Pantry";
 import Boundary from "./Boundary";
 import DragGroup from "../Wrappers/DragGroup";
-import { pantrySettings } from "lib/componentSettings";
+import { pantrySettings } from "lib/settings";
 
 type PantryGroupProps = {
     active: boolean
     cursorPlane: RefObject<THREE.Object3D>
     grabState: stateType<boolean>
     clickHandler: (params: componentSettings) => void
-    containerData: categoryContainerDataType
+    containerData: categoryContainerDataType[]
 };
 
 export default function PantryGroup(
@@ -60,6 +64,21 @@ export default function PantryGroup(
         void constraintApi.disable();
     }, [constraintApi]);
     
+    const containerBoundaries: containerBoundariesType = {
+        x: {
+            min: -2,
+            max: 2
+        },
+        y: {
+            min: -2,
+            max: 2
+        },
+        z: {
+            min: -0.5,
+            max: 0.5
+        }
+    };
+
     return (<>
         <group rotation={pantrySettings.rot} position={pantrySettings.pos} >
             <Pantry
@@ -75,7 +94,7 @@ export default function PantryGroup(
                     <boxGeometry args={[16,16,0.1]} />
                     <meshBasicMaterial color={'black'} wireframe />
                 </mesh>
-                <Boundary args={[4.9, 0.05, 1.6]} position={[0, -2.55, 0]} />
+                <Boundary args={[4.9, 0.05, 1.6]} position={[0, -2.5, 0]} />
                 <Boundary args={[4.9, 0.05, 1.6]} position={[0, -1.16, 0]} />
                 <Boundary args={[4.9, 0.05, 1.6]} position={[0, 0.1, 0]} />
                 <Boundary args={[4.9, 0.05, 1.6]} position={[0, 1.35, 0]} />
@@ -90,6 +109,7 @@ export default function PantryGroup(
                 constraintApi={constraintApi}
                 targetState={{ value: target, setValue: setTarget }}
                 containerData={containerData}
+                containerBoundaries={containerBoundaries}
             />
         </group>
     </>);

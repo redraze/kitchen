@@ -29,4 +29,4 @@ export const pantrySettings: componentSettings = {
 };
 
 // Limit the number of containers rendered within each physics instance
-export const containerLimit: number = 10;
+export const containerLimit: number = 15;

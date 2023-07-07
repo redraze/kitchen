@@ -1,6 +1,6 @@
-import type { dragPropsType } from "lib/commonPropTypes"
+import type { dragPropsType } from "lib/commonTypes"
 import Box from "./Box";
-import { initSettings } from "lib/componentSettings";
+import { initSettings } from "lib/settings";
 
 export default function StageGroup(props: { dragProps: dragPropsType }) {
     return (
