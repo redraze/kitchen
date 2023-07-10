@@ -12,7 +12,7 @@ type SceneProps = {
     clientRecipeData: clientDataType
     clientContainerData: containerDataType
 };
-  
+
 export default function Scene({ ingredients, clientRecipeData, clientContainerData }: SceneProps) {
     const [night, setNight] = useState(false);
     const [focus, setFocus] = useState(initSettings.focus);
@@ -72,6 +72,7 @@ export default function Scene({ ingredients, clientRecipeData, clientContainerDa
         if (settings === pantrySettings) setDataList(pantryMap.current);
     }
 
+    const [render, setRender] = useState(0)
     return (
         <div 
             className={ css.scene }
@@ -95,6 +96,7 @@ export default function Scene({ ingredients, clientRecipeData, clientContainerDa
                 userInputState={{value: userInput, setValue: setUserInput}}
                 dataListState={{value: dataList, setValue: setDataList}}
                 clickHandler={clickHandler}
+                reRender={{ value: render, setValue: setRender }}
             />
             <Kitchen 
                 nightState={{value: night, setValue: setNight}}

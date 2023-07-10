@@ -58,7 +58,8 @@ export default function Index({ ingredients }: { ingredients: string }) {
             break;
           };
           if (i == containerLimit - 1) {
-            clientContainerData.current.refrigerated[i] = {
+            const idx = Math.floor(Math.random() * containerLimit + 0.5)
+            clientContainerData.current.refrigerated[idx] = {
               id: id,
               containerType: info.container
             };
@@ -74,7 +75,8 @@ export default function Index({ ingredients }: { ingredients: string }) {
             break;
           };
           if (i == containerLimit - 1) {
-            clientContainerData.current.nonRefrigerated[i] = {
+            const idx = Math.floor(Math.random() * containerLimit + 0.5)
+            clientContainerData.current.nonRefrigerated[idx] = {
               id: id,
               containerType: info.container
             };

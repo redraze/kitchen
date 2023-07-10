@@ -15,6 +15,7 @@ type IngredientsNavProps = {
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
     clickHandler: (params: componentSettings) => void
+    reRender: stateType<number>
 };
 
 export default function IngredientsNav(
@@ -26,7 +27,8 @@ export default function IngredientsNav(
         ingredientsNavOpen,
         userInputState,
         dataListState,
-        clickHandler
+        clickHandler,
+        reRender
     }: IngredientsNavProps
 ) {
     const {value: userInput} = userInputState;
@@ -56,6 +58,7 @@ export default function IngredientsNav(
                 userInputState={userInputState}
                 changeSettings={changeSettings}
                 dataListState={dataListState}
+                reRender={reRender}
             />
             <ul>
                 <li onClick={() => clickHandler(fridgeSettings)}>

@@ -17,6 +17,7 @@ type HUDProps = {
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
     clickHandler: (params: componentSettings) => void
+    reRender: stateType<number>
 };
 
 export default function HUD(
@@ -30,7 +31,8 @@ export default function HUD(
         ingredientsNavOpen,
         userInputState,
         dataListState,
-        clickHandler
+        clickHandler,
+        reRender
     }: HUDProps
 ) {
     //  Force RecipeNavButton to re-render when clientRecipeData changes
@@ -60,6 +62,7 @@ export default function HUD(
                 userInputState={userInputState}
                 dataListState={dataListState}
                 clickHandler={clickHandler}
+                reRender={reRender}
             />
             <RecipesNav
                 clientRecipeData={clientRecipeData}

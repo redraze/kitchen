@@ -20,7 +20,7 @@ export default function IngredientCard(
     { 
         ingredient, 
         clientIngredientData, 
-        updateData,
+        updateData
     }: IngredientCardProps
 ) {
     const [active, setActive] = useState(clientIngredientData[ingredient._id])

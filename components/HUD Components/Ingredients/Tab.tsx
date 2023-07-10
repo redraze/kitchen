@@ -9,6 +9,7 @@ type IngredientsTabProps = {
     userInputState: stateType<string>
     changeSettings: (params: componentSettings) => void
     dataListState: stateType<(JSX.Element | undefined)[]>
+    reRender: stateType<number>
 }
 
 export default function IngredientsTab(
@@ -17,7 +18,8 @@ export default function IngredientsTab(
         focus,
         userInputState,
         changeSettings,
-        dataListState
+        dataListState,
+        reRender
     }: IngredientsTabProps
 ) {
     const {value: userInput, setValue: setUserInput} = userInputState;
@@ -45,22 +47,24 @@ export default function IngredientsTab(
         return css[name]
     };
 
-    return (<>
-        <div className={ css.search }>
-            <input 
-                placeholder="Search all ingredients..."
-                onChange={e => handler(e)}
-                value={userInput}
-            />
-            <button onClick={() => setUserInput('')}>Clear</button>
-        </div>
-        <div 
-            className={concatClassName('tab')}>
-            <div className={concatClassName('data')}>
-                <div className={ css.wrapper }>
-                    {dataList}
+    return (
+        <div onClick={() => reRender.setValue(reRender.value + 1)}>
+            <div className={ css.search }>
+                <input 
+                    placeholder="Search all ingredients..."
+                    onChange={e => handler(e)}
+                    value={userInput}
+                />
+                <button onClick={() => setUserInput('')}>Clear</button>
+            </div>
+            <div 
+                className={concatClassName('tab')}>
+                <div className={concatClassName('data')}>
+                    <div className={ css.wrapper }>
+                        {dataList}
+                    </div>
                 </div>
             </div>
         </div>
-    </>);
+    );
 };
