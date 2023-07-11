@@ -11,9 +11,17 @@ type SceneProps = {
     ingredients: JSX.Element[]
     clientRecipeData: clientDataType
     clientContainerData: containerDataType
+    resetData: () => void
 };
 
-export default function Scene({ ingredients, clientRecipeData, clientContainerData }: SceneProps) {
+export default function Scene(
+    {
+        ingredients,
+        clientRecipeData,
+        clientContainerData,
+        resetData
+    }: SceneProps
+) {
     const [night, setNight] = useState(false);
     const [focus, setFocus] = useState(initSettings.focus);
     const [recipeDataVisibility, setRecipeDataVisibility] = useState(false);
@@ -97,6 +105,7 @@ export default function Scene({ ingredients, clientRecipeData, clientContainerDa
                 dataListState={{value: dataList, setValue: setDataList}}
                 clickHandler={clickHandler}
                 reRender={{ value: render, setValue: setRender }}
+                resetData={resetData}
             />
             <Kitchen 
                 nightState={{value: night, setValue: setNight}}

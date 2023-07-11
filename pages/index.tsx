@@ -60,7 +60,18 @@ export default function Index({ ingredients }: { ingredients: string }) {
 
     localStorage['ingredientData'] = JSON.stringify(clientIngredientData.current);
   };
-  
+
+  const resetData = async () => {
+    clientIngredientData.current = {};
+    clientRecipeData.current = {};
+    clientContainerData.current = {
+      refrigerated: [], 
+      nonRefrigerated: [] 
+    };
+    localStorage['ingredientData'] = JSON.stringify(clientIngredientData.current);
+    window.location.reload();
+  };
+
   const [ingredientsMap, setIngredientsMap] = useState<JSX.Element[]>([]);
   useEffect(() => {
     let localData: clientDataType = {};
@@ -117,6 +128,7 @@ export default function Index({ ingredients }: { ingredients: string }) {
       ingredients={ingredientsMap}
       clientRecipeData={clientRecipeData.current}
       clientContainerData={clientContainerData.current}
+      resetData={resetData}
     />
   );
 };

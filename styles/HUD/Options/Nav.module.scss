@@ -30,6 +30,11 @@
             transition: background-color nv.$transitionTime/2 ease-out;
             will-change: background-color;
                 
+            a {
+                width: 100%;
+                display: flex;
+            }
+
             span {
                 font-family: calibri;
                 font-size: 25px;
