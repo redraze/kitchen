@@ -1,4 +1,5 @@
 import type { Triplet } from "@react-three/cannon";
+import type { containerBoundariesType } from "./commonTypes";
 import { Vector3, Euler } from "three";
 
 export type componentSettings = {
@@ -30,3 +31,33 @@ export const pantrySettings: componentSettings = {
 
 // Limit the number of containers rendered within each physics instance
 export const containerLimit: number = 15;
+
+export const fridgeContainerBoundaries: containerBoundariesType = {
+    x: {
+        min: -1,
+        max: 1
+    },
+    y: {
+        min: -2,
+        max: 2
+    },
+    z: {
+        min: -0.75,
+        max: 0.75
+    }
+};
+
+export const pantryContainerBoundaries: containerBoundariesType = {
+    x: {
+        min: -2,
+        max: 2
+    },
+    y: {
+        min: -2,
+        max: 2
+    },
+    z: {
+        min: -0.5,
+        max: 0.5
+    }
+};

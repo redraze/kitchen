@@ -15,6 +15,13 @@ export type IngredientType = {
   recipes: [string]
 };
 
+export type updateDataParams = {
+  id: string,
+  recipes: string[],
+  info: { container: string, refrigerated: boolean },
+  value: boolean
+};
+
 export type constraintApiMethods = {
   disable: () => void;
   enable: () => void;

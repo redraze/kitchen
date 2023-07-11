@@ -72,7 +72,7 @@ export default function Scene({ ingredients, clientRecipeData, clientContainerDa
         if (settings === pantrySettings) setDataList(pantryMap.current);
     }
 
-    const [render, setRender] = useState(0)
+    const [render, setRender] = useState(0);
     return (
         <div 
             className={ css.scene }

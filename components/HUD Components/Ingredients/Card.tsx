@@ -1,19 +1,11 @@
-import type { IngredientType, clientDataType } from "lib/commonTypes";
+import type { IngredientType, clientDataType, updateDataParams } from "lib/commonTypes";
 import { useState } from "react";
 import css from 'styles/HUD/Ingredients/Card.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
     clientIngredientData: clientDataType
-    updateData: (
-        arg1: string, 
-        arg2: string[], 
-        arg3: {
-            container: string,
-            refrigerated: boolean
-        },
-        arg4: boolean
-    ) => void
+    updateData: (params: updateDataParams) => void
 }
 
 export default function IngredientCard(
@@ -25,15 +17,15 @@ export default function IngredientCard(
 ) {
     const [active, setActive] = useState(clientIngredientData[ingredient._id])
     const handler = () => {
-        updateData(
-            ingredient._id, 
-            ingredient.recipes,
-            {
+        updateData({
+            id: ingredient._id, 
+            recipes: ingredient.recipes,
+            info: {
                 container: ingredient.info.containerType,
                 refrigerated: ingredient.info.refrigerated
             },
-            !clientIngredientData[ingredient._id]
-        );
+            value: !clientIngredientData[ingredient._id]
+        });
         setActive(clientIngredientData[ingredient._id])
     };
 

@@ -1,17 +1,13 @@
 import type { RefObject } from "react";
-import type { 
-    stateType, 
-    categoryContainerDataType, 
-    containerBoundariesType 
-} from "lib/commonTypes";
+import type { stateType, categoryContainerDataType } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import { useThree, useFrame } from "@react-three/fiber";
 import { useParticle, usePlane, usePointToPointConstraint } from "@react-three/cannon";
 import { useRef, useState, useEffect } from "react";
 import Fridge from "../Objects/Fridge";
-import Boundary from "./Boundary";
+import FridgeBoundaries from "./FridgeBoundaries";
 import DragGroup from "../Wrappers/DragGroup";
-import { fridgeSettings } from "lib/settings";
+import { fridgeContainerBoundaries, fridgeSettings } from "lib/settings";
 
 type FridgeGroupProps = {
     active: boolean
@@ -30,7 +26,7 @@ export default function FridgeGroup(
         containerData
     }: FridgeGroupProps
 ) {
-    const [cursor, cursorApi] = useParticle(() => ({}), useRef<THREE.Mesh>(null))
+    const [cursor, cursorApi] = useParticle(() => ({}), useRef<THREE.Mesh>(null));
     const { camera, raycaster } = useThree();
     const offset = 50;
     useFrame(({ pointer }) => {
@@ -63,21 +59,6 @@ export default function FridgeGroup(
         void constraintApi.disable();
     }, [constraintApi]);
     
-    const containerBoundaries: containerBoundariesType = {
-        x: {
-            min: -1,
-            max: 1
-        },
-        y: {
-            min: -2,
-            max: 2
-        },
-        z: {
-            min: -0.75,
-            max: 0.75
-        }
-    };
-
     return (<>
         <group rotation={fridgeSettings.rot} position={fridgeSettings.pos} >
             <Fridge
@@ -93,21 +74,14 @@ export default function FridgeGroup(
                     <boxGeometry args={[16,16,0.1]} />
                     <meshBasicMaterial color={'black'} wireframe />
                 </mesh>
-                <Boundary args={[2.6, 0.05, 1.8]} position={[0, -2.15, -0.15]} />
-                <Boundary args={[2.6, 0.05, 1.8]} position={[0, -0.72, -0.15]} />
-                <Boundary args={[2.6, 0.05, 1.8]} position={[0, 0.78, -0.15]} />
-                <Boundary args={[2.6, 0.05, 1.8]} position={[0, 2.3, -0.15]} />
-                <Boundary args={[0.05, 4.6, 1.8]} position={[-1.3, 0.05, -0.15]} />
-                <Boundary args={[0.05, 4.6, 1.8]} position={[1.3, 0.05, -0.15]} />
-                <Boundary args={[2.6, 4.6, 0.05]} position={[0, 0, -1.1]} />
-                <Boundary args={[2.6, 4.6, 0.05]} position={[0, 0, 0.8]} />
+                <FridgeBoundaries />
             </group>
             <DragGroup 
                 grabState={grabState}
                 constraintApi={constraintApi}
                 targetState={{ value: target, setValue: setTarget }}
                 containerData={containerData}
-                containerBoundaries={containerBoundaries}
+                containerBoundaries={fridgeContainerBoundaries}
             />
         </group>
     </>);

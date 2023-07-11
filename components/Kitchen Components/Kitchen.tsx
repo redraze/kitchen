@@ -7,10 +7,10 @@ import { Physics } from "@react-three/cannon";
 import ControlGroup from "./Wrappers/ControlGroup";
 import Level from "./Objects/Level";
 import Lights from "./Objects/Lights";
-import FridgeGroup from "./PhysicsObjects/FridgeGroup";
+import FridgeGroup from "./Wrappers/FridgeGroup";
+import PantryGroup from "./Wrappers/PantryGroup";
 import Universe from "./Objects/Universe";
 import { initSettings, fridgeSettings, pantrySettings } from "lib/settings";
-import PantryGroup from "./PhysicsObjects/PantryGroup";
 
 type KitchenProps = {
     nightState: stateType<boolean>
