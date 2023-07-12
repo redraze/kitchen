@@ -3,7 +3,7 @@ import Boundary from "../PhysicsObjects/Boundary";
 export default function PantryBoundaries() {
     return(<>
         <Boundary args={[4.9, 0.05, 1.6]} position={[0, -2.5, 0]} />
-        <Boundary args={[4.9, 0.05, 1.6]} position={[0, -1.16, 0]} />
+        <Boundary args={[4.9, 0.05, 1.6]} position={[0, -1.1, 0]} />
         <Boundary args={[4.9, 0.05, 1.6]} position={[0, 0.1, 0]} />
         <Boundary args={[4.9, 0.05, 1.6]} position={[0, 1.35, 0]} />
         <Boundary args={[4.9, 0.05, 1.6]} position={[0, 2.4, 0]} />

@@ -1,9 +1,11 @@
 import type { dragPropsType, containerBoundariesType } from 'lib/commonTypes';
-import type { Triplet, PublicApi } from '@react-three/cannon';
+import type { PublicApi, Triplet } from '@react-three/cannon';
 import type { RefObject } from 'react';
 import { useBox } from '@react-three/cannon';
 import { useRef } from 'react';
 import { useClickEvents, useHoverEvents } from 'lib/customHooks';
+import Bottle from './Bottle';
+import Spice from './Spice';
 
 type ContainerProps = {
     dragProps: dragPropsType
@@ -12,7 +14,11 @@ type ContainerProps = {
 };
 
 export default function Container({ dragProps, containerType, containerBoundaries }: ContainerProps) {
-    let args: Triplet = [0.3, 0.3, 0.3];
+    const args: { [param: string]: Triplet } = {
+        'box': [0.3, 0.3, 0.3],
+        'bottle': [0.24, 0.8, 0.24],
+        'spice': [0.2, 0.52, 0.2]
+    };
 
     const limitedRandom = (min: number, max: number) => {
         return Math.random() * (max - min) + min
@@ -26,7 +32,7 @@ export default function Container({ dragProps, containerType, containerBoundarie
                 limitedRandom(containerBoundaries.y.min, containerBoundaries.y.max),
                 limitedRandom(containerBoundaries.z.min, containerBoundaries.z.max)
             ],
-            args: args
+            args: containerType ? args[containerType as keyof object] : undefined
         }),
         useRef<THREE.Mesh>(null),
         [containerType]
@@ -38,25 +44,26 @@ export default function Container({ dragProps, containerType, containerBoundarie
     const meshInner = useRef<JSX.Element>();
     switch (containerType) {
         case undefined:
-            meshInner.current = <></>
+            meshInner.current = <></>;
             break;
-        //  TODO
-        // case 'spice':
-        //     meshInner = <>
-        //         spice bottle geometry
-        //     </>
-        //     break
-        // case 'etc':
-        //     ...
-        default:
+        case 'box':
             meshInner.current = <>
-                <boxGeometry args={args} />
+                <boxGeometry args={args.box} />
                 <meshBasicMaterial color={'red'} wireframe />
-            </>
+            </>;
+            break;
+        case 'bottle':
+            meshInner.current = <Bottle />;
+            break;
+        case 'spice':
+            meshInner.current = <Spice />;
+            break;
+        default:
+            meshInner.current = <></>;
     };
 
     return (
-        <mesh ref={ref} {...click} {...hover} >
+        <mesh ref={containerType ? ref : undefined} {...click} {...hover} >
             { meshInner.current }
         </mesh>
     );
