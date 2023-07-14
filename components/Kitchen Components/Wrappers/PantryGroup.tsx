@@ -52,13 +52,17 @@ export default function PantryGroup(
     const [, , constraintApi] = usePointToPointConstraint(
         cursor,
         target,
-        //  TODO:   offset pivotB to point clicked on object (using raycaster maybe?)
-        { pivotA: [0, 0, offset], pivotB: [0, 0, 0] },
+        { pivotA: [0, 0, offset], pivotB: [0, 0.1, 0] },
         [target]
     );
     useEffect(() => {
         void constraintApi.disable();
     }, [constraintApi]);
+    useEffect(() => {
+        active ? 
+            void constraintApi.enable :
+            void constraintApi.disable
+    }, [active]);
     
     return (<>
         <group rotation={pantrySettings.rot} position={pantrySettings.pos} >

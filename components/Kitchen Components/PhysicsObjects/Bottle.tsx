@@ -3,18 +3,27 @@ import { useGLTF } from "@react-three/drei";
 
 type GLTFResult = GLTF & {
     nodes: {
-        Cube: THREE.Mesh
+          Cube001: THREE.Mesh
+          Cube001_1: THREE.Mesh
+         Cube001_2: THREE.Mesh
+    }
+    materials: {
+        label: THREE.MeshStandardMaterial
+        glass: THREE.MeshPhysicalMaterial
+        cap: THREE.MeshStandardMaterial
     }
 };
 
-const url = 'objects/bottle.gltf'
+const url = 'objects/bottle.gltf';
 
 export default function Bottle() {
-    const { nodes } = useGLTF(url) as unknown as GLTFResult;
+    const { nodes, materials } = useGLTF(url) as unknown as GLTFResult;
     return (<>
-        <mesh geometry={nodes.Cube.geometry} position={[0, -0.04, 0]} scale={[0.12, 0.18, 0.12]} >
-            <meshBasicMaterial color={'red'} wireframe />
-        </mesh>
+        <group position={[0, -0.04, 0]} scale={[0.12, 0.18, 0.12]}>
+            <mesh geometry={nodes.Cube001.geometry} material={materials.label} />
+            <mesh geometry={nodes.Cube001_1.geometry} material={materials.glass} />
+            <mesh geometry={nodes.Cube001_2.geometry} material={materials.cap} />
+        </group>
     </>);
 };
 

@@ -6,6 +6,9 @@ import { useRef } from 'react';
 import { useClickEvents, useHoverEvents } from 'lib/customHooks';
 import Bottle from './Bottle';
 import Spice from './Spice';
+import Carton from './Carton';
+import Can from './Can';
+import Jar from './Jar';
 
 type ContainerProps = {
     dragProps: dragPropsType
@@ -17,22 +20,25 @@ export default function Container({ dragProps, containerType, containerBoundarie
     const args: { [param: string]: Triplet } = {
         'box': [0.3, 0.3, 0.3],
         'bottle': [0.24, 0.8, 0.24],
-        'spice': [0.2, 0.52, 0.2]
+        'spice': [0.2, 0.52, 0.2],
+        'carton': [0.25, 0.68, 0.25],
+        'can': [0.37, 0.54, 0.37],
+        'jar': [0.33, 0.63, 0.33]
     };
 
-    const limitedRandom = (min: number, max: number) => {
-        return Math.random() * (max - min) + min
+    const randomPosition = (): Triplet => {
+        return [
+            Math.random() * (containerBoundaries.x.max - containerBoundaries.x.min) + containerBoundaries.x.min,
+            Math.random() * (containerBoundaries.y.max - containerBoundaries.y.min) + containerBoundaries.y.min,
+            Math.random() * (containerBoundaries.z.max - containerBoundaries.z.min) + containerBoundaries.z.min
+        ]
     };
 
     const [ref, _api]: [RefObject<THREE.Mesh>, PublicApi] = useBox(
         () => ({
-            mass: 1,
-            position: [
-                limitedRandom(containerBoundaries.x.min, containerBoundaries.x.max),
-                limitedRandom(containerBoundaries.y.min, containerBoundaries.y.max),
-                limitedRandom(containerBoundaries.z.min, containerBoundaries.z.max)
-            ],
-            args: containerType ? args[containerType as keyof object] : undefined
+            mass: containerType ? 1 : 0,
+            position: containerType ? randomPosition() : [0, -100, 0],
+            args: containerType ? args[containerType as keyof object] : [0,0,0]
         }),
         useRef<THREE.Mesh>(null),
         [containerType]
@@ -58,13 +64,25 @@ export default function Container({ dragProps, containerType, containerBoundarie
         case 'spice':
             meshInner.current = <Spice />;
             break;
+        case 'carton':
+            meshInner.current = <Carton />;
+            break;
+        case 'can':
+            meshInner.current = <Can />;
+            break;
+        case 'jar':
+            meshInner.current = <Jar />;
+            break;
         default:
             meshInner.current = <></>;
     };
 
-    return (
-        <mesh ref={containerType ? ref : undefined} {...click} {...hover} >
-            { meshInner.current }
-        </mesh>
-    );
+    if (containerType) {
+        return (
+            <mesh ref={ref} {...click} {...hover} >
+                { meshInner.current }
+            </mesh>
+        );
+    };
+    return (<></>);
 };
