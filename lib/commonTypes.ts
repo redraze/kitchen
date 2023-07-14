@@ -22,7 +22,7 @@ export type updateDataParams = {
   value: boolean
 };
 
-export type constraintApiMethods = {
+export type constraintApiMethods = undefined | {
   disable: () => void;
   enable: () => void;
 };

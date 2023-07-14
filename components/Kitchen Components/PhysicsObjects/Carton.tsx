@@ -17,7 +17,7 @@ const url = 'objects/carton.gltf';
 export default function Carton() {
 	const { nodes, materials } = useGLTF(url) as unknown as GLTFResult;
 	return (
-		<group position={[0, -0.23, 0]} scale={0.13}>
+		<group position={[0, -0.3, 0]} scale={0.18}>
 			<mesh geometry={nodes.Cube.geometry} material={materials.label} />
 			<mesh geometry={nodes.Cube_1.geometry} material={materials.liner} />
 		</group>

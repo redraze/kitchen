@@ -58,11 +58,6 @@ export default function FridgeGroup(
     useEffect(() => {
         void constraintApi.disable();
     }, [constraintApi]);
-    useEffect(() => {
-        active ? 
-            void constraintApi.enable :
-            void constraintApi.disable
-    }, [active]);
     
     return (<>
         <group rotation={fridgeSettings.rot} position={fridgeSettings.pos} >
@@ -83,7 +78,7 @@ export default function FridgeGroup(
             </group>
             <DragGroup 
                 grabState={grabState}
-                constraintApi={constraintApi}
+                constraintApi={active ? constraintApi : undefined}
                 targetState={{ value: target, setValue: setTarget }}
                 containerData={containerData}
                 containerBoundaries={fridgeContainerBoundaries}

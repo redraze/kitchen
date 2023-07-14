@@ -24,7 +24,7 @@ export default function Group({ pos, focus, snap, rotation, enabled, children }:
         ref.current.position.lerp(
             focus === initSettings.focus ?
                 new Vector3(0,0,0) : 
-                new Vector3(pos['x']*-1,pos['y']*-1,pos['z']*-1),
+                new Vector3(pos['x']*-1,pos['y']*-1 - 0.1,pos['z']*-1),
             0.04);
         // Zoom camera
         camera.position.lerp(

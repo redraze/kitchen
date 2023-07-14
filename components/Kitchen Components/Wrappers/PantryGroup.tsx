@@ -58,11 +58,6 @@ export default function PantryGroup(
     useEffect(() => {
         void constraintApi.disable();
     }, [constraintApi]);
-    useEffect(() => {
-        active ? 
-            void constraintApi.enable :
-            void constraintApi.disable
-    }, [active]);
     
     return (<>
         <group rotation={pantrySettings.rot} position={pantrySettings.pos} >
@@ -83,7 +78,7 @@ export default function PantryGroup(
             </group>
             <DragGroup 
                 grabState={grabState}
-                constraintApi={constraintApi}
+                constraintApi={active ? constraintApi : undefined}
                 targetState={{ value: target, setValue: setTarget }}
                 containerData={containerData}
                 containerBoundaries={pantryContainerBoundaries}

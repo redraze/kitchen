@@ -4,6 +4,7 @@ import type { RefObject } from 'react';
 import { useBox } from '@react-three/cannon';
 import { useRef } from 'react';
 import { useClickEvents, useHoverEvents } from 'lib/customHooks';
+import Box from './Box';
 import Bottle from './Bottle';
 import Spice from './Spice';
 import Carton from './Carton';
@@ -18,10 +19,10 @@ type ContainerProps = {
 
 export default function Container({ dragProps, containerType, containerBoundaries }: ContainerProps) {
     const args: { [param: string]: Triplet } = {
-        'box': [0.3, 0.3, 0.3],
+        'box': [0.6, 0.8, 0.2],
         'bottle': [0.24, 0.8, 0.24],
         'spice': [0.2, 0.52, 0.2],
-        'carton': [0.25, 0.68, 0.25],
+        'carton': [0.37, 1, 0.37],
         'can': [0.37, 0.54, 0.37],
         'jar': [0.33, 0.63, 0.33]
     };
@@ -53,10 +54,7 @@ export default function Container({ dragProps, containerType, containerBoundarie
             meshInner.current = <></>;
             break;
         case 'box':
-            meshInner.current = <>
-                <boxGeometry args={args.box} />
-                <meshBasicMaterial color={'red'} wireframe />
-            </>;
+            meshInner.current = <Box />;
             break;
         case 'bottle':
             meshInner.current = <Bottle />;

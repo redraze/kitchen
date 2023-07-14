@@ -19,7 +19,7 @@ export const initSettings: componentSettings & {fov: number} = {
 
 export const fridgeSettings: componentSettings = {
     focus: 1,
-    pos: new Vector3(-5.4,2.3,-5.4),
+    pos: new Vector3(-5.4,2.6,-5.4),
     rot: new Euler(0,Math.PI/4,0)
 };
 
