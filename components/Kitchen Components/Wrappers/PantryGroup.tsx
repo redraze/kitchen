@@ -81,7 +81,7 @@ export default function PantryGroup(
                 constraintApi={active ? constraintApi : undefined}
                 targetState={{ value: target, setValue: setTarget }}
                 containerData={containerData}
-                containerBoundaries={pantryContainerBoundaries}
+                boundaries={pantryContainerBoundaries}
             />
         </group>
     </>);

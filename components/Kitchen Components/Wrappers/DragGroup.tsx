@@ -13,7 +13,7 @@ type DragGroupProps = {
     constraintApi: constraintApiMethods
     targetState: stateType<RefObject<THREE.Object3D>>
     containerData?: categoryContainerDataType[]
-    containerBoundaries: containerBoundariesType
+    boundaries: containerBoundariesType
 };
 
 export default function DragGroup(
@@ -22,7 +22,7 @@ export default function DragGroup(
         constraintApi, 
         targetState, 
         containerData,
-        containerBoundaries
+        boundaries
     }: DragGroupProps
 ) {
     //  All the props needed to enable dragging of 3D physics objects
@@ -46,7 +46,7 @@ export default function DragGroup(
             <Container
                 dragProps={dragProps}
                 containerType={item?.containerType}
-                containerBoundaries={containerBoundaries}
+                boundaries={boundaries}
                 key={idx}
             />
         )

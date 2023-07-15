@@ -69,7 +69,7 @@ export default function Fridge(props: FridgeProps) {
   }, [props.active]);
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} {...props} onClick={() => {}} dispose={null}>
       <group name="Scene">
         <group name="backWall" position={[0, 0.07, -1.14]} rotation={[Math.PI / 2, -Math.PI / 2, 0]} scale={[1.13, 1, 1.67]}>
           <mesh name="Cube004" geometry={nodes.Cube004.geometry} material={materials.outide} />
@@ -91,11 +91,11 @@ export default function Fridge(props: FridgeProps) {
           <mesh name="Cube010" geometry={nodes.Cube010.geometry} material={materials.outide} />
           <mesh name="Cube010_1" geometry={nodes.Cube010_1.geometry} material={materials.inside} />
         </group>
-        <group name="left" position={[-1.38, 0.07, 0.84]} rotation={[-Math.PI / 2, Math.PI / 2, 0]} scale={[-2.23, -1.5, -0.36]}>
+        <group name="left" onClick={props.onClick} position={[-1.38, 0.07, 0.84]} rotation={[-Math.PI / 2, Math.PI / 2, 0]} scale={[-2.23, -1.5, -0.36]}>
           <mesh name="Cube013" geometry={nodes.Cube013.geometry} material={materials.outide} />
           <mesh name="Cube013_1" geometry={nodes.Cube013_1.geometry} material={materials.inside} />
         </group>
-        <group name="right" position={[1.38, 0.07, 0.84]} rotation={[-Math.PI / 2, -Math.PI / 2, 0]} scale={[-2.23, -1.5, -0.36]}>
+        <group name="right" onClick={props.onClick} position={[1.38, 0.07, 0.84]} rotation={[-Math.PI / 2, -Math.PI / 2, 0]} scale={[-2.23, -1.5, -0.36]}>
           <mesh name="Cube001" geometry={nodes.Cube001.geometry} material={materials.outide} />
           <mesh name="Cube001_1" geometry={nodes.Cube001_1.geometry} material={materials.inside} />
         </group>

@@ -14,10 +14,10 @@ import Jar from './Jar';
 type ContainerProps = {
     dragProps: dragPropsType
     containerType?: string
-    containerBoundaries: containerBoundariesType
+    boundaries: containerBoundariesType
 };
 
-export default function Container({ dragProps, containerType, containerBoundaries }: ContainerProps) {
+export default function Container({ dragProps, containerType, boundaries }: ContainerProps) {
     const args: { [param: string]: Triplet } = {
         'box': [0.6, 0.8, 0.2],
         'bottle': [0.24, 0.8, 0.24],
@@ -29,9 +29,9 @@ export default function Container({ dragProps, containerType, containerBoundarie
 
     const randomPosition = (): Triplet => {
         return [
-            Math.random() * (containerBoundaries.x.max - containerBoundaries.x.min) + containerBoundaries.x.min,
-            Math.random() * (containerBoundaries.y.max - containerBoundaries.y.min) + containerBoundaries.y.min,
-            Math.random() * (containerBoundaries.z.max - containerBoundaries.z.min) + containerBoundaries.z.min
+            Math.random() * (boundaries.x.max - boundaries.x.min) + boundaries.x.min,
+            Math.random() * (boundaries.y.max - boundaries.y.min) + boundaries.y.min,
+            Math.random() * (boundaries.z.max - boundaries.z.min) + boundaries.z.min
         ]
     };
 
@@ -45,40 +45,24 @@ export default function Container({ dragProps, containerType, containerBoundarie
         [containerType]
     );
 
-    const click = useClickEvents({ clickProps: dragProps.click });
-    const hover = useHoverEvents({ hoverProps: dragProps.hover, child: ref});
-
-    const meshInner = useRef<JSX.Element>();
-    switch (containerType) {
-        case undefined:
-            meshInner.current = <></>;
-            break;
-        case 'box':
-            meshInner.current = <Box />;
-            break;
-        case 'bottle':
-            meshInner.current = <Bottle />;
-            break;
-        case 'spice':
-            meshInner.current = <Spice />;
-            break;
-        case 'carton':
-            meshInner.current = <Carton />;
-            break;
-        case 'can':
-            meshInner.current = <Can />;
-            break;
-        case 'jar':
-            meshInner.current = <Jar />;
-            break;
-        default:
-            meshInner.current = <></>;
+    const innerMesh: { [param: string]: JSX.Element } = {
+        'box': <Box />,
+        'bottle': <Bottle />,
+        'spice': <Spice />,
+        'carton': <Carton />,
+        'can': <Can />,
+        'jar': <Jar />
     };
 
     if (containerType) {
+        const [click, hover] = dragProps.click.constraintApi ? [
+            useClickEvents({ clickProps: dragProps.click }), 
+            useHoverEvents({ hoverProps: dragProps.hover, child: ref })
+        ] : [undefined, undefined];
+
         return (
             <mesh ref={ref} {...click} {...hover} >
-                { meshInner.current }
+                { innerMesh[containerType] }
             </mesh>
         );
     };

@@ -81,7 +81,7 @@ export default function FridgeGroup(
                 constraintApi={active ? constraintApi : undefined}
                 targetState={{ value: target, setValue: setTarget }}
                 containerData={containerData}
-                containerBoundaries={fridgeContainerBoundaries}
+                boundaries={fridgeContainerBoundaries}
             />
         </group>
     </>);

@@ -7,9 +7,10 @@ import Link from "next/link";
 type OptionsNavProps = {
     nightState: stateType<boolean>
     resetData: () => void
+    spaceState: stateType<boolean>
 };
 
-export default function OptionsNav({ nightState, resetData }: OptionsNavProps) {
+export default function OptionsNav({ nightState, resetData, spaceState }: OptionsNavProps) {
     const { value: night, setValue: setNight } = nightState;
     const [open, setOpen] = useState(false);
 
@@ -32,11 +33,14 @@ export default function OptionsNav({ nightState, resetData }: OptionsNavProps) {
                         <span>All Recipes</span>
                     </Link>
                 </li>
+                <li onClick={() => resetData()}>
+                    <span>Reset Ingredients</span>
+                </li>
                 <li onClick={() => setNight(!night)}>
                     <span>Toggle Dark Mode</span>
                 </li>
-                <li onClick={() => resetData()}>
-                    <span>Reset Ingredients</span>
+                <li onClick={() => spaceState.setValue(!spaceState.value)}>
+                    <span>SPACE???</span>
                 </li>
                 {/* <li><span>Free Camera Mode</span></li> */}
                 <li>

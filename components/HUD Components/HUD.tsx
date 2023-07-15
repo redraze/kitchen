@@ -19,6 +19,7 @@ type HUDProps = {
     clickHandler: (params: componentSettings) => void
     reRender: stateType<number>
     resetData: () => void
+    spaceState: stateType<boolean>
 };
 
 export default function HUD(
@@ -34,7 +35,8 @@ export default function HUD(
         dataListState,
         clickHandler,
         reRender,
-        resetData
+        resetData,
+        spaceState
     }: HUDProps
 ) {
     //  Force RecipeNavButton to re-render when clientRecipeData changes
@@ -55,6 +57,7 @@ export default function HUD(
             <OptionsNav
                 nightState={nightState}
                 resetData={resetData}
+                spaceState={spaceState}
             />
             <IngredientsNav
                 ingredients={ingredients}

@@ -20,6 +20,7 @@ type KitchenProps = {
     changeSettings: (params: componentSettings) => void
     clickHandler: (params: componentSettings) => void
     clientContainerData: containerDataType
+    space: boolean
 };
 
 export default function Kitchen(
@@ -30,7 +31,8 @@ export default function Kitchen(
         rot, 
         changeSettings,
         clickHandler,
-        clientContainerData
+        clientContainerData,
+        space
     }: KitchenProps
 ) {
     const [grab, setGrab] = useState(false);
@@ -61,7 +63,7 @@ export default function Kitchen(
                             new Vector3(2,7,-4),
                         ]}
                     />
-                    <Physics>
+                    <Physics gravity={[0, space ? 0 : -9.8, 0]}>
                         <FridgeGroup 
                             clickHandler={clickHandler}
                             active={focus === fridgeSettings.focus ? true : false}
@@ -70,7 +72,7 @@ export default function Kitchen(
                             containerData={clientContainerData.refrigerated}
                         />
                     </Physics>
-                    <Physics>
+                    <Physics gravity={[0, space ? 0 : -9.8, 0]}>
                         <PantryGroup 
                             clickHandler={clickHandler}
                             active={focus === pantrySettings.focus ? true : false}

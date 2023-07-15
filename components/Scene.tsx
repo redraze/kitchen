@@ -80,6 +80,8 @@ export default function Scene(
         if (settings === pantrySettings) setDataList(pantryMap.current);
     }
 
+    const [space, setSpace] = useState(false);
+
     const [render, setRender] = useState(0);
     return (
         <div 
@@ -106,6 +108,7 @@ export default function Scene(
                 clickHandler={clickHandler}
                 reRender={{ value: render, setValue: setRender }}
                 resetData={resetData}
+                spaceState={{ value: space, setValue: setSpace }}
             />
             <Kitchen 
                 nightState={{value: night, setValue: setNight}}
@@ -115,6 +118,7 @@ export default function Scene(
                 changeSettings={changeSettings}
                 clickHandler={clickHandler}
                 clientContainerData={clientContainerData}
+                space={space}
             />
         </div>
     );
