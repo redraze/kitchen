@@ -22,7 +22,7 @@ export default function Scene(
         resetData
     }: SceneProps
 ) {
-    const [night, setNight] = useState(false);
+    const [space, setSpace] = useState(false);
     const [focus, setFocus] = useState(initSettings.focus);
     const [recipeDataVisibility, setRecipeDataVisibility] = useState(false);
     const [ingredientsNavOpen, setIngredientsNavOpen] = useState(false);
@@ -80,8 +80,6 @@ export default function Scene(
         if (settings === pantrySettings) setDataList(pantryMap.current);
     }
 
-    const [space, setSpace] = useState(false);
-
     const [render, setRender] = useState(0);
     return (
         <div 
@@ -91,7 +89,7 @@ export default function Scene(
         >
             <HUD 
                 ingredients={ingredients}
-                nightState={{value: night, setValue: setNight}}
+                spaceState={{ value: space, setValue: setSpace }}
                 focusState={{value: focus, setValue: setFocus}}
                 changeSettings={changeSettings}
                 clientRecipeData={clientRecipeData}
@@ -108,17 +106,15 @@ export default function Scene(
                 clickHandler={clickHandler}
                 reRender={{ value: render, setValue: setRender }}
                 resetData={resetData}
-                spaceState={{ value: space, setValue: setSpace }}
             />
             <Kitchen 
-                nightState={{value: night, setValue: setNight}}
+                spaceState={{ value: space, setValue: setSpace }}
                 focus={focus}
                 pos={pos}
                 rot={rot}
                 changeSettings={changeSettings}
                 clickHandler={clickHandler}
                 clientContainerData={clientContainerData}
-                space={space}
             />
         </div>
     );

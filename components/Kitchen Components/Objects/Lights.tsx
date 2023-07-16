@@ -5,11 +5,11 @@ import Light from './Light';
 
 type LightsProps = {
   positions: THREE.Vector3[]
-  nightState: stateType<boolean>
+  spaceState: stateType<boolean>
 };
 
-export default function Lights({ positions, nightState }: LightsProps) {
-  const { value: night } = nightState;
+export default function Lights({ positions, spaceState }: LightsProps) {
+  const { value: dark } = spaceState;
   const [intensity, setIntensity] = useState(1);
   const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
   const lightMap = positions.map((position, index) => (
@@ -19,8 +19,8 @@ export default function Lights({ positions, nightState }: LightsProps) {
   useFrame(() => {
     setIntensity(lerp(
       intensity, 
-      night ? 0.6 : .8, 
-      night ? 0.1 : 0.08
+      dark ? 0.6 : .8, 
+      dark ? 0.1 : 0.08
     ));
   });
   

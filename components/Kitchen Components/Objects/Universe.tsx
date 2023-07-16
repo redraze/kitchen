@@ -2,9 +2,10 @@ import type { stateType } from "lib/commonTypes";
 import { Color, Vector3 } from "three";
 import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
+import { Stars } from "@react-three/drei";
 
-export default function Universe(props: { nightState: stateType<boolean> }) {
-    const {value: night, setValue: setNight} = props.nightState;
+export default function Universe(props: { spaceState: stateType<boolean> }) {
+    const {value: space, setValue: setSpace} = props.spaceState;
 
     const bg = useRef<THREE.Color>(null!);
     const [light, dark] = [new Color, new Color];
@@ -29,16 +30,16 @@ export default function Universe(props: { nightState: stateType<boolean> }) {
 
     useFrame(() => {
         bg.current.lerp(
-            night ? light : dark,
-            night ? 0.04 : 0.008
+            space ? light : dark,
+            space ? 0.04 : 0.008
         );
         amb.current.intensity = lerp(
             amb.current.intensity,
-            night ? .6 : 1,
-            night ? 0.1 : 0.08
+            space ? .6 : 1,
+            space ? 0.1 : 0.08
         );
         body.current.position.lerp(
-            night ? 
+            space ? 
                 new Vector3(
                     bodyInitPos['x']-10, 
                     bodyInitPos['y']-10,
@@ -52,18 +53,18 @@ export default function Universe(props: { nightState: stateType<boolean> }) {
                 0.04);
         setRadius(lerp(
             radius,
-            night ? 8 : initRadius,
-            night ? 0.08 : 0.04
+            space ? 8 : initRadius,
+            space ? 0.08 : 0.04
         ));
         setPhiStart(lerp(
             phiStart,
-            night ? 1.6 : initPhiStart,
-            night ? 0.08 : 0.04
+            space ? 1.6 : initPhiStart,
+            space ? 0.08 : 0.04
         ));
         setPhi(lerp(
             phi,
-            night ? 1.3 : initPhi,
-            night ? 0.08 : 0.04
+            space ? 1.3 : initPhi,
+            space ? 0.08 : 0.04
         ));
     });
 
@@ -73,11 +74,12 @@ export default function Universe(props: { nightState: stateType<boolean> }) {
         <group position={new Vector3(0,0,-100)} >
             <mesh 
                 ref={body}
-                onClick={() => setNight(!night)}
+                onClick={() => setSpace(!space)}
             >
                 <sphereGeometry args={[radius, 20, 20, phiStart, phi]} />
                 <meshPhongMaterial />
             </mesh>
         </group>
+        <Stars count={space ? 1000 : 0} factor={2.2} />
     </>);
 };

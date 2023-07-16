@@ -9,7 +9,7 @@ import { componentSettings } from "lib/settings";
 type HUDProps = {
     ingredients: JSX.Element[]
     focusState: stateType<number>
-    nightState: stateType<boolean>
+    spaceState: stateType<boolean>
     changeSettings: (params: componentSettings) => void
     clientRecipeData: object
     recipeDataVisibility: stateType<boolean>
@@ -19,14 +19,13 @@ type HUDProps = {
     clickHandler: (params: componentSettings) => void
     reRender: stateType<number>
     resetData: () => void
-    spaceState: stateType<boolean>
 };
 
 export default function HUD(
     {
         ingredients, 
         focusState, 
-        nightState, 
+        spaceState, 
         changeSettings,
         clientRecipeData,
         recipeDataVisibility,
@@ -35,8 +34,7 @@ export default function HUD(
         dataListState,
         clickHandler,
         reRender,
-        resetData,
-        spaceState
+        resetData
     }: HUDProps
 ) {
     //  Force RecipeNavButton to re-render when clientRecipeData changes
@@ -55,9 +53,8 @@ export default function HUD(
     return (
         <div className={ css.HUD }>
             <OptionsNav
-                nightState={nightState}
-                resetData={resetData}
                 spaceState={spaceState}
+                resetData={resetData}
             />
             <IngredientsNav
                 ingredients={ingredients}

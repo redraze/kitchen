@@ -13,26 +13,24 @@ import Universe from "./Objects/Universe";
 import { initSettings, fridgeSettings, pantrySettings } from "lib/settings";
 
 type KitchenProps = {
-    nightState: stateType<boolean>
+    spaceState: stateType<boolean>
     focus: number
     pos: THREE.Vector3
     rot: THREE.Euler
     changeSettings: (params: componentSettings) => void
     clickHandler: (params: componentSettings) => void
     clientContainerData: containerDataType
-    space: boolean
 };
 
 export default function Kitchen(
     { 
-        nightState, 
+        spaceState, 
         focus, 
         pos, 
         rot, 
         changeSettings,
         clickHandler,
-        clientContainerData,
-        space
+        clientContainerData
     }: KitchenProps
 ) {
     const [grab, setGrab] = useState(false);
@@ -57,13 +55,13 @@ export default function Kitchen(
                 >
                     <Level/>
                     <Lights 
-                        nightState={nightState}
+                        spaceState={spaceState}
                         positions={[
                             new Vector3(-5,7,2),
                             new Vector3(2,7,-4),
                         ]}
                     />
-                    <Physics gravity={[0, space ? 0 : -9.8, 0]}>
+                    <Physics gravity={[0, spaceState.value ? 0 : -9.8, 0]}>
                         <FridgeGroup 
                             clickHandler={clickHandler}
                             active={focus === fridgeSettings.focus ? true : false}
@@ -72,7 +70,7 @@ export default function Kitchen(
                             containerData={clientContainerData.refrigerated}
                         />
                     </Physics>
-                    <Physics gravity={[0, space ? 0 : -9.8, 0]}>
+                    <Physics gravity={[0, spaceState.value ? 0 : -9.8, 0]}>
                         <PantryGroup 
                             clickHandler={clickHandler}
                             active={focus === pantrySettings.focus ? true : false}
@@ -86,7 +84,7 @@ export default function Kitchen(
                     <boxGeometry args={ [1000,1000,0.1] } />
                     <meshBasicMaterial color={'black'} wireframe />
                 </mesh>
-                <Universe nightState={nightState} />
+                <Universe spaceState={spaceState} />
             </Suspense>
         </Canvas>
     );
