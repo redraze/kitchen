@@ -55,9 +55,8 @@ export default function FridgeGroup(
         { pivotA: [0, 0, offset], pivotB: [0, 0.1, 0] },
         [target]
     );
-    useEffect(() => {
-        void constraintApi.disable();
-    }, [constraintApi]);
+    useEffect(() => { void constraintApi.disable() }, [constraintApi]);
+    useEffect(() => { if (!active) void constraintApi.disable() }, [active]);
     
     return (<>
         <group rotation={fridgeSettings.rot} position={fridgeSettings.pos} >

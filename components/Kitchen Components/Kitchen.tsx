@@ -20,6 +20,7 @@ type KitchenProps = {
     changeSettings: (params: componentSettings) => void
     clickHandler: (params: componentSettings) => void
     clientContainerData: containerDataType
+    grabState: stateType<boolean>
 };
 
 export default function Kitchen(
@@ -30,10 +31,11 @@ export default function Kitchen(
         rot, 
         changeSettings,
         clickHandler,
-        clientContainerData
+        clientContainerData,
+        grabState
     }: KitchenProps
 ) {
-    const [grab, setGrab] = useState(false);
+    const { value: grab, setValue: setGrab } = grabState;
     const cursorPlane = useRef<THREE.Mesh>(null!);
 
     return (

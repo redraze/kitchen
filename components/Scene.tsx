@@ -37,8 +37,11 @@ export default function Scene(
         setRot(settings.rot)
     };
 
+    const [grab, setGrab] = useState(false);
+
     const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Escape') {
+            setGrab(false);
             if (recipeDataVisibility) {
                 setRecipeDataVisibility(false);
                 return;
@@ -115,6 +118,7 @@ export default function Scene(
                 changeSettings={changeSettings}
                 clickHandler={clickHandler}
                 clientContainerData={clientContainerData}
+                grabState={{ value: grab, setValue: setGrab }}
             />
         </div>
     );
