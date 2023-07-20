@@ -5,35 +5,32 @@ import { MeshPhysicalMaterial, LoopOnce } from 'three';
 
 type GLTFResult = GLTF & {
   nodes: {
-    floor: THREE.Mesh
     window: THREE.Mesh
     sink: THREE.Mesh
-    stool001: THREE.Mesh
-    stool002: THREE.Mesh
     dishWasher: THREE.Mesh
-    counter002: THREE.Mesh
+    stoveButton: THREE.Mesh
     Cube009: THREE.Mesh
     Cube009_1: THREE.Mesh
     Cube009_2: THREE.Mesh
-    counter001: THREE.Mesh
-    Cube006: THREE.Mesh
-    Cube006_1: THREE.Mesh
-    Cube006_2: THREE.Mesh
     Cube008: THREE.Mesh
     Cube008_1: THREE.Mesh
     ovenElement: THREE.Mesh
-    stoveButton: THREE.Mesh
+    stool001: THREE.Mesh
+    stool002: THREE.Mesh
+    floor: THREE.Mesh
+    Plane007: THREE.Mesh
+    Plane007_1: THREE.Mesh
+    knobs: THREE.Mesh
   }
   materials: {
-    floor: THREE.MeshPhysicalMaterial
-    window: THREE.MeshStandardMaterial
+    counterTop: THREE.MeshStandardMaterial
     metallic: THREE.MeshStandardMaterial
-    stool: THREE.MeshStandardMaterial
-    counter: THREE.MeshStandardMaterial
-    iron: THREE.MeshStandardMaterial
-    ['metallic.001']: THREE.MeshStandardMaterial
-    glass: THREE.MeshPhysicalMaterial
     button: THREE.MeshStandardMaterial
+    iron: THREE.MeshStandardMaterial
+    metallic_01: THREE.MeshStandardMaterial
+    stool: THREE.MeshStandardMaterial
+    floor: THREE.MeshStandardMaterial
+    counter: THREE.MeshStandardMaterial
   }
 };
 
@@ -70,17 +67,21 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
     <group ref={group} dispose={null}>
       <group name="Scene">
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
-        <mesh name="window" geometry={nodes.window.geometry} material={materials.window} position={[0, 3.95, -8.21]} rotation={[0, 0, 0]} scale={[-2.57, -1.36, -0.24]} />
+        <mesh name="window" geometry={nodes.window.geometry} material={materials.counterTop} position={[0, 3.95, -8.21]} rotation={[0, 0, 0]} scale={[-2.57, -1.36, -0.24]} />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="stool001" geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.7, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
         <mesh name="stool002" geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.7, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-        <mesh name="counter001" geometry={nodes.counter001.geometry} material={materials.counter} position={[5.92, 1.31, 1.23]} scale={[13.12, 1.21, 1]} />
-        <mesh name="counter002" geometry={nodes.counter002.geometry} material={materials.counter} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
+        {/* NOTE: use 0.27 for counters group scale (gltfjsx will round up to 0.3) */}
+        <group name="counters" rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={0.027}>
+          <mesh name="Plane007" geometry={nodes.Plane007.geometry} material={materials.counterTop} />
+          <mesh name="Plane007_1" geometry={nodes.Plane007_1.geometry} material={materials.counter} />
+        </group>
+        <mesh name="knobs" geometry={nodes.knobs.geometry} material={materials.metallic_01} rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={0.027} />
         <group name="stove" position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]}>
           <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={materials.metallic} />
           <mesh name="Cube009_1" geometry={nodes.Cube009_1.geometry} material={materials.iron} />
-          <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials['metallic.001']} />
+          <mesh name="Cube009_2" geometry={nodes.Cube009_2.geometry} material={materials.metallic_01} />
         </group>
         <group 
           name="ovenDoor" 
@@ -105,7 +106,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
         />
       </group>
     </group>
-  )
-}
+  );
+};
 
 useGLTF.preload(url);

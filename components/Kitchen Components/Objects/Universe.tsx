@@ -10,7 +10,7 @@ export default function Universe(props: { spaceState: stateType<boolean> }) {
     const bg = useRef<THREE.Color>(null!);
     const [light, dark] = [new Color, new Color];
     light.setRGB(0,0,0);
-    dark.setRGB(0.255, 0.678, 0.945);
+    dark.setRGB(0.354, 0.660, 0.727);
 
     const amb = useRef<THREE.AmbientLight>(null!);
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
@@ -77,7 +77,7 @@ export default function Universe(props: { spaceState: stateType<boolean> }) {
                 onClick={() => setSpace(!space)}
             >
                 <sphereGeometry args={[radius, 20, 20, phiStart, phi]} />
-                <meshPhongMaterial />
+                <meshPhongMaterial color={'yellow'}/>
             </mesh>
         </group>
         <Stars count={space ? 1000 : 0} factor={2.2} />

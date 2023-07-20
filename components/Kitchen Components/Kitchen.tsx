@@ -1,6 +1,6 @@
 import type { stateType, containerDataType } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
-import { useState, useRef, Suspense } from "react";
+import { useRef, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { Physics } from "@react-three/cannon";
