@@ -18,7 +18,10 @@ export type IngredientType = {
 export type updateDataParams = {
   id: string,
   recipes: string[],
-  info: { container: string, refrigerated: boolean },
+  info: {
+    container: string,
+    refrigerated: boolean
+  },
   value: boolean
 };
 
@@ -68,4 +71,13 @@ export type containerBoundariesType = {
   x: extremums,
   y: extremums,
   z: extremums
+};
+
+export type catagoryType = {
+  [key: string]: boolean
+};
+
+export type filterType = {
+  meal: catagoryType,
+  cuisine: catagoryType
 };

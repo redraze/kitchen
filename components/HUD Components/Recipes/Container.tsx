@@ -1,10 +1,12 @@
 import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
-import type { stateType } from 'lib/commonTypes';
+import type { stateType, filterType } from 'lib/commonTypes';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
 import Spinner from './Spinner';
 import Error from './Error';
+import Filters from './Filters';
+import { useEffect, useState } from 'react';
 
 type RecipeDataContainerProps = {
     clientRecipeData: object
@@ -23,7 +25,19 @@ export default function RecipeDataContainer(
         recipeDataVisibility
     }: RecipeDataContainerProps
 ) {
-    const calcDataMap = () => {
+    const [filters, setFilters] = useState<filterType>({ meal: {}, cuisine: {} })
+    useEffect(() =>{
+        setFilters(() => {
+            let temp: filterType = { meal: {}, cuisine: {} };
+            data?.map((item: RecipeDataTypeOutput) => {
+                temp.cuisine[item.filters.cuisine as keyof object] = false;
+                temp.meal[item.filters.meal as keyof object] = false;
+            });
+            return temp;
+        });
+    }, [data]);
+        
+    const dataMap = () => {
         if (!error && loading) {
             return <Spinner />
         } else if (!error && !loading && data) {
@@ -42,10 +56,10 @@ export default function RecipeDataContainer(
                 return b.props.cookabilityScore - a.props.cookabilityScore;
             });
             // TODO: filter dataMap
-        } else {
-            return <Error />
         };
+        return <Error />;
     };
+
     return (
         <div 
             style={ 
@@ -65,15 +79,28 @@ export default function RecipeDataContainer(
                 className={ css.wrapper }
                 style={
                     error || loading || !recipeDataVisibility.value ?
-                        { width: '140px', height: '140px', transition: '' } :
+                        { width: '140px', height: '140px', transition: 'width 0s, height 0s' } :
                         { width: '80%', height: '90vh', transition: 'width 0.5s, height 0.5s' }
                 }
             >
-                {/* <div className={ css.filters }>
-                    TODO
-                </div> */}
+                <div className={ css.filters }>
+                    { 
+                        !error && !loading && data ?
+                            Object.entries(filters).map((item, idx) => {
+                                return (
+                                    <Filters 
+                                        key={idx} 
+                                        filter={item[0]} 
+                                        catagories={item[1]}
+                                        filterState={{ value: filters, setValue: setFilters}}
+                                    />
+                                );
+                            }) :
+                            <></>
+                    }
+                </div>
                 <div className={ css.container }>
-                    { calcDataMap() }
+                    { dataMap() }
                 </div>
             </div>
         </div>
