@@ -5,9 +5,14 @@
 .info {
     display: flex;
     flex-flow: column;
+    width: 75%;
 
     h1 {
         padding-bottom: 8px;
+    }
+
+    h3 {
+        transition: opacity 0.5s;
     }
 }
 
@@ -15,4 +20,7 @@
     display: flex;
     align-items: center;
     font-size: 25px;
+    justify-content: center;
+    flex-direction: column;
+    width: 20%;
 }

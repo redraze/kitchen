@@ -26,10 +26,8 @@
         position: fixed;
         left: 50%;
         top: 50%;
-        transform: translatey(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
         border-radius: 5px;
-        max-height: 80vh;
-        min-width: 70vw;
         background: black;
         padding: 10px;
     }

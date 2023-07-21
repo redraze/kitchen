@@ -1,14 +1,19 @@
 import type { RecipeDataTypeOutput } from "lib/typeDefsExports";
+import { useState } from "react";
 import Link from "next/link"
 import css from 'styles/HUD/Recipes/Card.module.scss';
 
 type RecipeDataCardProps = {
     recipe: RecipeDataTypeOutput
-    availableIngredients: number
+    cookabilityScore: string
 }
 
-export default function RecipeDataCard({ recipe, availableIngredients }: RecipeDataCardProps) {
-    const cookabilityScore = availableIngredients / recipe.info.totalIngredients * 100;
+export default function RecipeDataCard({ recipe, cookabilityScore }: RecipeDataCardProps) {
+    const [opacity, setOpacity] = useState(0);
+    setTimeout(() => {
+        setOpacity(1);
+    }, 500);
+
     return (<>
         <Link
             className={ css.link } 
@@ -23,10 +28,11 @@ export default function RecipeDataCard({ recipe, availableIngredients }: RecipeD
         >
             <div className={ css.info }>
                 <h1>{recipe.info.name}</h1>
-                <h3>{recipe.info.description}</h3>
+                <h3 style={{ opacity: opacity }}>{recipe.info.description}</h3>
             </div>
             <div className={ css.score }>
-                Cookability: { parseFloat(cookabilityScore.toString()).toFixed(0) + '%' }
+                Cookability:
+                <span>{ cookabilityScore + '%' }</span>
             </div>
         </Link>
     </>)
