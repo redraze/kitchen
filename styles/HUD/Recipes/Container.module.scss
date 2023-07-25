@@ -68,8 +68,8 @@ $imgDimension: 35px;
             transition: height 0.5s, background-size nv.$transitionTime/2;
 
             .filterButton {
-                left: -$imgDimension * 2/3;
-                top: -$imgDimension * 2/3;
+                left: -$imgDimension * 1/3;
+                top: -$imgDimension * 1/3;
                 position: absolute;
                 border: solid 5px rgba(0, 0, 0, 0);
                 padding: 0px;
@@ -86,8 +86,6 @@ $imgDimension: 35px;
 
             button {
                 height: min-content;
-                margin: 10px;
-                padding: 5px;
                 border-radius: 3px;
                 border-width: 0px;
             }
@@ -118,7 +116,7 @@ $imgDimension: 35px;
         }
 
         .filtersWrapperActive {
-            height: 50px;
+            height: 100px;
             background-size: 20% 0.1em;
         }
 

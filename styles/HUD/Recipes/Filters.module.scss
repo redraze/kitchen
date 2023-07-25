@@ -4,21 +4,72 @@
     display: flex;
     flex-direction: column;
     margin-left: 50px;
-    transition: opacity 0.25s, margin-top 0.4s ease-in;
     justify-content: center;
     height: min-content;
+    position: relative;
 
     button {
-        padding: 5px;
+        padding: 7.5px;
+        transition: background-color 0.1s;
+
+        div {
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            padding-right: 15px;
+ 
+            span {
+                font-size: 20px;
+            }
+                
+            span::first-letter {
+                text-transform: capitalize;
+            }
+                
+            img {
+                padding-left: 10px;
+                justify-content: center;
+                align-items: center;
+                margin-left: 5px;
+                height: 30px;
+                width: 30px;
+            }
+        }
     }
 
-    button::first-letter {
-        text-transform: capitalize;
+    .buttonActive {
+        background-color: nv.$navHoverBGOpaque;
     }
 
     ul {
-        list-style: none;
+        display: flex;
+        flex-flow: column;
         z-index: 1;
+        list-style: none;
+        position: absolute;
+        top: 50%;
+        transform: translateY(25px);
+        background-color: nv.$navBackground;
+
+        li {
+            display: flex;
+            justify-content: center;
+            padding: 8px 10px 8px 10px;
+            font-size: 20px;
+            font-family: Calibri;
+            border: solid 0px white;
+            transition: border 0.25s, background-color 0.1s;
+        }
+
+        li:hover {
+            cursor: pointer;
+            background-color: nv.$navHoverBG;
+        }
+
+        .liActive {
+            border-left: solid 10px white;
+            border-right: solid 10px white;
+        }
 
         li::first-letter {
             text-transform: capitalize;

@@ -65,11 +65,10 @@ export default function RecipeDataContainer(
 
     return (
         <div 
-            style={ 
-                recipeDataVisibility.value ?
-                    { visibility: 'visible' } :
-                    { visibility: 'hidden' } 
-                }
+            style={ recipeDataVisibility.value ?
+                { visibility: 'visible' } :
+                { visibility: 'hidden' } 
+            }
             className={ css.data }
         >
             <div 
@@ -78,10 +77,9 @@ export default function RecipeDataContainer(
             ></div>
             <div
                 className={ css.container }
-                style={
-                    error || loading || !recipeDataVisibility.value ?
-                        { width: '140px', height: '140px', transition: 'width 0s, height 0s' } :
-                        { width: '80%', height: '90vh', transition: 'width 0.5s, height 0.5s' }
+                style={ error || loading || !recipeDataVisibility.value ?
+                    { width: '140px', height: '140px', transition: 'width 0s, height 0s' } :
+                    { width: '80%', height: '90vh', transition: 'width 0.5s, height 0.5s' }
                 }
             >
                 <button
@@ -92,10 +90,9 @@ export default function RecipeDataContainer(
                     <img src={'/CloseIcon.png'} alt='X' />
                 </button>
                 <div
-                    className={
-                        !filterDisplay ?
-                            css.filtersWrapper :
-                            [css.filtersWrapper, css.filtersWrapperActive].join(' ')
+                    className={ !filterDisplay ?
+                        css.filtersWrapper :
+                        [css.filtersWrapper, css.filtersWrapperActive].join(' ')
                     }
                     style={ error || loading || !recipeDataVisibility.value ? { display: 'none' } : {} }
                 >
@@ -105,7 +102,7 @@ export default function RecipeDataContainer(
                     >
                         <img src={'/FilterIcon.png'} alt='Filters:' />
                     </button>
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                         {
                             Object.entries(filters).map((item, idx) => {
                                 return (
