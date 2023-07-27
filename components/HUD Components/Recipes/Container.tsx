@@ -25,43 +25,60 @@ export default function RecipeDataContainer(
         recipeDataVisibility
     }: RecipeDataContainerProps
 ) {
-    const [filters, setFilters] = useState<filterType>({ meal: {}, cuisine: {} })
+    const [filters, setFilters] = useState<filterType>({ active: 0, meal: {}, cuisine: {} });
+    const [dataMap, setDataMap] = useState<JSX.Element[] | JSX.Element>([]);
+
+    useEffect(() => {
+        setDataMap(<Spinner />);
+    }, [recipeDataVisibility]);
+
     useEffect(() =>{
-        setFilters(() => {
-            let temp: filterType = { meal: {}, cuisine: {} };
-            data?.map((item: RecipeDataTypeOutput) => {
-                temp.cuisine[item.filters.cuisine as keyof object] = false;
-                temp.meal[item.filters.meal as keyof object] = false;
+        if (!error && !loading && data) {
+            setFilters(() => {
+                let temp: filterType = { active: 0, meal: {}, cuisine: {} };
+                data?.map((item: RecipeDataTypeOutput) => {
+                    temp.cuisine[item.filters.cuisine as keyof object] = false;
+                    temp.meal[item.filters.meal as keyof object] = false;
+                });
+                return temp;
             });
-            return temp;
-        });
+        };
+        renderDataMap();
     }, [data]);
 
-    const dataMap = () => {
-        if (!error && loading) {
-            return <Spinner />
-        } else if (!error && !loading && data) {
-            return data?.map((item: RecipeDataTypeOutput, idx: number) => {
-                const availableIngredients = clientRecipeData[item.id as keyof object];
-                const cookabilityScore = availableIngredients / item.info.totalIngredients * 100;
+    const renderDataMap = () => {
+        if (error) {
+            setDataMap(<Error />);
+            return;
+        } else if (!error && data) {
+            setDataMap(() => {
+                let temp: JSX.Element[] = data?.map((item: RecipeDataTypeOutput, idx: number) => {
+                    const availableIngredients = clientRecipeData[item.id as keyof object];
+                    const cookabilityScore = availableIngredients / item.info.totalIngredients * 100;
 
-                return (
-                    <RecipeDataCard
-                        key={idx}
-                        recipe={item}
-                        cookabilityScore={cookabilityScore.toFixed(0)}
-                    />
-                );
-            }).sort((a: JSX.Element, b: JSX.Element) => {
-                return b.props.cookabilityScore - a.props.cookabilityScore;
+                    return (
+                        <RecipeDataCard
+                            key={idx}
+                            recipe={item}
+                            cookabilityScore={ cookabilityScore.toFixed(0) }
+                            active={true}
+                        />
+                    );
+                }).sort((a: JSX.Element, b: JSX.Element) => {
+                    return b.props.cookabilityScore - a.props.cookabilityScore;
+                });
+                // TODO: filter dataMap
+                return temp;
             });
-            // TODO: filter dataMap
+            return;
         };
-        return <Error />;
+        setDataMap(<Spinner />);
     };
 
     const [filterDisplay, setFilterDisplay] = useState(false);
-    useEffect(() => { setFilterDisplay(false) }, [recipeDataVisibility.value]);
+    useEffect(() => {
+        setFilterDisplay(false);
+    }, [recipeDataVisibility.value]);
 
     return (
         <div 
@@ -105,13 +122,15 @@ export default function RecipeDataContainer(
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {
                             Object.entries(filters).map((item, idx) => {
+                                if (typeof item[1] == 'number') return;
                                 return (
                                     <Filters
                                         key={idx}
                                         filter={item[0]}
                                         catagories={item[1]}
-                                        filterState={{ value: filters, setValue: setFilters}}
+                                        filterState={{ value: filters, setValue: setFilters }}
                                         active={filterDisplay}
+                                        renderDataMap={renderDataMap}
                                     />
                                 );
                             })
@@ -119,7 +138,7 @@ export default function RecipeDataContainer(
                     </div>
                 </div>
                 <div className={ css.results }>
-                    { dataMap() }
+                    { dataMap }
                 </div>
             </div>
         </div>

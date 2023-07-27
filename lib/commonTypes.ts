@@ -78,6 +78,7 @@ export type catagoryType = {
 };
 
 export type filterType = {
+  active: number,
   meal: catagoryType,
   cuisine: catagoryType
 };

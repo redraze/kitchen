@@ -7,25 +7,26 @@ type filtersType = {
     catagories: catagoryType
     filterState: stateType<filterType>
     active: boolean
+    renderDataMap: () => void
 }
 
-export default function Filters({ filter, catagories, filterState, active }: filtersType) {
+export default function Filters({ filter, catagories, filterState, active, renderDataMap }: filtersType) {
     const [r, forceReRender] = useState(0);
     const toggleFilter = (catagory: string) => {
-        let temp = filterState.value;
+        let temp: filterType = filterState.value;
         const value = temp[filter as keyof object][catagory as keyof object];
+        value ? temp.active-- : temp.active++;
         // @ts-ignore
         temp[filter as keyof object][catagory as keyof object] = !value;
         filterState.setValue(temp);
         forceReRender(r + 1);
+        renderDataMap();
     };
 
-    const [dropDown, setDropDown] = useState(false);
-    useEffect(() => { setDropDown(false) }, [active]);
-
+    const [dropDown, setDropDown] = useState<boolean>(false);
     const buttonRef = useRef<any>();
-
     const [ulStyle, setUlStyle] = useState<CSSProperties | undefined>(undefined);
+
     useEffect(() => {
         !dropDown && buttonRef ?
             setUlStyle({ display: 'none' }) :
@@ -41,9 +42,11 @@ export default function Filters({ filter, catagories, filterState, active }: fil
             style={ active ?
                 { opacity: 1, marginTop: '0px', transition: 'opacity 0.5s ease-in, margin-top 0.4s'} :
                 { opacity: 0, marginTop: '10px', transition: 'opacity 0.1s, margin-top 1s'}
-            }>
+            }
+            onMouseOver={ () => setDropDown(true) }
+            onMouseOut={ () => setDropDown(false) }
+        >
             <button 
-                onClick={ () => setDropDown(!dropDown) }
                 className={ dropDown ? css.buttonActive : '' }
                 ref={buttonRef}
             >
