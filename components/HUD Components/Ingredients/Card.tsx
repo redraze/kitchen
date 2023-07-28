@@ -1,11 +1,16 @@
-import type { IngredientType, clientDataType, updateDataParams } from "lib/commonTypes";
+import type { 
+    IngredientType,
+    clientDataType,
+    updateDataParams,
+    voidFunc
+} from "lib/commonTypes";
 import { useState } from "react";
 import css from 'styles/HUD/Ingredients/Card.module.scss';
 
 type IngredientCardProps = {
     ingredient: IngredientType
     clientIngredientData: clientDataType
-    updateData: (params: updateDataParams) => void
+    updateData: voidFunc<updateDataParams>
 }
 
 export default function IngredientCard(

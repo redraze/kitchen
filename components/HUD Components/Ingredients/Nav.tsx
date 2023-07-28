@@ -1,6 +1,6 @@
-import type { stateType } from "lib/commonTypes";
+import type { stateType, voidFunc } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import css from "styles/HUD/Ingredients/Nav.module.scss";
 import Button from "../Button";
 import IngredientsTab from "./Tab";
@@ -9,12 +9,12 @@ import { fridgeSettings, initSettings, pantrySettings } from "lib/settings";
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
     focus: number
-    changeSettings: (params: componentSettings) => void
-    forceReRender: (params: void) => void
+    changeSettings: voidFunc<componentSettings>
+    forceReRender: voidFunc
     ingredientsNavOpen: stateType<boolean>
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
-    clickHandler: (params: componentSettings) => void
+    clickHandler: voidFunc<componentSettings>
     reRender: stateType<number>
 };
 
@@ -39,10 +39,17 @@ export default function IngredientsNav(
         };
     }, [focus]);
 
+    const [offset, setOffset] = useState<string>('-350px');
+    useEffect(() => {
+        setTimeout(() => {
+            setOffset('-300px');
+        }, 2000);
+    }, []);
+
     return (<>
         <div 
             className={ css.ingredientsNav } 
-            style={{ left: open ? '0' : '-300px' }}
+            style={{ left: open ? '0px' : offset }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
                 if (focus === initSettings.focus && !userInput) {

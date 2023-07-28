@@ -14,7 +14,7 @@ export type GroupProps = {
     children?: ReactNode
 };
 
-export default function Group({ pos, focus, snap, rotation, enabled, children }: GroupProps) {
+export default function Group({ pos, focus, rotation, enabled, children }: GroupProps) {
     const lerp = (a:number, b:number, n:number) => (1 - n) * a + n * b;
     const ref = useRef<THREE.Group>(null!)
     const { camera }: { camera: THREE.PerspectiveCamera } = useThree();

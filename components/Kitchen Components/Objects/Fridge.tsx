@@ -1,5 +1,7 @@
 import type { GLTF } from 'three-stdlib';
-import { LoopOnce, MeshPhysicalMaterial } from "three";
+import type { voidFunc } from 'lib/commonTypes';
+import type { ThreeEvent } from '@react-three/fiber';
+import { LoopOnce } from "three";
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
 
@@ -32,17 +34,11 @@ type GLTFResult = GLTF & {
 type FridgeProps = {
   position?: THREE.Vector3
   rotation?: THREE.Euler
-  onClick?: () => void
+  onClick?: voidFunc<ThreeEvent<MouseEvent>>
   active: boolean
 };
 
 const url = 'objects/fridge.gltf';
-
-const glass = new MeshPhysicalMaterial({
-  metalness: 0.5,
-  roughness: 0.1,
-  transmission: 0.98
-});
 
 export default function Fridge(props: FridgeProps) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;

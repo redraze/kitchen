@@ -9,7 +9,13 @@ type RecipeDataCardProps = {
     active: boolean
 }
 
-export default function RecipeDataCard({ recipe, cookabilityScore, active }: RecipeDataCardProps) {
+export default function RecipeDataCard(
+    {
+        recipe,
+        cookabilityScore,
+        active
+    }: RecipeDataCardProps
+) {
     const [onLoadOpacity, setonLoadOpacity] = useState(0);
     setTimeout(() => {
         setonLoadOpacity(1);
@@ -19,11 +25,10 @@ export default function RecipeDataCard({ recipe, cookabilityScore, active }: Rec
     const [height, setHeight] = useState<string>('min-height');
     useEffect(() => {
         setHeight(ref.current.clientHeight);
-    }, [ref.current]);
-
+    });
+    
     return (
         <div 
-            ref={ref}
             style={ active ?
                 {
                     opacity: '1',
@@ -38,6 +43,7 @@ export default function RecipeDataCard({ recipe, cookabilityScore, active }: Rec
             }
         >
             <Link
+                ref={ref}
                 className={ css.link }
                 href={{
                     pathname: "/recipes/[id]",

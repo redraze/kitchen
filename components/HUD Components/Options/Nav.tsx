@@ -1,21 +1,28 @@
-import type { stateType } from "lib/commonTypes";
-import { useState } from "react";
+import type { stateType, voidFunc } from "lib/commonTypes";
+import { useEffect, useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
 import Link from "next/link";
 
 type OptionsNavProps = {
-    resetData: () => void
+    resetData: voidFunc
     spaceState: stateType<boolean>
 };
 
 export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
     const [open, setOpen] = useState(false);
 
+    const [offset, setOffset] = useState<string>('-350px');
+    useEffect(() => {
+        setTimeout(() => {
+            setOffset('-300px');
+        }, 2000);
+    }, []);
+
     return (
         <div 
             className={ css.nav } 
-            style={{right: open ? '0' : '-300px'}}
+            style={{ right: open ? '0' : offset }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}    
         >

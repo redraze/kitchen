@@ -1,4 +1,9 @@
-import type { catagoryType, stateType, filterType } from "lib/commonTypes";
+import type {
+    catagoryType,
+    stateType,
+    filterType,
+    voidFunc
+} from "lib/commonTypes";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import css from 'styles/HUD/Recipes/Filters.module.scss';
 
@@ -7,10 +12,18 @@ type filtersType = {
     catagories: catagoryType
     filterState: stateType<filterType>
     active: boolean
-    renderDataMap: () => void
+    renderDataMap: voidFunc
 }
 
-export default function Filters({ filter, catagories, filterState, active, renderDataMap }: filtersType) {
+export default function Filters(
+    {
+        filter,
+        catagories,
+        filterState,
+        active,
+        renderDataMap
+    } : filtersType
+) {
     const [r, forceReRender] = useState(0);
     const toggleFilter = (catagory: string) => {
         let temp: filterType = filterState.value;

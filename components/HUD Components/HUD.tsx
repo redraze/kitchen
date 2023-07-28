@@ -1,4 +1,8 @@
-import type { stateType } from "lib/commonTypes";
+import type {
+    clientDataType,
+    stateType,
+    voidFunc
+} from "lib/commonTypes";
 import { useState } from "react";
 import css from "styles/HUD/HUD.module.scss";
 import OptionsNav from "./Options/Nav";
@@ -10,15 +14,15 @@ type HUDProps = {
     ingredients: JSX.Element[]
     focusState: stateType<number>
     spaceState: stateType<boolean>
-    changeSettings: (params: componentSettings) => void
-    clientRecipeData: object
+    changeSettings: voidFunc<componentSettings>
+    clientRecipeData: clientDataType
     recipeDataVisibility: stateType<boolean>
     ingredientsNavOpen: stateType<boolean>
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
-    clickHandler: (params: componentSettings) => void
+    clickHandler: voidFunc<componentSettings>
     reRender: stateType<number>
-    resetData: () => void
+    resetData: voidFunc
 };
 
 export default function HUD(

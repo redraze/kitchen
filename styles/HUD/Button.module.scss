@@ -1,28 +1,32 @@
-@use 'styles/foundation/buttonVariables' as bv;
 @use 'styles/foundation/navVariables' as nv;
 
+$buttonSize: 100px;
+$crossWidth: $buttonSize * 0.375;
+$borderThickness: 2.5px;
+$crossPositionalFactor: 1.8;
+
 .button {
-    height: bv.$buttonSize;
-    width: bv.$buttonSize/2;
+    height: $buttonSize;
+    width: $buttonSize/2;
     background: nv.$navBackground;
     position: absolute;
-    top: calc(50% - bv.$buttonSize/2);
-    left: bv.$buttonSize/-2;
-    border-top-left-radius: bv.$buttonSize;
-    border-bottom-left-radius: bv.$buttonSize;
+    top: calc(50% - $buttonSize/2);
+    left: $buttonSize/-2;
+    border-top-left-radius: $buttonSize;
+    border-bottom-left-radius: $buttonSize;
     cursor: pointer;
 }
 
 .cross {
     position: relative;
-    top: calc(50% - bv.$borderThickness);
-    width: bv.$crossWidth;
+    top: calc(50% - $borderThickness);
+    width: $crossWidth;
     transition: margin 0.5s;
     will-change: margin;
     
     > * {
         background-color: white;
-        border: bv.$borderThickness white solid;
+        border: $borderThickness white solid;
         border-radius: 10px;
         width: 100%;
         position: absolute;
@@ -31,11 +35,11 @@
     }
 
     :first-child {
-        top: calc(bv.$crossWidth/2*sin(90) - bv.$crossPositionalFactor*bv.$borderThickness);
+        top: calc($crossWidth/2*sin(90) - $crossPositionalFactor*$borderThickness);
     }
     
     :last-child {
-        top: calc(bv.$crossWidth/2*sin(90)*-1 + bv.$crossPositionalFactor*bv.$borderThickness);
+        top: calc($crossWidth/2*sin(90)*-1 + $crossPositionalFactor*$borderThickness);
     }
 }
 

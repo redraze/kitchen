@@ -36,7 +36,7 @@ export default function RecipeDataContainer(
         if (!error && !loading && data) {
             setFilters(() => {
                 let temp: filterType = { active: 0, meal: {}, cuisine: {} };
-                data?.map((item: RecipeDataTypeOutput) => {
+                data.map((item: RecipeDataTypeOutput) => {
                     temp.cuisine[item.filters.cuisine as keyof object] = false;
                     temp.meal[item.filters.meal as keyof object] = false;
                 });
@@ -50,9 +50,9 @@ export default function RecipeDataContainer(
         if (error) {
             setDataMap(<Error />);
             return;
-        } else if (!error && data) {
+        } else if (!error && !loading && data) {
             setDataMap(() => {
-                let temp: JSX.Element[] = data?.map((item: RecipeDataTypeOutput, idx: number) => {
+                let temp: JSX.Element[] = data.map((item: RecipeDataTypeOutput, idx: number) => {
                     const availableIngredients = clientRecipeData[item.id as keyof object];
                     const cookabilityScore = availableIngredients / item.info.totalIngredients * 100;
 
@@ -67,8 +67,33 @@ export default function RecipeDataContainer(
                 }).sort((a: JSX.Element, b: JSX.Element) => {
                     return b.props.cookabilityScore - a.props.cookabilityScore;
                 });
-                // TODO: filter dataMap
-                return temp;
+                
+                if (filters.active == 0) {
+                    return temp;
+                };
+                
+                return (
+                    temp.map((recipeElement: JSX.Element, idx: number) => {
+                        let active: boolean = false;
+                        Object.entries(recipeElement.props.recipe.filters).map(recipeFilter => {
+                            if (recipeFilter[0] == '__typename') {
+                                return;
+                            } else if (filters[recipeFilter[0] as keyof object][recipeFilter[1] as keyof object]) {
+                                active = true;
+                                return;
+                            };
+                        });
+
+                        return(
+                            <RecipeDataCard
+                                key={idx}
+                                recipe={recipeElement.props.recipe}
+                                cookabilityScore={recipeElement.props.cookabilityScore}
+                                active={active}
+                            />
+                        );
+                    })
+                );
             });
             return;
         };

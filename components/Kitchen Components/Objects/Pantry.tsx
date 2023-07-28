@@ -1,4 +1,6 @@
 import type { GLTF } from 'three-stdlib';
+import type { voidFunc } from 'lib/commonTypes';
+import type { ThreeEvent } from '@react-three/fiber';
 import { LoopOnce } from 'three';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { useEffect, useRef } from 'react';
@@ -22,7 +24,7 @@ type GLTFResult = GLTF & {
 type PantryProps = {
   position?: THREE.Vector3
   rotation?: THREE.Euler
-  onClick?: () => void
+  onClick?: voidFunc<ThreeEvent<MouseEvent>>
   active: boolean
 };
 

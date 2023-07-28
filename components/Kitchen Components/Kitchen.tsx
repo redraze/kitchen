@@ -1,4 +1,4 @@
-import type { stateType, containerDataType } from "lib/commonTypes";
+import type { stateType, containerDataType, voidFunc } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import { useRef, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -17,8 +17,8 @@ type KitchenProps = {
     focus: number
     pos: THREE.Vector3
     rot: THREE.Euler
-    changeSettings: (params: componentSettings) => void
-    clickHandler: (params: componentSettings) => void
+    changeSettings: voidFunc<componentSettings>
+    clickHandler: voidFunc<componentSettings>
     clientContainerData: containerDataType
     grabState: stateType<boolean>
 };

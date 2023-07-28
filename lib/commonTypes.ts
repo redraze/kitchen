@@ -5,6 +5,8 @@ export type stateType<T> = {
   setValue: (params: T) => void
 };
 
+export type voidFunc<T = void> = (params: T) => void;
+
 export type IngredientType = {
   _id: string
   info: {

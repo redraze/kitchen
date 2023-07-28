@@ -1,4 +1,8 @@
-import type { clientDataType, containerDataType } from "lib/commonTypes";
+import type {
+    clientDataType,
+    containerDataType,
+    voidFunc
+} from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import type { KeyboardEvent } from "react";
 import { useState, useEffect, useRef } from "react";
@@ -11,7 +15,7 @@ type SceneProps = {
     ingredients: JSX.Element[]
     clientRecipeData: clientDataType
     clientContainerData: containerDataType
-    resetData: () => void
+    resetData: voidFunc
 };
 
 export default function Scene(

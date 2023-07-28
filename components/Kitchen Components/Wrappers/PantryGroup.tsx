@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import type { stateType, categoryContainerDataType } from "lib/commonTypes";
+import type { stateType, categoryContainerDataType, voidFunc } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import { useThree, useFrame } from "@react-three/fiber";
 import { useParticle, usePlane, usePointToPointConstraint } from "@react-three/cannon";
@@ -13,7 +13,7 @@ type PantryGroupProps = {
     active: boolean
     cursorPlane: RefObject<THREE.Object3D>
     grabState: stateType<boolean>
-    clickHandler: (params: componentSettings) => void
+    clickHandler: voidFunc<componentSettings>
     containerData: categoryContainerDataType[]
 };
 

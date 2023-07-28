@@ -1,4 +1,4 @@
-import type { stateType } from "lib/commonTypes";
+import type { stateType, voidFunc } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import css from "styles/HUD/Ingredients/Tab.module.scss";
 import { initSettings } from "lib/settings";
@@ -7,7 +7,7 @@ type IngredientsTabProps = {
     ingredients: JSX.Element[]
     focus: number
     userInputState: stateType<string>
-    changeSettings: (params: componentSettings) => void
+    changeSettings: voidFunc<componentSettings>
     dataListState: stateType<(JSX.Element | undefined)[]>
     reRender: stateType<number>
 }
