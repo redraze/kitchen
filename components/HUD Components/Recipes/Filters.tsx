@@ -5,6 +5,7 @@ import type {
     voidFunc
 } from "lib/commonTypes";
 import { CSSProperties, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import css from 'styles/HUD/Recipes/Filters.module.scss';
 
 type filtersType = {
@@ -65,7 +66,12 @@ export default function Filters(
             >
                 <div>
                     <span>{ filter }</span>
-                    <img src={'/DropdownIcon.png'} alt='\/' />    
+                    <Image
+                        src={'/DropdownIcon.png'}
+                        alt='\/'
+                        height={30}
+                        width={30}
+                    />    
                 </div>
             </button>
             <ul style={ ulStyle }>

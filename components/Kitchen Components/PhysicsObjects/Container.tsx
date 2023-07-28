@@ -54,14 +54,18 @@ export default function Container({ dragProps, containerType, boundaries }: Cont
         'jar': <Jar />
     };
 
-    if (containerType) {
-        const [click, hover] = dragProps.click.constraintApi ? [
-            useClickEvents({ clickProps: dragProps.click }), 
-            useHoverEvents({ hoverProps: dragProps.hover, child: ref })
-        ] : [undefined, undefined];
+    const [click, hover] = [
+        useClickEvents({ clickProps: dragProps.click }), 
+        useHoverEvents({ hoverProps: dragProps.hover, child: ref })
+    ];
 
+    if (containerType) {
         return (
-            <mesh ref={ref} {...click} {...hover} >
+            <mesh 
+                ref={ref}
+                {...(dragProps.click.constraintApi ? click : undefined)}
+                {...(dragProps.click.constraintApi ? hover : undefined)}
+            >
                 { innerMesh[containerType] }
             </mesh>
         );

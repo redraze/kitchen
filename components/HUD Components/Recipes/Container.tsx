@@ -2,6 +2,7 @@ import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
 import type { stateType, filterType } from 'lib/commonTypes';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
 import Spinner from './Spinner';
@@ -129,7 +130,12 @@ export default function RecipeDataContainer(
                     className={ css.closeButton }
                     style={ error || loading || !recipeDataVisibility.value ? { display: 'none' } : {} }
                 >
-                    <img src={'/CloseIcon.png'} alt='X' />
+                    <Image
+                        src={'/CloseIcon.png'}
+                        alt='X'
+                        height={35 * 3/2}
+                        width={35 * 3/2}
+                    />
                 </button>
                 <div
                     className={ !filterDisplay ?
@@ -142,7 +148,12 @@ export default function RecipeDataContainer(
                         onClick={ () => setFilterDisplay(!filterDisplay) } 
                         className={ css.filterButton }
                     >
-                        <img src={'/FilterIcon.png'} alt='Filters:' />
+                        <Image
+                            src={'/FilterIcon.png'}
+                            alt='Filters:'
+                            height={35 * 3/2}    
+                            width={35 * 3/2}    
+                        />
                     </button>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {

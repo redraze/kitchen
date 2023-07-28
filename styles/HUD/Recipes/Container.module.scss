@@ -42,8 +42,8 @@ $imgDimension: 35px;
         
             img {
                 display: flex;
-                height: $imgDimension * 3/2;
-                width: $imgDimension * 3/2;
+                // height: $imgDimension * 3/2;
+                // width: $imgDimension * 3/2;
                 padding: $imgDimension / 10;
                 transition: padding 0.1s;
             }
