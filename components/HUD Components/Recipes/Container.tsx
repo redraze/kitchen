@@ -2,6 +2,7 @@ import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
 import type { stateType, filterType } from 'lib/commonTypes';
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
@@ -26,85 +27,78 @@ export default function RecipeDataContainer(
         recipeDataVisibility
     }: RecipeDataContainerProps
 ) {
-    const [filters, setFilters] = useState<filterType>({ active: 0, meal: {}, cuisine: {} });
-    const [dataMap, setDataMap] = useState<JSX.Element[] | JSX.Element>([]);
-
-    useEffect(() => {
-        setDataMap(<Spinner />);
-    }, [recipeDataVisibility]);
+    const [dataMap, setDataMap] = useState<JSX.Element[] | JSX.Element | undefined>([]);
+    useEffect(() => {  }, [recipeDataVisibility]);
+    const [filters, setFilters] = useState<filterType<string[]>>({ meal: [], cuisine: [] });
+    const [activeFilters, setActiveFilters] = useState<filterType<string>>({ meal: '', cuisine: '' });
+    const [uuidMap, setUuidMap] = useState<{[uid: string]: boolean}>({})
 
     useEffect(() =>{
-        if (!error && !loading && data) {
-            setFilters(() => {
-                let temp: filterType = { active: 0, meal: {}, cuisine: {} };
-                data.map((item: RecipeDataTypeOutput) => {
-                    temp.cuisine[item.filters.cuisine as keyof object] = false;
-                    temp.meal[item.filters.meal as keyof object] = false;
-                });
-                return temp;
-            });
-        };
-        renderDataMap();
-    }, [data]);
-
-    const renderDataMap = () => {
         if (error) {
             setDataMap(<Error />);
             return;
         } else if (!error && !loading && data) {
-            setDataMap(() => {
-                let temp: JSX.Element[] = data.map((item: RecipeDataTypeOutput, idx: number) => {
-                    const availableIngredients = clientRecipeData[item.id as keyof object];
-                    const cookabilityScore = availableIngredients / item.info.totalIngredients * 100;
+            let tempFilters: filterType<{}> = { meal: {}, cuisine: {} };
+            let tempDataMap: JSX.Element[] = [];
+            let tempUuidMap: {[uid: string]: boolean} = {};
 
-                    return (
-                        <RecipeDataCard
-                            key={idx}
-                            recipe={item}
-                            cookabilityScore={ cookabilityScore.toFixed(0) }
-                            active={true}
-                        />
-                    );
-                }).sort((a: JSX.Element, b: JSX.Element) => {
+            data.map((item: RecipeDataTypeOutput) => {
+                const uid = uuidv4();
+                tempUuidMap[uid as keyof object] = true;
+
+                const availableIngredients = clientRecipeData[item.id as keyof object];
+                const cookabilityScore = availableIngredients / item.info.totalIngredients * 100;
+                tempDataMap.push(
+                    <RecipeDataCard
+                        key={uid}
+                        recipe={item}
+                        cookabilityScore={ cookabilityScore.toFixed(0) }
+                        // active={uuidMap[uid]}
+                        active={true}
+                    />
+                );
+
+                Object.entries(item.filters).map(([filter, catagory]) => {
+                    if (filter == '__typename') return;
+                    // @ts-ignore
+                    tempFilters[filter as keyof object][catagory as keyof object] = 1;
+                });
+            });
+
+            setActiveFilters({ meal: '', cuisine: '' });
+            setFilters(() => {
+                let temp: filterType<string[]> = { meal: [], cuisine: [] }
+                Object.entries(tempFilters).map(([filter, catagories]) => {
+                    Object.entries(catagories).map(([catagory, _num]) => {
+                        // @ts-ignore
+                        temp[filter as keyof object] = [
+                            ...temp[filter as keyof object],
+                            catagory
+                        ];
+                    });
+                });
+                return temp;
+            });
+            setUuidMap(tempUuidMap);
+            setDataMap(() => {
+                return tempDataMap.sort((a: JSX.Element, b: JSX.Element) => {
                     return b.props.cookabilityScore - a.props.cookabilityScore;
                 });
-                
-                if (filters.active == 0) {
-                    return temp;
-                };
-                
-                return (
-                    temp.map((recipeElement: JSX.Element, idx: number) => {
-                        let active: boolean = false;
-                        Object.entries(recipeElement.props.recipe.filters).map(recipeFilter => {
-                            if (recipeFilter[0] == '__typename') {
-                                return;
-                            } else if (filters[recipeFilter[0] as keyof object][recipeFilter[1] as keyof object]) {
-                                active = true;
-                                return;
-                            };
-                        });
-
-                        return(
-                            <RecipeDataCard
-                                key={idx}
-                                recipe={recipeElement.props.recipe}
-                                cookabilityScore={recipeElement.props.cookabilityScore}
-                                active={active}
-                            />
-                        );
-                    })
-                );
             });
             return;
         };
         setDataMap(<Spinner />);
+    }, [data]);
+
+    const filterData = () => {
+        // TODO:    replace dataMap with a filtered dataMap
     };
 
     const [filterDisplay, setFilterDisplay] = useState(false);
-    useEffect(() => {
+    useEffect(() => { 
         setFilterDisplay(false);
-    }, [recipeDataVisibility.value]);
+        setDataMap(<Spinner />);
+    }, [recipeDataVisibility]);
 
     return (
         <div 
@@ -157,16 +151,18 @@ export default function RecipeDataContainer(
                     </button>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {
-                            Object.entries(filters).map((item, idx) => {
-                                if (typeof item[1] == 'number') return;
+                            Object.entries(filters).map(([filter, catagories], idx) => {
                                 return (
                                     <Filters
                                         key={idx}
-                                        filter={item[0]}
-                                        catagories={item[1]}
-                                        filterState={{ value: filters, setValue: setFilters }}
+                                        filter={filter}
+                                        catagories={catagories}
+                                        activeFilterState={{
+                                            value: activeFilters,
+                                            setValue: setActiveFilters
+                                        }}
+                                        filterData={filterData}
                                         active={filterDisplay}
-                                        renderDataMap={renderDataMap}
                                     />
                                 );
                             })

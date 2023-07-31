@@ -75,12 +75,7 @@ export type containerBoundariesType = {
   z: extremums
 };
 
-export type catagoryType = {
-  [key: string]: boolean
-};
-
-export type filterType = {
-  active: number,
-  meal: catagoryType,
-  cuisine: catagoryType
+export type filterType<T> = {
+  meal: T,
+  cuisine: T
 };

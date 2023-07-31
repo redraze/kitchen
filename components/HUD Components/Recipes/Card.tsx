@@ -21,12 +21,44 @@ export default function RecipeDataCard(
         setonLoadOpacity(1);
     }, 500);
 
-    const ref = useRef<any>(null!);
+    const ref = useRef<any>();
     const [height, setHeight] = useState<string>('min-height');
     useEffect(() => {
-        setHeight(ref.current.clientHeight);
+        if (ref.current) setHeight(ref.current.clientHeight);
     });
     
+    const [link, setLink] = useState<JSX.Element | undefined>(undefined);
+
+    useEffect(() => {
+        if (!active) {
+            setLink(undefined);
+        } else {
+            setLink(
+                <Link
+                    ref={ref}
+                    className={ css.link }
+                    href={{
+                        pathname: "/recipes/[id]",
+                        query: {
+                            id: recipe.id,
+                        }
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <div className={ css.info }>
+                        <h1>{recipe.info.name}</h1>
+                        <h3 style={{ opacity: onLoadOpacity }}>{recipe.info.description}</h3>
+                    </div>
+                    <div className={ css.score }>
+                        Cookability:
+                        <span>{ cookabilityScore + '%' }</span>
+                    </div>
+                </Link>
+            );
+        };
+    }, [active])
+
     return (
         <div 
             style={ active ?
@@ -42,27 +74,7 @@ export default function RecipeDataCard(
                 }
             }
         >
-            <Link
-                ref={ref}
-                className={ css.link }
-                href={{
-                    pathname: "/recipes/[id]",
-                    query: {
-                        id: recipe.id,
-                    }
-                }}
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <div className={ css.info }>
-                    <h1>{recipe.info.name}</h1>
-                    <h3 style={{ opacity: onLoadOpacity }}>{recipe.info.description}</h3>
-                </div>
-                <div className={ css.score }>
-                    Cookability:
-                    <span>{ cookabilityScore + '%' }</span>
-                </div>
-            </Link>
+            {link}
         </div>
     );
 };

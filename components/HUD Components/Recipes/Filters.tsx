@@ -1,5 +1,4 @@
 import type {
-    catagoryType,
     stateType,
     filterType,
     voidFunc
@@ -8,33 +7,32 @@ import { CSSProperties, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import css from 'styles/HUD/Recipes/Filters.module.scss';
 
-type filtersType = {
+type FiltersProps = {
     filter: string,
-    catagories: catagoryType
-    filterState: stateType<filterType>
+    catagories: string[]
+    activeFilterState: stateType<filterType<string>>
+    filterData: voidFunc
     active: boolean
-    renderDataMap: voidFunc
-}
+};
 
 export default function Filters(
     {
         filter,
         catagories,
-        filterState,
+        activeFilterState,
+        filterData,
         active,
-        renderDataMap
-    } : filtersType
+    } : FiltersProps
 ) {
     const [r, forceReRender] = useState(0);
-    const toggleFilter = (catagory: string) => {
-        let temp: filterType = filterState.value;
-        const value = temp[filter as keyof object][catagory as keyof object];
-        value ? temp.active-- : temp.active++;
-        // @ts-ignore
-        temp[filter as keyof object][catagory as keyof object] = !value;
-        filterState.setValue(temp);
+    const setCatagory = (catagory: string) => {
+        const temp = activeFilterState.value;
+        temp[filter as keyof object] == catagory ?
+            // @ts-ignore
+            temp[filter] = '' : temp[filter] = catagory
+        activeFilterState.setValue(temp);
+        filterData();
         forceReRender(r + 1);
-        renderDataMap();
     };
 
     const [dropDown, setDropDown] = useState<boolean>(false);
@@ -76,14 +74,17 @@ export default function Filters(
             </button>
             <ul style={ ulStyle }>
                 {
-                    Object.entries(catagories).map((item, idx) => {
+                    catagories.map((catagory, idx) => {
                         return (
                             <li 
                                 key={idx}
-                                onClick={ () => toggleFilter(item[0]) }
-                                className={ item[1] ? css.liActive : '' }
+                                onClick={ () => setCatagory(catagory) }
+                                className={ 
+                                    activeFilterState.value[filter as keyof object] == catagory ? 
+                                        css.liActive : '' 
+                                }
                             >
-                                { item[0] }
+                                {catagory}
                             </li>
                         );
                     })
