@@ -16,48 +16,16 @@ export default function RecipeDataCard(
         active
     }: RecipeDataCardProps
 ) {
-    const [onLoadOpacity, setonLoadOpacity] = useState(0);
-    setTimeout(() => {
-        setonLoadOpacity(1);
-    }, 500);
-
     const ref = useRef<any>();
     const [height, setHeight] = useState<string>('min-height');
     useEffect(() => {
         if (ref.current) setHeight(ref.current.clientHeight);
     });
     
-    const [link, setLink] = useState<JSX.Element | undefined>(undefined);
-
-    useEffect(() => {
-        if (!active) {
-            setLink(undefined);
-        } else {
-            setLink(
-                <Link
-                    ref={ref}
-                    className={ css.link }
-                    href={{
-                        pathname: "/recipes/[id]",
-                        query: {
-                            id: recipe.id,
-                        }
-                    }}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <div className={ css.info }>
-                        <h1>{recipe.info.name}</h1>
-                        <h3 style={{ opacity: onLoadOpacity }}>{recipe.info.description}</h3>
-                    </div>
-                    <div className={ css.score }>
-                        Cookability:
-                        <span>{ cookabilityScore + '%' }</span>
-                    </div>
-                </Link>
-            );
-        };
-    }, [active])
+    const [onLoadOpacity, setonLoadOpacity] = useState(0);
+    setTimeout(() => {
+        setonLoadOpacity(1);
+    }, 500);
 
     return (
         <div 
@@ -74,7 +42,28 @@ export default function RecipeDataCard(
                 }
             }
         >
-            {link}
+            <Link
+                ref={ref}
+                className={ css.link }
+                href={{
+                    pathname: "/recipes/[id]",
+                    query: {
+                        id: recipe.id,
+                    }
+                }}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={ active ? {visibility: 'visible'} : {visibility: 'hidden'} }
+            >
+                <div className={ css.info }>
+                    <h1>{recipe.info.name}</h1>
+                    <h3 style={{ opacity: onLoadOpacity }}>{recipe.info.description}</h3>
+                </div>
+                <div className={ css.score }>
+                    Cookability:
+                    <span>{ cookabilityScore + '%' }</span>
+                </div>
+            </Link>
         </div>
     );
 };

@@ -2,7 +2,6 @@ import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
 import type { stateType, filterType } from 'lib/commonTypes';
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image';
 import css from 'styles/HUD/Recipes/Container.module.scss';
 import RecipeDataCard from './Card';
@@ -28,10 +27,12 @@ export default function RecipeDataContainer(
     }: RecipeDataContainerProps
 ) {
     const [dataMap, setDataMap] = useState<JSX.Element[] | JSX.Element | undefined>([]);
-    useEffect(() => {  }, [recipeDataVisibility]);
     const [filters, setFilters] = useState<filterType<string[]>>({ meal: [], cuisine: [] });
     const [activeFilters, setActiveFilters] = useState<filterType<string>>({ meal: '', cuisine: '' });
-    const [uuidMap, setUuidMap] = useState<{[uid: string]: boolean}>({})
+
+    const sortByCookabilityScore = (a: JSX.Element, b: JSX.Element) => {
+        return b.props.cookabilityScore - a.props.cookabilityScore;
+    };
 
     useEffect(() =>{
         if (error) {
@@ -40,25 +41,20 @@ export default function RecipeDataContainer(
         } else if (!error && !loading && data) {
             let tempFilters: filterType<{}> = { meal: {}, cuisine: {} };
             let tempDataMap: JSX.Element[] = [];
-            let tempUuidMap: {[uid: string]: boolean} = {};
 
-            data.map((item: RecipeDataTypeOutput) => {
-                const uid = uuidv4();
-                tempUuidMap[uid as keyof object] = true;
-
-                const availableIngredients = clientRecipeData[item.id as keyof object];
-                const cookabilityScore = availableIngredients / item.info.totalIngredients * 100;
+            data.map((recipe: RecipeDataTypeOutput, idx: number) => {
+                const availableIngredients = clientRecipeData[recipe.id as keyof object];
+                const cookabilityScore = availableIngredients / recipe.info.totalIngredients * 100;
                 tempDataMap.push(
                     <RecipeDataCard
-                        key={uid}
-                        recipe={item}
+                        key={idx}
+                        recipe={recipe}
                         cookabilityScore={ cookabilityScore.toFixed(0) }
-                        // active={uuidMap[uid]}
                         active={true}
                     />
                 );
 
-                Object.entries(item.filters).map(([filter, catagory]) => {
+                Object.entries(recipe.filters).map(([filter, catagory]) => {
                     if (filter == '__typename') return;
                     // @ts-ignore
                     tempFilters[filter as keyof object][catagory as keyof object] = 1;
@@ -79,19 +75,38 @@ export default function RecipeDataContainer(
                 });
                 return temp;
             });
-            setUuidMap(tempUuidMap);
-            setDataMap(() => {
-                return tempDataMap.sort((a: JSX.Element, b: JSX.Element) => {
-                    return b.props.cookabilityScore - a.props.cookabilityScore;
-                });
-            });
+            setDataMap(tempDataMap.sort(sortByCookabilityScore));
             return;
         };
         setDataMap(<Spinner />);
     }, [data]);
 
+    const notFilteredOut = (recipeFilters: [filter: string, catagory: string][]) => {
+        return recipeFilters.every(([filter, catagory]) => {
+            if (
+                filter == '__typename' 
+                || activeFilters[filter as keyof object] == ''
+                || activeFilters[filter as keyof object] == catagory
+            ) return true;
+            return false;
+        });
+    };
+
     const filterData = () => {
-        // TODO:    replace dataMap with a filtered dataMap
+        let tempDataMap: JSX.Element[] = [];
+        data?.map((recipe: RecipeDataTypeOutput, idx: number) => {
+            const availableIngredients = clientRecipeData[recipe.id as keyof object];
+            const cookabilityScore = availableIngredients / recipe.info.totalIngredients * 100;
+            tempDataMap.push(
+                <RecipeDataCard
+                    key={idx}
+                    recipe={recipe}
+                    cookabilityScore={ cookabilityScore.toFixed(0) }
+                    active={notFilteredOut(Object.entries(recipe.filters))}
+                />
+            );
+        });
+        setDataMap(tempDataMap.sort(sortByCookabilityScore));
     };
 
     const [filterDisplay, setFilterDisplay] = useState(false);
