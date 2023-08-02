@@ -1,38 +1,40 @@
 import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
 import type { stateType, filterType } from 'lib/commonTypes';
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
+import { calcCookabilityScore, sortByCookabilityScore } from 'lib/functions';
 import Image from 'next/image';
-import css from 'styles/HUD/Recipes/Container.module.scss';
+import css from 'styles/HUD/Recipes/Results.module.scss';
 import RecipeDataCard from './Card';
 import Spinner from './Spinner';
 import Error from './Error';
 import Filters from './Filters';
 
-type RecipeDataContainerProps = {
+type ResultsProps = {
     clientRecipeData: object
     error?: ApolloError
     loading?: boolean
     data?: RecipeDataTypeOutput[] | undefined
-    recipeDataVisibility: stateType<boolean>
+    recipeDataVisibilityState: stateType<boolean>
+    recipeResultsVisibilityState: stateType<boolean>
+    setDisplayRecipe: Dispatch<SetStateAction<string>>
 };
 
-export default function RecipeDataContainer(
+export default function Results(
     { 
         clientRecipeData, 
         error, 
         loading, 
         data,
-        recipeDataVisibility
-    }: RecipeDataContainerProps
+        recipeDataVisibilityState,
+        recipeResultsVisibilityState,
+        setDisplayRecipe
+    }: ResultsProps
 ) {
     const [dataMap, setDataMap] = useState<JSX.Element[] | JSX.Element | undefined>([]);
     const [filters, setFilters] = useState<filterType<string[]>>({ meal: [], cuisine: [] });
     const [activeFilters, setActiveFilters] = useState<filterType<string>>({ meal: '', cuisine: '' });
-
-    const sortByCookabilityScore = (a: JSX.Element, b: JSX.Element) => {
-        return b.props.cookabilityScore - a.props.cookabilityScore;
-    };
 
     useEffect(() =>{
         if (error) {
@@ -40,25 +42,29 @@ export default function RecipeDataContainer(
             return;
         } else if (!error && !loading && data) {
             let tempFilters: filterType<{}> = { meal: {}, cuisine: {} };
-            let tempDataMap: JSX.Element[] = [];
+            setDataMap(() => {
+                return data.map((recipe: RecipeDataTypeOutput, idx: number) => {
+                    Object.entries(recipe.filters).map(([filter, catagory]) => {
+                        if (filter == '__typename') return;
+                        // @ts-ignore
+                        tempFilters[filter as keyof object][catagory as keyof object] = 1;
+                    });
 
-            data.map((recipe: RecipeDataTypeOutput, idx: number) => {
-                const availableIngredients = clientRecipeData[recipe.id as keyof object];
-                const cookabilityScore = availableIngredients / recipe.info.totalIngredients * 100;
-                tempDataMap.push(
-                    <RecipeDataCard
-                        key={idx}
-                        recipe={recipe}
-                        cookabilityScore={ cookabilityScore.toFixed(0) }
-                        active={true}
-                    />
-                );
-
-                Object.entries(recipe.filters).map(([filter, catagory]) => {
-                    if (filter == '__typename') return;
-                    // @ts-ignore
-                    tempFilters[filter as keyof object][catagory as keyof object] = 1;
-                });
+                    return (
+                        <RecipeDataCard
+                            key={idx}
+                            recipe={recipe}
+                            cookabilityScore={ calcCookabilityScore(
+                                clientRecipeData[recipe.id as keyof object],
+                                recipe.info.totalIngredients
+                            )}
+                            active={true}
+                            setDisplayRecipe={setDisplayRecipe}
+                            recipeDataVisibilityState={recipeDataVisibilityState}
+                            recipeResultsVisibilityState={recipeResultsVisibilityState}
+                        />
+                    );
+                }).sort(sortByCookabilityScore);
             });
 
             setActiveFilters({ meal: '', cuisine: '' });
@@ -75,7 +81,6 @@ export default function RecipeDataContainer(
                 });
                 return temp;
             });
-            setDataMap(tempDataMap.sort(sortByCookabilityScore));
             return;
         };
         setDataMap(<Spinner />);
@@ -93,51 +98,54 @@ export default function RecipeDataContainer(
     };
 
     const filterData = () => {
-        let tempDataMap: JSX.Element[] = [];
-        data?.map((recipe: RecipeDataTypeOutput, idx: number) => {
-            const availableIngredients = clientRecipeData[recipe.id as keyof object];
-            const cookabilityScore = availableIngredients / recipe.info.totalIngredients * 100;
-            tempDataMap.push(
-                <RecipeDataCard
-                    key={idx}
-                    recipe={recipe}
-                    cookabilityScore={ cookabilityScore.toFixed(0) }
-                    active={notFilteredOut(Object.entries(recipe.filters))}
-                />
-            );
+        setDataMap(() => {
+            return data?.map((recipe: RecipeDataTypeOutput, idx: number) => {
+                return (
+                    <RecipeDataCard
+                        key={idx}
+                        recipe={recipe}
+                        cookabilityScore={ calcCookabilityScore(
+                            clientRecipeData[recipe.id as keyof object],
+                            recipe.info.totalIngredients
+                        )}
+                        active={notFilteredOut(Object.entries(recipe.filters))}
+                        setDisplayRecipe={setDisplayRecipe}
+                        recipeDataVisibilityState={recipeDataVisibilityState}
+                        recipeResultsVisibilityState={recipeResultsVisibilityState}
+                    />
+                );
+            }).sort(sortByCookabilityScore);
         });
-        setDataMap(tempDataMap.sort(sortByCookabilityScore));
     };
+
+    const { value: resultsVis, setValue: setResultsVis } = recipeResultsVisibilityState;
 
     const [filterDisplay, setFilterDisplay] = useState(false);
     useEffect(() => { 
         setFilterDisplay(false);
         setDataMap(<Spinner />);
-    }, [recipeDataVisibility]);
+    }, [recipeResultsVisibilityState]);
 
     return (
         <div 
-            style={ recipeDataVisibility.value ?
-                { visibility: 'visible' } :
-                { visibility: 'hidden' } 
-            }
+            style={ resultsVis ? { visibility: 'visible' } : { visibility: 'hidden' } }
             className={ css.data }
         >
             <div 
                 className={ css.screen }
-                onClick={ () => recipeDataVisibility.setValue(!recipeDataVisibility.value) }
+                onClick={ () => setResultsVis(!resultsVis) }
             ></div>
             <div
                 className={ css.container }
-                style={ error || loading || !recipeDataVisibility.value ?
+                style={ !resultsVis ?
                     { width: '140px', height: '140px', transition: 'width 0s, height 0s' } :
                     { width: '80%', height: '90vh', transition: 'width 0.5s, height 0.5s' }
                 }
             >
                 <button
-                    onClick={ () => recipeDataVisibility.setValue(false) }
+                    onClick={ () => setResultsVis(false) }
                     className={ css.closeButton }
-                    style={ error || loading || !recipeDataVisibility.value ? { display: 'none' } : {} }
+                    style={ !resultsVis ? { display: 'none' } : {} }
                 >
                     <Image
                         src={'/CloseIcon.png'}
@@ -151,7 +159,7 @@ export default function RecipeDataContainer(
                         css.filtersWrapper :
                         [css.filtersWrapper, css.filtersWrapperActive].join(' ')
                     }
-                    style={ error || loading || !recipeDataVisibility.value ? { display: 'none' } : {} }
+                    style={ !resultsVis ? { display: 'none' } : {} }
                 >
                     <button 
                         onClick={ () => setFilterDisplay(!filterDisplay) } 
@@ -184,7 +192,7 @@ export default function RecipeDataContainer(
                         }
                     </div>
                 </div>
-                <div className={ css.results }>
+                <div className={ css.results } >
                     { dataMap }
                 </div>
             </div>

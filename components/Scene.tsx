@@ -29,6 +29,7 @@ export default function Scene(
     const [space, setSpace] = useState(false);
     const [focus, setFocus] = useState(initSettings.focus);
     const [recipeDataVisibility, setRecipeDataVisibility] = useState(false);
+    const [recipeResultsVisibility, setRecipeResultsVisibility] = useState(false);
     const [ingredientsNavOpen, setIngredientsNavOpen] = useState(false);
     const [userInput, setUserInput] = useState('')
 
@@ -46,8 +47,14 @@ export default function Scene(
     const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Escape') {
             setGrab(false);
-            if (recipeDataVisibility) {
-                setRecipeDataVisibility(false);
+            // if (recipeDataVisibility) {
+            //     setRecipeDataVisibility(false);
+            //     setRecipeResultsVisibility(true);
+            //     // changeSettings(initSettings);
+            //     return;
+            // };
+            if (recipeResultsVisibility) {
+                setRecipeResultsVisibility(false);
                 return;
             };
             if (userInput) {
@@ -100,11 +107,15 @@ export default function Scene(
                 focusState={{value: focus, setValue: setFocus}}
                 changeSettings={changeSettings}
                 clientRecipeData={clientRecipeData}
-                recipeDataVisibility={{
+                recipeDataVisibilityState={{
                     value: recipeDataVisibility, 
                     setValue: setRecipeDataVisibility
                 }}
-                ingredientsNavOpen={{
+                recipeResultsVisibilityState={{
+                    value: recipeResultsVisibility, 
+                    setValue: setRecipeResultsVisibility
+                }}
+                ingredientsNavOpenState={{
                     value: ingredientsNavOpen,
                     setValue: setIngredientsNavOpen
                 }}

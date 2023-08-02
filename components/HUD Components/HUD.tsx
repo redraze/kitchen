@@ -16,8 +16,9 @@ type HUDProps = {
     spaceState: stateType<boolean>
     changeSettings: voidFunc<componentSettings>
     clientRecipeData: clientDataType
-    recipeDataVisibility: stateType<boolean>
-    ingredientsNavOpen: stateType<boolean>
+    recipeDataVisibilityState: stateType<boolean>
+    recipeResultsVisibilityState: stateType<boolean>
+    ingredientsNavOpenState: stateType<boolean>
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
     clickHandler: voidFunc<componentSettings>
@@ -32,8 +33,9 @@ export default function HUD(
         spaceState, 
         changeSettings,
         clientRecipeData,
-        recipeDataVisibility,
-        ingredientsNavOpen,
+        recipeDataVisibilityState,
+        recipeResultsVisibilityState,
+        ingredientsNavOpenState,
         userInputState,
         dataListState,
         clickHandler,
@@ -65,7 +67,7 @@ export default function HUD(
                 focus={focusState.value}
                 changeSettings={changeSettings}
                 forceReRender={forceReRender}
-                ingredientsNavOpen={ingredientsNavOpen}
+                ingredientsNavOpenState={ingredientsNavOpenState}
                 userInputState={userInputState}
                 dataListState={dataListState}
                 clickHandler={clickHandler}
@@ -74,7 +76,8 @@ export default function HUD(
             <RecipesNav
                 clientRecipeData={clientRecipeData}
                 buttonVisibility={buttonVisibility}
-                recipeDataVisibility={recipeDataVisibility}
+                recipeDataVisibilityState={recipeDataVisibilityState}
+                recipeResultsVisibilityState={recipeResultsVisibilityState}
             />
         </div>
     );

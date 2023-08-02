@@ -2,19 +2,23 @@ import type { clientDataType, stateType } from "lib/commonTypes";
 import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
 import css from 'styles/HUD/Recipes/Nav.module.scss';
-import RecipeDataContainer from "./Container";
+import Results from "./Results";
+import RecipeData from "./RecipeData";
+import { useState } from "react";
 
 type RecipeRequestTabProps = {
     clientRecipeData: clientDataType
     buttonVisibility: boolean
-    recipeDataVisibility: stateType<boolean>
+    recipeDataVisibilityState: stateType<boolean>
+    recipeResultsVisibilityState: stateType<boolean>
 };
 
 export default function RecipeRequestTab(
     { 
         clientRecipeData, 
         buttonVisibility,
-        recipeDataVisibility
+        recipeDataVisibilityState,
+        recipeResultsVisibilityState
     }: RecipeRequestTabProps
 ) {
     //  useMutation is used here instead of useQuery in order to make
@@ -22,7 +26,7 @@ export default function RecipeRequestTab(
     const [recipeSearch, { error, data, loading }] = useMutation(RECIPE_SEARCH);
 
     const handler = async () => {
-        recipeDataVisibility.setValue(true);
+        recipeResultsVisibilityState.setValue(true);
         try {
             await recipeSearch({ 
                 variables: { 
@@ -42,6 +46,8 @@ export default function RecipeRequestTab(
         };
     };
 
+    const [displayRecipe, setDisplayRecipe] = useState<string>('');
+
     return (<>
         <button
             style={ buttonVisibility ?
@@ -52,12 +58,19 @@ export default function RecipeRequestTab(
         >
             <span>Find Recipes!</span>
         </button>
-        <RecipeDataContainer
+        <Results
             clientRecipeData={clientRecipeData}
             error={error}
             data={data?.recipeSearch}
             loading={loading}
-            recipeDataVisibility={recipeDataVisibility}
+            recipeDataVisibilityState={recipeDataVisibilityState}
+            recipeResultsVisibilityState={recipeResultsVisibilityState}
+            setDisplayRecipe={setDisplayRecipe}
+        />
+        <RecipeData 
+            recipeDataVisibilityState={recipeDataVisibilityState}
+            recipeResultsVisibilityState={recipeResultsVisibilityState}
+            displayRecipe={displayRecipe}
         />
     </>);
 };

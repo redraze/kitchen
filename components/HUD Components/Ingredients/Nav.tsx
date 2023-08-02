@@ -11,7 +11,7 @@ type IngredientsNavProps = {
     focus: number
     changeSettings: voidFunc<componentSettings>
     forceReRender: voidFunc
-    ingredientsNavOpen: stateType<boolean>
+    ingredientsNavOpenState: stateType<boolean>
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
     clickHandler: voidFunc<componentSettings>
@@ -24,7 +24,7 @@ export default function IngredientsNav(
         focus, 
         changeSettings,
         forceReRender,
-        ingredientsNavOpen,
+        ingredientsNavOpenState,
         userInputState,
         dataListState,
         clickHandler,
@@ -32,7 +32,7 @@ export default function IngredientsNav(
     }: IngredientsNavProps
 ) {
     const {value: userInput} = userInputState;
-    const {value: open, setValue: setOpen} = ingredientsNavOpen;
+    const {value: open, setValue: setOpen} = ingredientsNavOpenState;
     useEffect(() => {
         if (focus !== initSettings.focus) {
             setOpen(true);
@@ -58,7 +58,7 @@ export default function IngredientsNav(
             }}
             onClick={() => forceReRender()}
         >
-            <Button openState={ingredientsNavOpen} left/>
+            <Button openState={ingredientsNavOpenState} left />
             <IngredientsTab 
                 ingredients={ingredients}
                 focus={focus}

@@ -2,7 +2,7 @@ import type { stateType, voidFunc } from "lib/commonTypes";
 import { useEffect, useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
-import Link from "next/link";
+// import Link from "next/link";
 
 type OptionsNavProps = {
     resetData: voidFunc
@@ -28,7 +28,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
         >
             <Button openState={{value: open, setValue: setOpen}}/>
             <ul>
-                <li>
+                {/* <li>
                     <Link
                         className={ css.link }
                         href={{ pathname: "/recipes/" }}
@@ -37,7 +37,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                     >
                         <span>All Recipes</span>
                     </Link>
-                </li>
+                </li> */}
                 <li onClick={() => resetData()}>
                     <span>Reset Ingredients</span>
                 </li>
@@ -45,14 +45,14 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                     <span>Space!</span>
                 </li>
                 <li>
-                  <Link
+                    {/* <Link
                         className={ css.link }
                         href={{ pathname: "about" }}
                         target="_blank"
                         rel="noopener noreferrer"
-                    >
+                    > */}
                         <span>About</span>
-                    </Link>
+                    {/* </Link> */}
                 </li>
             </ul>
         </div>

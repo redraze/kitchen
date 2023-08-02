@@ -149,3 +149,12 @@ export const updateIngredientData = ({ data, id, action }: updateIngredientDataT
             return data;
     };
 };
+
+export const calcCookabilityScore = (available: number, total: number) => {
+    const score = available / total * 100;
+    return score.toFixed(0)
+};
+
+export const sortByCookabilityScore = (a: JSX.Element, b: JSX.Element) => {
+    return b.props.cookabilityScore - a.props.cookabilityScore;
+};

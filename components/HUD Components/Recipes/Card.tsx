@@ -1,19 +1,27 @@
 import type { RecipeDataTypeOutput } from "lib/typeDefsExports";
+import type { Dispatch, SetStateAction } from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link"
 import css from 'styles/HUD/Recipes/Card.module.scss';
+import { stateType } from "lib/commonTypes";
 
 type RecipeDataCardProps = {
     recipe: RecipeDataTypeOutput
     cookabilityScore: string
     active: boolean
+    setDisplayRecipe: Dispatch<SetStateAction<string>>
+    recipeDataVisibilityState: stateType<boolean>,
+    recipeResultsVisibilityState: stateType<boolean>
 }
 
 export default function RecipeDataCard(
     {
         recipe,
         cookabilityScore,
-        active
+        active,
+        setDisplayRecipe,
+        recipeDataVisibilityState,
+        recipeResultsVisibilityState
     }: RecipeDataCardProps
 ) {
     const ref = useRef<any>();
@@ -26,6 +34,12 @@ export default function RecipeDataCard(
     setTimeout(() => {
         setonLoadOpacity(1);
     }, 500);
+
+    const handler = () => {
+        setDisplayRecipe(recipe.id);
+        recipeDataVisibilityState.setValue(true);
+        recipeResultsVisibilityState.setValue(false);
+    };
 
     return (
         <div 
@@ -54,6 +68,7 @@ export default function RecipeDataCard(
                 target="_blank"
                 rel="noopener noreferrer"
                 style={ active ? {visibility: 'visible'} : {visibility: 'hidden'} }
+                onClick={ (e) => { e.preventDefault(), handler() } }
             >
                 <div className={ css.info }>
                     <h1>{recipe.info.name}</h1>
