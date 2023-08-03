@@ -1,7 +1,13 @@
 import type { ApolloError } from '@apollo/client';
 import type { RecipeDataTypeOutput } from 'lib/typeDefsExports';
-import type { stateType, filterType } from 'lib/commonTypes';
+import type {
+    stateType,
+    filterType,
+    voidFunc,
+    clientDataType
+} from 'lib/commonTypes';
 import type { Dispatch, SetStateAction } from 'react';
+import type { componentSettings } from 'lib/settings';
 import { useEffect, useState } from 'react';
 import { calcCookabilityScore, sortByCookabilityScore } from 'lib/functions';
 import Image from 'next/image';
@@ -12,13 +18,14 @@ import Error from './Error';
 import Filters from './Filters';
 
 type ResultsProps = {
-    clientRecipeData: object
+    clientRecipeData: clientDataType
     error?: ApolloError
     loading?: boolean
     data?: RecipeDataTypeOutput[] | undefined
     recipeDataVisibilityState: stateType<boolean>
     recipeResultsVisibilityState: stateType<boolean>
     setDisplayRecipe: Dispatch<SetStateAction<string>>
+    changeSettings: voidFunc<componentSettings>
 };
 
 export default function Results(
@@ -29,7 +36,8 @@ export default function Results(
         data,
         recipeDataVisibilityState,
         recipeResultsVisibilityState,
-        setDisplayRecipe
+        setDisplayRecipe,
+        changeSettings
     }: ResultsProps
 ) {
     const [dataMap, setDataMap] = useState<JSX.Element[] | JSX.Element | undefined>([]);
@@ -62,6 +70,7 @@ export default function Results(
                             setDisplayRecipe={setDisplayRecipe}
                             recipeDataVisibilityState={recipeDataVisibilityState}
                             recipeResultsVisibilityState={recipeResultsVisibilityState}
+                            changeSettings={changeSettings}
                         />
                     );
                 }).sort(sortByCookabilityScore);
@@ -112,6 +121,7 @@ export default function Results(
                         setDisplayRecipe={setDisplayRecipe}
                         recipeDataVisibilityState={recipeDataVisibilityState}
                         recipeResultsVisibilityState={recipeResultsVisibilityState}
+                        changeSettings={changeSettings}
                     />
                 );
             }).sort(sortByCookabilityScore);

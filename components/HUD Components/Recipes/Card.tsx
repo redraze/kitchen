@@ -1,9 +1,12 @@
 import type { RecipeDataTypeOutput } from "lib/typeDefsExports";
-import type { Dispatch, SetStateAction } from "react";
-import { useEffect, useRef, useState } from "react";
+import type { stateType, voidFunc } from "lib/commonTypes";
+import {
+    type Dispatch, type SetStateAction,
+    useEffect, useRef, useState
+} from "react";
+import { stoveSettings, type componentSettings } from "lib/settings";
 import Link from "next/link"
 import css from 'styles/HUD/Recipes/Card.module.scss';
-import { stateType } from "lib/commonTypes";
 
 type RecipeDataCardProps = {
     recipe: RecipeDataTypeOutput
@@ -12,6 +15,7 @@ type RecipeDataCardProps = {
     setDisplayRecipe: Dispatch<SetStateAction<string>>
     recipeDataVisibilityState: stateType<boolean>,
     recipeResultsVisibilityState: stateType<boolean>
+    changeSettings: voidFunc<componentSettings>
 }
 
 export default function RecipeDataCard(
@@ -21,7 +25,8 @@ export default function RecipeDataCard(
         active,
         setDisplayRecipe,
         recipeDataVisibilityState,
-        recipeResultsVisibilityState
+        recipeResultsVisibilityState,
+        changeSettings
     }: RecipeDataCardProps
 ) {
     const ref = useRef<any>();
@@ -39,6 +44,7 @@ export default function RecipeDataCard(
         setDisplayRecipe(recipe.id);
         recipeDataVisibilityState.setValue(true);
         recipeResultsVisibilityState.setValue(false);
+        changeSettings(stoveSettings);
     };
 
     return (

@@ -1,10 +1,15 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
-import type { componentSettings } from "lib/settings";
 import { useEffect, useState } from "react";
 import css from "styles/HUD/Ingredients/Nav.module.scss";
 import Button from "../Button";
 import IngredientsTab from "./Tab";
-import { fridgeSettings, initSettings, pantrySettings } from "lib/settings";
+import {
+    type componentSettings,
+    initSettings,
+    fridgeSettings,
+    pantrySettings,
+    stoveSettings
+} from "lib/settings";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
@@ -34,7 +39,7 @@ export default function IngredientsNav(
     const {value: userInput} = userInputState;
     const {value: open, setValue: setOpen} = ingredientsNavOpenState;
     useEffect(() => {
-        if (focus !== initSettings.focus) {
+        if (focus == fridgeSettings.focus || focus == pantrySettings.focus) {
             setOpen(true);
         };
     }, [focus]);
@@ -52,7 +57,10 @@ export default function IngredientsNav(
             style={{ left: open ? '0px' : offset }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
-                if (focus === initSettings.focus && !userInput) {
+                if (
+                    (focus == initSettings.focus || focus == stoveSettings.focus)
+                    && !userInput
+                ) {
                     setOpen(false);
                 };
             }}

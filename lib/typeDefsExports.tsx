@@ -10,7 +10,7 @@ type recipeFiltersOutput = {
     cuisine: string
 };
 
-type recipeIngredientsOutput = {
+export type recipeIngredientsOutput = {
     id: string
     name: string
     amount: string

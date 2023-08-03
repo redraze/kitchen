@@ -29,6 +29,12 @@ export const pantrySettings: componentSettings = {
     rot: new Euler(0,Math.PI/2,0)
 };
 
+export const stoveSettings: componentSettings = {
+    focus: 3,
+    pos: new Vector3(-5.7,2.8,-1.1),
+    rot: new Euler(0,Math.PI/2,0)
+}
+
 // Limit the number of containers rendered within each physics instance
 export const containerLimit: number = 30;
 

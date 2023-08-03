@@ -78,6 +78,7 @@ export default function HUD(
                 buttonVisibility={buttonVisibility}
                 recipeDataVisibilityState={recipeDataVisibilityState}
                 recipeResultsVisibilityState={recipeResultsVisibilityState}
+                changeSettings={changeSettings}
             />
         </div>
     );

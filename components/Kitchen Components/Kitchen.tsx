@@ -1,4 +1,8 @@
-import type { stateType, containerDataType, voidFunc } from "lib/commonTypes";
+import type {
+    stateType,
+    containerDataType,
+    voidFunc
+} from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import { useRef, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -10,7 +14,12 @@ import Lights from "./Objects/Lights";
 import FridgeGroup from "./Wrappers/FridgeGroup";
 import PantryGroup from "./Wrappers/PantryGroup";
 import Universe from "./Objects/Universe";
-import { initSettings, fridgeSettings, pantrySettings } from "lib/settings";
+import {
+    initSettings,
+    fridgeSettings,
+    pantrySettings,
+    stoveSettings
+} from "lib/settings";
 
 type KitchenProps = {
     spaceState: stateType<boolean>
@@ -46,7 +55,11 @@ export default function Kitchen(
                 position: initSettings.pos, 
                 rotation: initSettings.camRot
             }}
-            onPointerMissed={() => changeSettings(initSettings)}
+            onPointerMissed={() => {
+                if (focus !== stoveSettings.focus) {
+                    changeSettings(initSettings);
+                };
+            }}
         >
             <Suspense>
                 <ControlGroup

@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from "react";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
-import { initSettings, fridgeSettings, pantrySettings } from "lib/settings";
+import { initSettings, fridgeSettings, pantrySettings, stoveSettings } from "lib/settings";
 
 type SceneProps = {
     ingredients: JSX.Element[]
@@ -47,12 +47,12 @@ export default function Scene(
     const handleKeyPress = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Escape') {
             setGrab(false);
-            // if (recipeDataVisibility) {
-            //     setRecipeDataVisibility(false);
-            //     setRecipeResultsVisibility(true);
-            //     // changeSettings(initSettings);
-            //     return;
-            // };
+            if (recipeDataVisibility) {
+                setRecipeDataVisibility(false);
+                setRecipeResultsVisibility(true);
+                changeSettings(initSettings);
+                return;
+            };
             if (recipeResultsVisibility) {
                 setRecipeResultsVisibility(false);
                 return;
@@ -83,6 +83,7 @@ export default function Scene(
 
     const [dataList, setDataList] = useState<(JSX.Element | undefined)[]>([]);
     const clickHandler = (settings: componentSettings) => {
+        if (focus == stoveSettings.focus) return;
         setUserInput('');
         if (focus === settings.focus) {
             changeSettings(initSettings);

@@ -1,3 +1,80 @@
-.data {
+@use 'styles/foundation/navVariables' as nv;
+
+.name {
     display: flex;
+    position: fixed;
+    // background-color: nv.$navBackground;
+    background-color: black;
+    visibility: visible;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 30px;
+    padding: 10px;
+    padding-bottom: 15px;
+    border-radius: 3px;
+    font-family: calibri;
+    font-size: 40px;
+
+    span {
+        background: linear-gradient(white, white) bottom / 0.1em no-repeat;
+        background-size: 0% 0.1em;
+        transition: background-size 0.25s;
+        padding: 10px;
+    }
+}
+
+.ingredients {
+    right: 10%;
+    width: 23vw;
+
+    ul {
+        list-style: circle;
+    }
+}
+
+.instructions {
+    left: 5%;
+    width: 30vw;
+    
+    ul {
+        list-style: decimal;
+        line-height: 1.2em;
+    }
+}
+
+.list {
+    // background-color: nv.$navBackground;
+    background-color: black;
+    display: flex;
+    position: fixed;
+    height: 65vh;
+    top: 55%;
+    transform: translateY(-50%);
+    border-radius: 3px;
+    overflow: auto;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    font-family: calibri;
+
+    span {
+        justify-content: center;
+        display: flex;
+        margin-bottom: 50px;
+        font-size: 40px;
+        background: linear-gradient(white, white) bottom / 0.1em no-repeat;
+        transition: background-size 0.25s;
+        padding-bottom: 10px;
+    }
+
+    ul {
+        font-family: calibri;
+        font-size: 20px;
+        padding-left: 25px;
+
+        li {
+            padding-bottom: 40px;
+            padding-left: 15px;
+        }
+    }
 }

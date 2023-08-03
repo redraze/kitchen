@@ -1,4 +1,5 @@
-import type { clientDataType, stateType } from "lib/commonTypes";
+import type { clientDataType, stateType, voidFunc } from "lib/commonTypes";
+import type { componentSettings } from "lib/settings";
 import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
 import css from 'styles/HUD/Recipes/Nav.module.scss';
@@ -11,6 +12,7 @@ type RecipeRequestTabProps = {
     buttonVisibility: boolean
     recipeDataVisibilityState: stateType<boolean>
     recipeResultsVisibilityState: stateType<boolean>
+    changeSettings: voidFunc<componentSettings>
 };
 
 export default function RecipeRequestTab(
@@ -18,7 +20,8 @@ export default function RecipeRequestTab(
         clientRecipeData, 
         buttonVisibility,
         recipeDataVisibilityState,
-        recipeResultsVisibilityState
+        recipeResultsVisibilityState,
+        changeSettings
     }: RecipeRequestTabProps
 ) {
     //  useMutation is used here instead of useQuery in order to make
@@ -66,8 +69,10 @@ export default function RecipeRequestTab(
             recipeDataVisibilityState={recipeDataVisibilityState}
             recipeResultsVisibilityState={recipeResultsVisibilityState}
             setDisplayRecipe={setDisplayRecipe}
+            changeSettings={changeSettings}
         />
         <RecipeData 
+            clientRecipeData={clientRecipeData}
             recipeDataVisibilityState={recipeDataVisibilityState}
             recipeResultsVisibilityState={recipeResultsVisibilityState}
             displayRecipe={displayRecipe}
