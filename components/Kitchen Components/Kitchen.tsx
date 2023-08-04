@@ -27,7 +27,7 @@ type KitchenProps = {
     pos: THREE.Vector3
     rot: THREE.Euler
     changeSettings: voidFunc<componentSettings>
-    clickHandler: voidFunc<componentSettings>
+    updateSettings: voidFunc<componentSettings>
     clientContainerData: containerDataType
     grabState: stateType<boolean>
 };
@@ -39,7 +39,7 @@ export default function Kitchen(
         pos, 
         rot, 
         changeSettings,
-        clickHandler,
+        updateSettings,
         clientContainerData,
         grabState
     }: KitchenProps
@@ -78,7 +78,7 @@ export default function Kitchen(
                     />
                     <Physics gravity={[0, spaceState.value ? 0 : -9.8, 0]}>
                         <FridgeGroup 
-                            clickHandler={clickHandler}
+                            updateSettings={updateSettings}
                             active={focus === fridgeSettings.focus ? true : false}
                             grabState={{ value: grab, setValue: setGrab }}
                             cursorPlane={cursorPlane}
@@ -87,7 +87,7 @@ export default function Kitchen(
                     </Physics>
                     <Physics gravity={[0, spaceState.value ? 0 : -9.8, 0]}>
                         <PantryGroup 
-                            clickHandler={clickHandler}
+                            updateSettings={updateSettings}
                             active={focus === pantrySettings.focus ? true : false}
                             grabState={{ value: grab, setValue: setGrab }}
                             cursorPlane={cursorPlane}

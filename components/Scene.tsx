@@ -14,6 +14,7 @@ import { initSettings, fridgeSettings, pantrySettings, stoveSettings } from "lib
 type SceneProps = {
     ingredients: JSX.Element[]
     clientRecipeData: clientDataType
+    clientIngredientData: clientDataType
     clientContainerData: containerDataType
     resetData: voidFunc
 };
@@ -22,6 +23,7 @@ export default function Scene(
     {
         ingredients,
         clientRecipeData,
+        clientIngredientData,
         clientContainerData,
         resetData
     }: SceneProps
@@ -82,7 +84,7 @@ export default function Scene(
     }, [ingredients]);
 
     const [dataList, setDataList] = useState<(JSX.Element | undefined)[]>([]);
-    const clickHandler = (settings: componentSettings) => {
+    const updateSettings = (settings: componentSettings) => {
         if (focus == stoveSettings.focus) return;
         setUserInput('');
         if (focus === settings.focus) {
@@ -108,6 +110,7 @@ export default function Scene(
                 focusState={{value: focus, setValue: setFocus}}
                 changeSettings={changeSettings}
                 clientRecipeData={clientRecipeData}
+                clientIngredientData={clientIngredientData}
                 recipeDataVisibilityState={{
                     value: recipeDataVisibility, 
                     setValue: setRecipeDataVisibility
@@ -122,7 +125,7 @@ export default function Scene(
                 }}
                 userInputState={{value: userInput, setValue: setUserInput}}
                 dataListState={{value: dataList, setValue: setDataList}}
-                clickHandler={clickHandler}
+                updateSettings={updateSettings}
                 reRender={{ value: render, setValue: setRender }}
                 resetData={resetData}
             />
@@ -132,7 +135,7 @@ export default function Scene(
                 pos={pos}
                 rot={rot}
                 changeSettings={changeSettings}
-                clickHandler={clickHandler}
+                updateSettings={updateSettings}
                 clientContainerData={clientContainerData}
                 grabState={{ value: grab, setValue: setGrab }}
             />

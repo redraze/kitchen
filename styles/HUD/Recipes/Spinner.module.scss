@@ -1,7 +1,9 @@
+@use 'styles/foundation/navVariables' as nv;
+
 .lds_dual_ring {
     display: inline-block;
-    width: 80px;
-    height: 80px;
+    width: nv.$spinnerDim;
+    height: nv.$spinnerDim;
     margin: auto;
     display: flex;
     align-items: center;

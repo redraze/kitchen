@@ -1,5 +1,5 @@
 import type { clientDataType, stateType, voidFunc } from "lib/commonTypes";
-import type { componentSettings } from "lib/settings";
+import { initSettings, type componentSettings } from "lib/settings";
 import { useMutation } from "@apollo/client";
 import { RECIPE_SEARCH } from 'lib/mutations';
 import css from 'styles/HUD/Recipes/Nav.module.scss';
@@ -8,19 +8,23 @@ import RecipeData from "./RecipeData";
 import { useState } from "react";
 
 type RecipeRequestTabProps = {
+    clientIngredientData: clientDataType
     clientRecipeData: clientDataType
     buttonVisibility: boolean
     recipeDataVisibilityState: stateType<boolean>
     recipeResultsVisibilityState: stateType<boolean>
+    ingredientsNavOpenState: stateType<boolean>
     changeSettings: voidFunc<componentSettings>
 };
 
 export default function RecipeRequestTab(
-    { 
+    {
+        clientIngredientData,
         clientRecipeData, 
         buttonVisibility,
         recipeDataVisibilityState,
         recipeResultsVisibilityState,
+        ingredientsNavOpenState,
         changeSettings
     }: RecipeRequestTabProps
 ) {
@@ -29,7 +33,9 @@ export default function RecipeRequestTab(
     const [recipeSearch, { error, data, loading }] = useMutation(RECIPE_SEARCH);
 
     const handler = async () => {
+        changeSettings(initSettings);
         recipeResultsVisibilityState.setValue(true);
+        ingredientsNavOpenState.setValue(false);
         try {
             await recipeSearch({ 
                 variables: { 
@@ -57,7 +63,7 @@ export default function RecipeRequestTab(
                 {transform: 'translateX(-50%) translateY(-20%)'} :
                 {transform: 'translateX(-50%) translateY(100%)'} }
             className={ css.search }
-            onClick={() => handler()}
+            onClick={ () => handler() }
         >
             <span>Find Recipes!</span>
         </button>
@@ -72,7 +78,7 @@ export default function RecipeRequestTab(
             changeSettings={changeSettings}
         />
         <RecipeData 
-            clientRecipeData={clientRecipeData}
+            clientIngredientData={clientIngredientData}
             recipeDataVisibilityState={recipeDataVisibilityState}
             recipeResultsVisibilityState={recipeResultsVisibilityState}
             displayRecipe={displayRecipe}

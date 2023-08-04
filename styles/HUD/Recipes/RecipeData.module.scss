@@ -1,7 +1,6 @@
 @use 'styles/foundation/navVariables' as nv;
 
 .name {
-    display: flex;
     position: fixed;
     // background-color: nv.$navBackground;
     background-color: black;
@@ -24,8 +23,8 @@
 }
 
 .ingredients {
-    right: 10%;
-    width: 23vw;
+    right: 5%;
+    width: 400px;
 
     ul {
         list-style: circle;
@@ -34,7 +33,7 @@
 
 .instructions {
     left: 5%;
-    width: 30vw;
+    width: 400px;
     
     ul {
         list-style: decimal;
@@ -45,7 +44,6 @@
 .list {
     // background-color: nv.$navBackground;
     background-color: black;
-    display: flex;
     position: fixed;
     height: 65vh;
     top: 55%;
@@ -53,7 +51,6 @@
     border-radius: 3px;
     overflow: auto;
     padding: 40px;
-    display: flex;
     flex-direction: column;
     font-family: calibri;
 

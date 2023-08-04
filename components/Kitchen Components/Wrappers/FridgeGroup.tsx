@@ -13,7 +13,7 @@ type FridgeGroupProps = {
     active: boolean
     cursorPlane: RefObject<THREE.Object3D>
     grabState: stateType<boolean>
-    clickHandler: voidFunc<componentSettings>
+    updateSettings: voidFunc<componentSettings>
     containerData: categoryContainerDataType[]
 };
 
@@ -22,7 +22,7 @@ export default function FridgeGroup(
         active,
         cursorPlane, 
         grabState, 
-        clickHandler,
+        updateSettings,
         containerData
     }: FridgeGroupProps
 ) {
@@ -61,7 +61,7 @@ export default function FridgeGroup(
     return (<>
         <group rotation={fridgeSettings.rot} position={fridgeSettings.pos} >
             <Fridge
-                onClick={() => {if (!grabState.value) clickHandler(fridgeSettings)}}
+                onClick={() => {if (!grabState.value) updateSettings(fridgeSettings)}}
                 active={active}
             />
             <group visible={false} >

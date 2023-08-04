@@ -131,10 +131,6 @@ export default function Results(
     const { value: resultsVis, setValue: setResultsVis } = recipeResultsVisibilityState;
 
     const [filterDisplay, setFilterDisplay] = useState(false);
-    useEffect(() => { 
-        setFilterDisplay(false);
-        setDataMap(<Spinner />);
-    }, [recipeResultsVisibilityState]);
 
     return (
         <div 
@@ -202,7 +198,12 @@ export default function Results(
                         }
                     </div>
                 </div>
-                <div className={ css.results } >
+                <div 
+                    className={ css.results } 
+                    style={ recipeResultsVisibilityState.value ? 
+                        {display: ''} : {display: 'none'}
+                    }
+                >
                     { dataMap }
                 </div>
             </div>

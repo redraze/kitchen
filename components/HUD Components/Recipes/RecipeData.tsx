@@ -7,7 +7,7 @@ import css from 'styles/HUD/Recipes/RecipeData.module.scss';
 import Spinner from "./Spinner";
 
 type RecipeDataProps = {
-    clientRecipeData: clientDataType
+    clientIngredientData: clientDataType
     recipeDataVisibilityState: stateType<boolean>
     recipeResultsVisibilityState: stateType<boolean>
     displayRecipe: string
@@ -15,7 +15,7 @@ type RecipeDataProps = {
 
 export default function RecipeData(
     {
-        clientRecipeData,
+        clientIngredientData,
         recipeDataVisibilityState,
         recipeResultsVisibilityState,
         displayRecipe
@@ -44,12 +44,54 @@ export default function RecipeData(
         }
     }, [displayRecipe]);
 
+    const mapIngredients = (recipe: RecipeTypeOutput) => {
+        let have: JSX.Element[] = [];
+        let haveNot: JSX.Element[] = [];
+
+        recipe.ingredients.map((ingredient: recipeIngredientsOutput, idx: number) => {
+            if (Boolean(clientIngredientData[ingredient.id as keyof object])) {
+                have.push(
+                    <li key={idx} >
+                        { ingredient.amount } { ingredient.name }
+                    </li>
+                );
+            } else {
+                haveNot.push(
+                    (<li key={idx} style={{ color: 'red' }}>
+                        {ingredient.amount} { ingredient.name}
+                    </li>)
+                );
+            };
+        });
+
+        return (<>
+            <ul>{ have }</ul>
+            <ul>{ haveNot }</ul>
+        </>);
+    };
+
+    const mapInstructions = (recipe: RecipeTypeOutput) => {
+        let instructionsList: JSX.Element[] = [];
+
+        recipe.info.instructions.map((instruction: string, idx: number) => {
+            instructionsList.push(
+                <li key={idx} >
+                    {instruction}
+                </li>
+            );
+        });
+
+        return(<ul>
+            { instructionsList }
+        </ul>);
+    };;
+
     const {value: vis, setValue: setVis} = recipeDataVisibilityState;
 
     return (<>
         <div
-            className={css.name}
-            style={ vis ? {visibility: 'visible'} : {visibility: 'hidden'} }
+            className={ css.name }
+            style={ vis ? {display: 'flex'} : {display: 'none'} }
         >
             <span
                 style={ !error && !loading && data ?
@@ -64,8 +106,8 @@ export default function RecipeData(
         </div>
 
         <div
-            className={[css.ingredients, css.list].join(' ')}
-            style={ vis ? {visibility: 'visible'} : {visibility: 'hidden'} }
+            className={ [css.ingredients, css.list].join(' ') }
+            style={ vis ? {display: 'flex'} : {display: 'none'} }
         >
             <span
                 style={ !error && !loading && data ?
@@ -76,20 +118,13 @@ export default function RecipeData(
                 { !error && !loading && data ? 'Ingredients' : '' }
             </span>
             { error ? <p>Error!</p> :
-                !loading && data ? 
-                    <ul>{
-                            data.recipe.ingredients.map((ingredient: recipeIngredientsOutput) => {
-                                return (<li>
-                                    {ingredient.amount} { ingredient.name}
-                                </li>);
-                            })
-                    }</ul> : <Spinner />
+                !loading && data ? mapIngredients(data.recipe) : <Spinner /> 
             }
         </div>
 
         <div
-            className={[css.instructions, css.list].join(' ')}
-            style={ vis ? {visibility: 'visible'} : {visibility: 'hidden'} }
+            className={ [css.instructions, css.list].join(' ') }
+            style={ vis ? {display: 'flex'} : {display: 'none'} }
         >
             <span
                 style={ !error && !loading && data ? 
@@ -100,14 +135,7 @@ export default function RecipeData(
                 { !error && !loading && data ? 'Instructions' : '' }
             </span>
             { error ? <p>Error!</p> :
-                !loading && data ? 
-                    <ul>{
-                    data.recipe.info.instructions.map((instruction: string) => {
-                        return (<li>
-                            {instruction}
-                        </li>);
-                    })
-                }</ul> : <Spinner />
+                !loading && data ? mapInstructions(data.recipe) : <Spinner />
             }
         </div>
     </>);

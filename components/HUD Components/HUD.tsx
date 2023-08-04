@@ -3,12 +3,12 @@ import type {
     stateType,
     voidFunc
 } from "lib/commonTypes";
-import { useState } from "react";
+import type { componentSettings } from "lib/settings";
+import { useEffect, useState } from "react";
 import css from "styles/HUD/HUD.module.scss";
 import OptionsNav from "./Options/Nav";
 import IngredientsNav from "./Ingredients/Nav";
 import RecipesNav from "./Recipes/Nav";
-import { componentSettings } from "lib/settings";
 
 type HUDProps = {
     ingredients: JSX.Element[]
@@ -16,12 +16,13 @@ type HUDProps = {
     spaceState: stateType<boolean>
     changeSettings: voidFunc<componentSettings>
     clientRecipeData: clientDataType
+    clientIngredientData: clientDataType
     recipeDataVisibilityState: stateType<boolean>
     recipeResultsVisibilityState: stateType<boolean>
     ingredientsNavOpenState: stateType<boolean>
     userInputState: stateType<string>
     dataListState: stateType<(JSX.Element | undefined)[]>
-    clickHandler: voidFunc<componentSettings>
+    updateSettings: voidFunc<componentSettings>
     reRender: stateType<number>
     resetData: voidFunc
 };
@@ -33,28 +34,35 @@ export default function HUD(
         spaceState, 
         changeSettings,
         clientRecipeData,
+        clientIngredientData,
         recipeDataVisibilityState,
         recipeResultsVisibilityState,
         ingredientsNavOpenState,
         userInputState,
         dataListState,
-        clickHandler,
+        updateSettings,
         reRender,
         resetData
     }: HUDProps
 ) {
     //  Force RecipeNavButton to re-render when clientRecipeData changes
     const [buttonVisibility, setButtonVisibility] = useState(false);
+
     const forceReRender = () => {
-        if (JSON.stringify(clientRecipeData) !== JSON.stringify({})) {
-            setButtonVisibility(true);
-        } else {
+        if (
+            recipeDataVisibilityState.value 
+            || recipeResultsVisibilityState.value
+            || JSON.stringify(clientRecipeData) == JSON.stringify({})
+        ) {
             setButtonVisibility(false);
+            return;
         };
+        setButtonVisibility(true);
     };
-    setTimeout(() => {
+
+    useEffect(() => {
         forceReRender();
-    }, 3000)
+    }, [recipeDataVisibilityState, recipeResultsVisibilityState]);
     
     return (
         <div className={ css.HUD }>
@@ -70,14 +78,16 @@ export default function HUD(
                 ingredientsNavOpenState={ingredientsNavOpenState}
                 userInputState={userInputState}
                 dataListState={dataListState}
-                clickHandler={clickHandler}
+                updateSettings={updateSettings}
                 reRender={reRender}
             />
             <RecipesNav
+                clientIngredientData={clientIngredientData}
                 clientRecipeData={clientRecipeData}
                 buttonVisibility={buttonVisibility}
                 recipeDataVisibilityState={recipeDataVisibilityState}
                 recipeResultsVisibilityState={recipeResultsVisibilityState}
+                ingredientsNavOpenState={ingredientsNavOpenState}
                 changeSettings={changeSettings}
             />
         </div>

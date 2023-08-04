@@ -127,6 +127,7 @@ export default function Index({ ingredients }: { ingredients: string }) {
     <Scene 
       ingredients={ingredientsMap}
       clientRecipeData={clientRecipeData.current}
+      clientIngredientData={clientIngredientData.current}
       clientContainerData={clientContainerData.current}
       resetData={resetData}
     />

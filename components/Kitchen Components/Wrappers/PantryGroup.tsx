@@ -13,7 +13,7 @@ type PantryGroupProps = {
     active: boolean
     cursorPlane: RefObject<THREE.Object3D>
     grabState: stateType<boolean>
-    clickHandler: voidFunc<componentSettings>
+    updateSettings: voidFunc<componentSettings>
     containerData: categoryContainerDataType[]
 };
 
@@ -22,7 +22,7 @@ export default function PantryGroup(
         active,
         cursorPlane, 
         grabState, 
-        clickHandler,
+        updateSettings,
         containerData
     }: PantryGroupProps
 ) {
@@ -62,7 +62,7 @@ export default function PantryGroup(
     return (<>
         <group rotation={pantrySettings.rot} position={pantrySettings.pos} >
             <Pantry
-                onClick={() => {if (!grabState.value) clickHandler(pantrySettings)}}
+                onClick={() => {if (!grabState.value) updateSettings(pantrySettings)}}
                 active={active}
             />
             <group visible={false} >
