@@ -8,6 +8,7 @@
     background: nv.$navBackground;
     transition: right nv.$transitionTime;
     will-change: right;
+    z-index: 2;
 
     ul {
         width: 100%;

@@ -21,6 +21,7 @@ type IngredientsNavProps = {
     dataListState: stateType<(JSX.Element | undefined)[]>
     updateSettings: voidFunc<componentSettings>
     reRender: stateType<number>
+    recipeDataVisibility: boolean
 };
 
 export default function IngredientsNav(
@@ -33,7 +34,8 @@ export default function IngredientsNav(
         userInputState,
         dataListState,
         updateSettings,
-        reRender
+        reRender,
+        recipeDataVisibility,
     }: IngredientsNavProps
 ) {
     const {value: userInput} = userInputState;
@@ -53,8 +55,8 @@ export default function IngredientsNav(
 
     return (<>
         <div 
-            className={ css.ingredientsNav } 
-            style={{ left: open ? '0px' : offset }}
+            className={ css.ingredientsNav }
+            style={{ left: open ? '0px' : !recipeDataVisibility ? offset : '-400px' }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
                 if (

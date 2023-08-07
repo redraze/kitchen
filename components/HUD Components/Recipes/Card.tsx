@@ -33,7 +33,7 @@ export default function RecipeDataCard(
     const [height, setHeight] = useState<string>('min-height');
     useEffect(() => {
         if (ref.current) setHeight(ref.current.clientHeight);
-    });
+    }, []);
     
     const [onLoadOpacity, setonLoadOpacity] = useState(0);
     setTimeout(() => {
