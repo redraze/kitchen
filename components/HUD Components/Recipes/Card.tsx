@@ -5,7 +5,6 @@ import {
     useEffect, useRef, useState
 } from "react";
 import { stoveSettings, type componentSettings } from "lib/settings";
-import Link from "next/link"
 import css from 'styles/HUD/Recipes/Card.module.scss';
 
 type RecipeDataCardProps = {
@@ -48,7 +47,7 @@ export default function RecipeDataCard(
     };
 
     return (
-        <div 
+        <div
             style={ active ?
                 {
                     opacity: '1',
@@ -62,19 +61,11 @@ export default function RecipeDataCard(
                 }
             }
         >
-            <Link
+            <div
                 ref={ref}
                 className={ css.link }
-                href={{
-                    pathname: "/recipes/[id]",
-                    query: {
-                        id: recipe.id,
-                    }
-                }}
-                target="_blank"
-                rel="noopener noreferrer"
                 style={ active ? {visibility: 'visible'} : {visibility: 'hidden'} }
-                onClick={ (e) => { e.preventDefault(), handler() } }
+                onClick={ () => handler() }
             >
                 <div className={ css.info }>
                     <h1>{recipe.info.name}</h1>
@@ -84,7 +75,7 @@ export default function RecipeDataCard(
                     Cookability:
                     <span>{ cookabilityScore + '%' }</span>
                 </div>
-            </Link>
+            </div>
         </div>
     );
 };

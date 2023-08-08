@@ -1,5 +1,32 @@
 @use 'styles/foundation/navVariables' as nv;
 
+.closeButton {
+    position: absolute;
+    left: -50px;
+    top: -25px;
+    border-radius: 5px;
+    border: none;
+    background-color: nv.$navHoverBGOpaque;
+    height: 50px;
+    width: 60px;
+
+    img {
+        display: flex;
+        padding: nv.$imgDimension / 10;
+        transition: padding 0.1s;
+        position: relative;
+        left: 6px;
+    }
+}
+
+.closeButton:hover {
+    cursor: pointer;
+
+    img {
+        padding: 0px;
+    }
+}
+
 .name {
     position: fixed;
     // background-color: nv.$navBackground;

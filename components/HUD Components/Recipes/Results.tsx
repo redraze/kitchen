@@ -129,8 +129,13 @@ export default function Results(
     };
 
     const { value: resultsVis, setValue: setResultsVis } = recipeResultsVisibilityState;
-
     const [filterDisplay, setFilterDisplay] = useState(false);
+
+    useEffect(() => {
+        if (!resultsVis) setFilterDisplay(false);
+        setActiveFilters({ meal: '', cuisine: '' });
+        filterData();
+    }, [resultsVis]);
 
     return (
         <div 

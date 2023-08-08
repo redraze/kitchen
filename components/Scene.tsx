@@ -95,7 +95,7 @@ export default function Scene(
 
         if (settings === fridgeSettings) setDataList(fridgeMap.current);
         if (settings === pantrySettings) setDataList(pantryMap.current);
-    }
+    };
 
     const [render, setRender] = useState(0);
     return (

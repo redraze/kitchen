@@ -1,5 +1,4 @@
 @use 'styles/foundation/navVariables' as nv;
-$imgDimension: 35px;
 
 .error {
     display: flex;
@@ -34,17 +33,17 @@ $imgDimension: 35px;
 
         .closeButton {
             position: absolute;
-            right: -$imgDimension * 2;
-            top: $imgDimension * 2/3;
+            right: nv.$imgDimension * -2;
+            top: nv.$imgDimension * 2/3;
             border-radius: 100%;
             border: none;
             background-color: #ff0001;
         
             img {
                 display: flex;
-                // height: $imgDimension * 3/2;
-                // width: $imgDimension * 3/2;
-                padding: $imgDimension / 10;
+                // height: nv.$imgDimension * 3/2;
+                // width: nv.$imgDimension * 3/2;
+                padding: nv.$imgDimension / 10;
                 transition: padding 0.1s;
             }
         }
@@ -68,8 +67,8 @@ $imgDimension: 35px;
             transition: height 0.5s, background-size nv.$transitionTime/2;
 
             .filterButton {
-                left: -$imgDimension * 1/3;
-                top: -$imgDimension * 1/3;
+                left: nv.$imgDimension * -1/3;
+                top: nv.$imgDimension * -1/3;
                 position: absolute;
                 border: solid 5px rgba(0, 0, 0, 0);
                 padding: 0px;
@@ -96,8 +95,8 @@ $imgDimension: 35px;
     
             img {
                 display: flex;
-                height: $imgDimension;
-                width: $imgDimension;
+                height: nv.$imgDimension;
+                width: nv.$imgDimension;
                 padding: 2px;
                 transition: padding 0.2s;
             }
@@ -110,7 +109,7 @@ $imgDimension: 35px;
 
             .filtersActive {
                 display: flex;
-                // height: calc($imgDimension);
+                // height: calc(nv.$imgDimension);
                 // transition: height 0.5s;
             }
         }
@@ -127,17 +126,6 @@ $imgDimension: 35px;
             padding: 20px;
             overflow: auto;
             height: 100%;
-
-            a {
-                justify-content: space-between;
-                padding: 20px;
-                width: 100%;
-                border-radius: 5px;
-            }
-
-            a:hover {
-                background-color: nv.$navHoverBG;
-            }
         }
     }
 }

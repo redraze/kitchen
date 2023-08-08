@@ -19,6 +19,10 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
         }, 2000);
     }, []);
 
+    const aboutHandler = () => {
+        
+    };
+
     return (
         <div 
             className={ css.nav } 
@@ -38,21 +42,14 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                         <span>All Recipes</span>
                     </Link>
                 </li> */}
-                <li onClick={() => resetData()}>
+                <li onClick={ () => resetData() }>
                     <span>Reset Ingredients</span>
                 </li>
-                <li onClick={() => spaceState.setValue(!spaceState.value)}>
+                <li onClick={ () => spaceState.setValue(!spaceState.value) }>
                     <span>Space!</span>
                 </li>
-                <li>
-                    {/* <Link
-                        className={ css.link }
-                        href={{ pathname: "about" }}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    > */}
-                        <span>About</span>
-                    {/* </Link> */}
+                <li onClick={ () => aboutHandler() }>
+                    <span>About</span>
                 </li>
             </ul>
         </div>

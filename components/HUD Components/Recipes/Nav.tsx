@@ -82,6 +82,7 @@ export default function RecipeRequestTab(
             recipeDataVisibilityState={recipeDataVisibilityState}
             recipeResultsVisibilityState={recipeResultsVisibilityState}
             displayRecipe={displayRecipe}
+            changeSettings={changeSettings}
         />
     </>);
 };

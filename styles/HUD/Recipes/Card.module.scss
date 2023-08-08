@@ -1,5 +1,15 @@
+@use 'styles/foundation/navVariables' as nv;
+
 .link {
     display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.link:hover {
+    background-color: nv.$navHoverBG;
 }
 
 .info {
