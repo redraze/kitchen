@@ -68,9 +68,11 @@ export default function Kitchen(
                     rotation={rot}
                     enabled={!grab}
                 >
-                    <Level/>
+                    <Physics gravity={[0, spaceState.value ? 0 : -9.8, 0]}>
+                        <Level/>
+                    </Physics>
                     <Lights 
-                        spaceState={spaceState}
+                        space={spaceState.value}
                         positions={[
                             new Vector3(-5,7,2),
                             new Vector3(2,7,-4),

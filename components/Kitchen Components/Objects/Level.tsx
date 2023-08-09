@@ -1,7 +1,10 @@
 import type { GLTF } from 'three-stdlib';
 import { useRef, useEffect, useState } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
-import { MeshPhysicalMaterial, LoopOnce } from 'three';
+import { Vector3, MeshPhysicalMaterial, LoopOnce } from 'three';
+import Plane from '../PhysicsObjects/Plane';
+import Stool from '../PhysicsObjects/Stool';
+import StoolBoundaries from '../Wrappers/StoolBoundaries';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -63,14 +66,30 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
     transmission: 0.98
   });
 
-  return (
+  return (<>
+    <Plane position={[0, 0.1, 0]} />
     <group ref={group} dispose={null}>
       <group name="Scene">
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
         <mesh name="window" geometry={nodes.window.geometry} material={materials.counterTop} position={[0, 3.95, -8.21]} rotation={[0, 0, 0]} scale={[-2.57, -1.36, -0.24]} />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-        <mesh name="stool001" geometry={nodes.stool001.geometry} material={materials.stool} position={[6.86, 1.7, -0.28]} rotation={[-Math.PI, 0, -Math.PI]} scale={[-0.52, -0.08, -0.39]} />
-        <mesh name="stool002" geometry={nodes.stool002.geometry} material={materials.stool} position={[7.16, 1.7, -3.86]} rotation={[Math.PI, -0.44, Math.PI]} scale={[-0.52, -0.08, -0.39]} />
+        <Stool
+          name="stool001"
+          geometry={nodes.stool001.geometry}
+          material={materials.stool}
+          scale={new Vector3(-0.52, -0.08, -0.39)}
+          position={[6.86, 1.05, -0.28]}
+          rotation={[-Math.PI, 0, -Math.PI]}
+        />
+        <Stool
+          name="stool002"
+          geometry={nodes.stool002.geometry}
+          material={materials.stool}
+          scale={new Vector3(-0.52, -0.08, -0.39)}
+          position={[7.16, 1.05, -3.86]}
+          rotation={[Math.PI, -0.44, Math.PI]}
+        />
+        <StoolBoundaries />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         {/* NOTE: use 0.27 for counters group scale (gltfjsx will round up to 0.3) */}
         <group name="counters" rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={0.027}>
@@ -106,7 +125,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
         />
       </group>
     </group>
-  );
+  </>);
 };
 
 useGLTF.preload(url);
