@@ -32,7 +32,7 @@ export default function Scene(
     const [focus, setFocus] = useState(initSettings.focus);
     const [recipeDataVisibility, setRecipeDataVisibility] = useState(false);
     const [recipeResultsVisibility, setRecipeResultsVisibility] = useState(false);
-    const [ingredientsNavOpen, setIngredientsNavOpen] = useState(false);
+    const [ingredientsNavOpen, setIngredientsNavOpen] = useState(true);
     const [userInput, setUserInput] = useState('')
 
     // position and rotation for the control group component
