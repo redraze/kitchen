@@ -111,7 +111,7 @@ export default function RecipeData(
                 style={ vis ? {display: 'flex'} : {display: 'none'} }
             >
                 <Image
-                    src={'/BackIcon.png'}
+                    src={'/Icons/Back.png'}
                     alt='X'
                     height={35 * 4/3}
                     width={35 * 4/3}

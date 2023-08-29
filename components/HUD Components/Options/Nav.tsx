@@ -54,7 +54,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                 onMouseLeave={() => setResetCheck(false)}
             >
                 <Image
-                    src={'/BingChilling.gif'}
+                    src={'/Icons/BingChilling.gif'}
                     alt='Are you sure about that?'
                     height={35 * 3}
                     width={35 * 3}
@@ -65,7 +65,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                     onClick={() => resetData()}
                 >
                     <Image
-                        src={'/ConfirmIcon.png'}
+                        src={'/Icons/Confirm.png'}
                         alt='✓'
                         height={35 * 3/2}
                         width={35 * 3/2}
@@ -76,7 +76,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                     onClick={() => setResetCheck(false)}
                 >
                     <Image
-                        src={'/CloseIcon.png'}
+                        src={'/Icons/Close.png'}
                         alt='X'
                         height={35 * 3/2}
                         width={35 * 3/2}

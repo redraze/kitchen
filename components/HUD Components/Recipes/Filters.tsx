@@ -65,7 +65,7 @@ export default function Filters(
                 <div>
                     <span>{ filter }</span>
                     <Image
-                        src={'/DropdownIcon.png'}
+                        src={'/Icons/Dropdown.png'}
                         alt='\/'
                         height={30}
                         width={30}

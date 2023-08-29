@@ -159,7 +159,7 @@ export default function Results(
                     style={ !resultsVis ? { display: 'none' } : {} }
                 >
                     <Image
-                        src={'/CloseIcon.png'}
+                        src={'/Icons/Close.png'}
                         alt='X'
                         height={35 * 3/2}
                         width={35 * 3/2}
@@ -177,7 +177,7 @@ export default function Results(
                         className={ css.filterButton }
                     >
                         <Image
-                            src={'/FilterIcon.png'}
+                            src={'/Icons/Filter.png'}
                             alt='Filters:'
                             height={35 * 3/2}    
                             width={35 * 3/2}    
