@@ -6,13 +6,22 @@ import Plane from '../PhysicsObjects/Plane';
 import Stool from '../PhysicsObjects/Stool';
 import LevelBoundaries from '../Wrappers/LevelBoundaries';
 import Pot from '../PhysicsObjects/Pot';
-import { Debug } from '@react-three/cannon';
 
 type GLTFResult = GLTF & {
   nodes: {
-    window: THREE.Mesh
-    sink: THREE.Mesh
-    dishWasher: THREE.Mesh
+    mug0: THREE.Mesh
+    mug1: THREE.Mesh
+    plate0: THREE.Mesh
+    plate1: THREE.Mesh
+    plate2: THREE.Mesh
+    Circle003: THREE.Mesh
+    Circle003_1: THREE.Mesh
+    wineGlass0: THREE.Mesh
+    wineGlass1: THREE.Mesh
+    glass0: THREE.Mesh
+    glass1: THREE.Mesh
+    Cylinder004: THREE.Mesh
+    Cylinder004_1: THREE.Mesh
     stoveButton: THREE.Mesh
     Cube009: THREE.Mesh
     Cube009_1: THREE.Mesh
@@ -20,34 +29,44 @@ type GLTFResult = GLTF & {
     Cube008: THREE.Mesh
     Cube008_1: THREE.Mesh
     ovenElement: THREE.Mesh
+    cuttingBoard: THREE.Mesh
+    Plane: THREE.Mesh
+    Plane_1: THREE.Mesh
+    Plane003: THREE.Mesh
+    Plane003_1: THREE.Mesh
+    Cube006: THREE.Mesh
+    Cube006_1: THREE.Mesh
+    Cylinder: THREE.Mesh
+    Cylinder_1: THREE.Mesh
+    Cylinder001: THREE.Mesh
+    Cylinder001_1: THREE.Mesh
     stool001: THREE.Mesh
     stool002: THREE.Mesh
     floor: THREE.Mesh
     Plane007: THREE.Mesh
     Plane007_1: THREE.Mesh
     knobs: THREE.Mesh
-    Cube006: THREE.Mesh
-    Cube006_1: THREE.Mesh
-    Cylinder: THREE.Mesh
-    Cylinder_1: THREE.Mesh
-    Plane: THREE.Mesh
-    Plane_1: THREE.Mesh
-    cuttingBoard: THREE.Mesh
-    Plane003: THREE.Mesh
-    Plane003_1: THREE.Mesh
-    Cylinder001: THREE.Mesh
-    Cylinder001_1: THREE.Mesh
+    shelves: THREE.Mesh
+    window: THREE.Mesh
+    sink: THREE.Mesh
+    dishWasher: THREE.Mesh
   }
   materials: {
-    counterTop: THREE.MeshStandardMaterial
-    metallic: THREE.MeshStandardMaterial
-    button: THREE.MeshStandardMaterial
-    iron: THREE.MeshStandardMaterial
+    mug: THREE.MeshStandardMaterial
+    plate: THREE.MeshStandardMaterial
     metallic_01: THREE.MeshStandardMaterial
-    stool: THREE.MeshStandardMaterial
+    black: THREE.MeshStandardMaterial
+    glass: THREE.MeshPhysicalMaterial
+    plantPot: THREE.MeshStandardMaterial
+    soil: THREE.MeshStandardMaterial
+    button: THREE.MeshStandardMaterial
+    metallic: THREE.MeshStandardMaterial
+    iron: THREE.MeshStandardMaterial
     floor: THREE.MeshStandardMaterial
-    counter: THREE.MeshStandardMaterial
     copper: THREE.MeshStandardMaterial
+    stool: THREE.MeshStandardMaterial
+    counterTop: THREE.MeshStandardMaterial
+    counter: THREE.MeshStandardMaterial
   }
 };
 
@@ -139,6 +158,11 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           <mesh name="Plane003" geometry={nodes.Plane003.geometry} material={materials.metallic} />
           <mesh name="Plane003_1" geometry={nodes.Plane003_1.geometry} material={materials.floor} />
         </group>
+        <mesh name="shelves" geometry={nodes.shelves.geometry} material={nodes.shelves.material} position={[4.73, 4.34, -7.59]} scale={[1.69, 1, 0.38]} />
+        <group name="flowerPot" position={[5.65, 4.83, -7.59]} scale={[0.17, 0.31, 0.17]}>
+          <mesh name="Cylinder004" geometry={nodes.Cylinder004.geometry} material={materials.plantPot} />
+          <mesh name="Cylinder004_1" geometry={nodes.Cylinder004_1.geometry} material={materials.soil} />
+        </group>
 
         {/* physics objects */}
         <Pot
@@ -168,6 +192,21 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           rotation={[Math.PI, -0.44, Math.PI]}
         />
         <LevelBoundaries />
+
+        {/* TODO: add physics to the below objects */}
+        <mesh name="mug0" geometry={nodes.mug0.geometry} material={materials.mug} position={[3.9, 4.95, -7.71]} rotation={[Math.PI, -1.01, Math.PI]} scale={0.17} />
+        <mesh name="mug1" geometry={nodes.mug1.geometry} material={materials.mug} position={[4.19, 4.95, -7.46]} rotation={[0, -0.62, 0]} scale={0.17} />
+        <mesh name="plate0" geometry={nodes.plate0.geometry} material={materials.plate} position={[4.79, 3.99, -7.59]} scale={[0.63, 0.88, 0.63]} />
+        <mesh name="plate1" geometry={nodes.plate1.geometry} material={materials.plate} position={[4.79, 4.05, -7.59]} scale={[0.63, 0.88, 0.63]} />
+        <mesh name="plate2" geometry={nodes.plate2.geometry} material={materials.plate} position={[4.8, 4.12, -7.6]} scale={[0.63, 0.88, 0.63]} />
+        <group name="coffeePot" position={[3.4, 5.18, -7.59]} rotation={[-Math.PI, 0.61, -Math.PI]} scale={0.26}>
+          <mesh name="Circle003" geometry={nodes.Circle003.geometry} material={materials.metallic_01} />
+          <mesh name="Circle003_1" geometry={nodes.Circle003_1.geometry} material={materials.black} />
+        </group>
+        <mesh name="wineGlass0" geometry={nodes.wineGlass0.geometry} material={materials.glass} position={[3.5, 4.24, -7.8]} scale={0.21} />
+        <mesh name="wineGlass1" geometry={nodes.wineGlass1.geometry} material={materials.glass} position={[3.3, 4.24, -7.42]} scale={0.21} />
+        <mesh name="glass0" geometry={nodes.glass0.geometry} material={materials.glass} position={[3.97, 4.19, -7.73]} scale={0.14} />
+        <mesh name="glass1" geometry={nodes.glass1.geometry} material={materials.glass} position={[4.14, 4.19, -7.41]} scale={0.14} />
 
       </group>
     </group>

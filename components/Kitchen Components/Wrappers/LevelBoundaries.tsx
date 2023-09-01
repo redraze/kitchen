@@ -8,8 +8,10 @@ export default function LevelBoundaries() {
             <Boundary args={[1.75, 2.3, 0.01]} position={[5.9, 1.165, 1.1]} />
             <Boundary args={[1.75, 2.3, 0.01]} position={[5.9, 1.165, -5.83]} />
 
-            {/* Stovetop boundary */}
+            {/* Stovetop boundaries */}
             <Boundary args={[2, 0.01, 6]} position={[-7, 2.55, -1]} />
+            <Boundary args={[2, 3, 0.01]} position={[-7, 3.55, 1.9]}/>
+            <Boundary args={[2, 6, 0.01]} position={[-7, 2.55, -5]} rotation={[0,-Math.PI/4,0]} />
 
             {/* Wall and ceiling boundaries */}
             <Boundary args={[0.01, 8, 16]} position={[8, 4, 0]} />
