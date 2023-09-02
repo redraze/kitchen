@@ -65,7 +65,7 @@ export default function Pantry(props: PantryProps) {
   }, [props.active]);
 
   return (
-    <group ref={group} {...props} onClick={() => {}} dispose={null}>
+    <group ref={group} {...props} onClick={() => {}} dispose={null} position={[0.02,0,0]}>
       <mesh name="struct" geometry={nodes.struct.geometry} material={materials.counter} position={[9.98, -1.58, 5.96]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]}/>
       <group name="Scene" onClick={props.onClick}>
         <group name="LL" position={[-2.34, -0.13, 0.81]} rotation={[Math.PI, -1.57, Math.PI]} scale={[11.09, 0.96, 0.85]}>

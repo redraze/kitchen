@@ -4,8 +4,13 @@ import { useGLTF, useAnimations } from '@react-three/drei';
 import { Vector3, MeshPhysicalMaterial, LoopOnce } from 'three';
 import Plane from '../PhysicsObjects/Plane';
 import Stool from '../PhysicsObjects/Stool';
-import LevelBoundaries from '../Wrappers/LevelBoundaries';
 import Pot from '../PhysicsObjects/Pot';
+import Mug from '../PhysicsObjects/Mug';
+import Plate from '../PhysicsObjects/Plate';
+import WineGlass from '../PhysicsObjects/WineGlass';
+import Glass from '../PhysicsObjects/Glass';
+import CoffeePot from '../PhysicsObjects/CoffeePot';
+import LevelBoundaries from '../Wrappers/LevelBoundaries';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -146,8 +151,8 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           <mesh name="Cube006_1" geometry={nodes.Cube006_1.geometry} material={materials.iron} />
         </group>
         <group name="pan" position={[-7.9, 3.42, -0.21]} rotation={[0, 0, -1.54]} scale={[0.33, 0.27, 0.33]}>
-          <mesh name="Cylinder" geometry={nodes.Cylinder.geometry} material={materials.metallic} />
-          <mesh name="Cylinder_1" geometry={nodes.Cylinder_1.geometry} material={materials.copper} />
+          <mesh name="Cylinder" geometry={nodes.Cylinder.geometry} material={materials.copper} />
+          <mesh name="Cylinder_1" geometry={nodes.Cylinder_1.geometry} material={materials.metallic} />
         </group>
         <group name="knifeBig" position={[-7.96, 4.53, -1.18]} rotation={[Math.PI, 0, -Math.PI / 2]} scale={[0.84, 0.39, 0.08]}>
           <mesh name="Plane" geometry={nodes.Plane.geometry} material={materials.metallic} />
@@ -171,8 +176,8 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           position={[-7.48, 3.04, -1.84]}
           rotation={[Math.PI, -0.77, -3.13]}
           meshes={[
-            <mesh name="Cylinder001" geometry={nodes.Cylinder001.geometry} material={materials.metallic} />,
-            <mesh name="Cylinder001_1" geometry={nodes.Cylinder001_1.geometry} material={materials.copper} />
+            <mesh name="Cylinder001" geometry={nodes.Cylinder001.geometry} material={materials.copper} key={0} />,
+            <mesh name="Cylinder001_1" geometry={nodes.Cylinder001_1.geometry} material={materials.metallic} key={1} />
           ]}
         />
         <Stool
@@ -191,23 +196,82 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           position={[7.16, 1.05, -3.86]}
           rotation={[Math.PI, -0.44, Math.PI]}
         />
+        <Mug
+          name="mug0"
+          geometry={nodes.mug0.geometry}
+          material={materials.mug}
+          position={[3.9, 4.95, -7.71]}
+          rotation={[Math.PI, -1.01, Math.PI]}
+          scale={0.17}
+        />
+        <Mug
+          name="mug1"
+          geometry={nodes.mug1.geometry}
+          material={materials.mug}
+          position={[4.19, 4.95, -7.46]}
+          rotation={[0, -0.62, 0]}
+          scale={0.17}
+        />
+        <Plate
+          name="plate0"
+          geometry={nodes.plate0.geometry}
+          material={materials.plate}
+          position={[4.79, 3.99, -7.59]}
+          scale={[0.63, 0.88, 0.63]}
+        />
+        <Plate
+          name="plate1"
+          geometry={nodes.plate1.geometry}
+          material={materials.plate}
+          position={[4.79, 4.05, -7.59]}
+          scale={[0.63, 0.88, 0.63]}
+        />
+        <Plate
+          name="plate2"
+          geometry={nodes.plate2.geometry}
+          material={materials.plate}
+          position={[4.8, 4.12, -7.6]}
+          scale={[0.63, 0.88, 0.63]}
+        />
+        <WineGlass 
+          name="wineGlass0"
+          geometry={nodes.wineGlass0.geometry}
+          material={glass}
+          position={[3.5, 4.24, -7.8]}
+          scale={0.21}
+        />
+        <WineGlass
+          name="wineGlass1"
+          geometry={nodes.wineGlass1.geometry}
+          material={glass}
+          position={[3.3, 4.24, -7.42]}
+          scale={0.21}
+        />
+        <Glass
+          name="glass0"
+          geometry={nodes.glass0.geometry}
+          material={glass}
+          position={[3.97, 4.19, -7.73]}
+          scale={0.14}
+        />
+        <Glass
+          name="glass1"
+          geometry={nodes.glass1.geometry}
+          material={glass}
+          position={[4.14, 4.19, -7.41]}
+          scale={0.14}
+        />
+        <CoffeePot
+          name="coffeePot"
+          scale={0.26}
+          position={[3.4, 5.18, -7.59]}
+          rotation={[-Math.PI, 0.61, -Math.PI]}
+          meshes={[
+            <mesh name="Circle003" geometry={nodes.Circle003.geometry} material={materials.metallic_01} key={0} />,
+            <mesh name="Circle003_1" geometry={nodes.Circle003_1.geometry} material={materials.black} key={1} />
+          ]}
+        />
         <LevelBoundaries />
-
-        {/* TODO: add physics to the below objects */}
-        <mesh name="mug0" geometry={nodes.mug0.geometry} material={materials.mug} position={[3.9, 4.95, -7.71]} rotation={[Math.PI, -1.01, Math.PI]} scale={0.17} />
-        <mesh name="mug1" geometry={nodes.mug1.geometry} material={materials.mug} position={[4.19, 4.95, -7.46]} rotation={[0, -0.62, 0]} scale={0.17} />
-        <mesh name="plate0" geometry={nodes.plate0.geometry} material={materials.plate} position={[4.79, 3.99, -7.59]} scale={[0.63, 0.88, 0.63]} />
-        <mesh name="plate1" geometry={nodes.plate1.geometry} material={materials.plate} position={[4.79, 4.05, -7.59]} scale={[0.63, 0.88, 0.63]} />
-        <mesh name="plate2" geometry={nodes.plate2.geometry} material={materials.plate} position={[4.8, 4.12, -7.6]} scale={[0.63, 0.88, 0.63]} />
-        <group name="coffeePot" position={[3.4, 5.18, -7.59]} rotation={[-Math.PI, 0.61, -Math.PI]} scale={0.26}>
-          <mesh name="Circle003" geometry={nodes.Circle003.geometry} material={materials.metallic_01} />
-          <mesh name="Circle003_1" geometry={nodes.Circle003_1.geometry} material={materials.black} />
-        </group>
-        <mesh name="wineGlass0" geometry={nodes.wineGlass0.geometry} material={materials.glass} position={[3.5, 4.24, -7.8]} scale={0.21} />
-        <mesh name="wineGlass1" geometry={nodes.wineGlass1.geometry} material={materials.glass} position={[3.3, 4.24, -7.42]} scale={0.21} />
-        <mesh name="glass0" geometry={nodes.glass0.geometry} material={materials.glass} position={[3.97, 4.19, -7.73]} scale={0.14} />
-        <mesh name="glass1" geometry={nodes.glass1.geometry} material={materials.glass} position={[4.14, 4.19, -7.41]} scale={0.14} />
-
       </group>
     </group>
   </>);

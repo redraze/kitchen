@@ -19,6 +19,11 @@ export default function LevelBoundaries() {
             <Boundary args={[16, 8, 0.01]} position={[0, 4, 8]} />
             <Boundary args={[16, 8, 0.01]} position={[0, 4, -8]} />
             <Boundary args={[16, 0.01, 16]} position={[0, 8, 0]} />
+
+            {/* Shelf and lower countertop boundaries */}
+            <Boundary args={[4.525, 0.01, 2]} position={[4.5, 2.57, -7]} />
+            <Boundary args={[3.4, 0.01, 0.8]} position={[4.7, 3.95, -7.6]} />
+            <Boundary args={[3.4, 0.01, 0.8]} position={[4.7, 4.76, -7.6]} />
         </group>
     );
 };
