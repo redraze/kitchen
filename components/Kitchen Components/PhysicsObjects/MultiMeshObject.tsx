@@ -1,30 +1,31 @@
 import { type PublicApi, type Triplet, useBox } from "@react-three/cannon";
 import { type ReactElement, type RefObject, useRef } from "react";
-import type { Vector3 } from "three";
 
-type CoffeePotProps = {
+type MultiMeshObjectProps = {
     name: string
-    scale: Vector3 | number
+    scale: Triplet | number
     position: Triplet
     rotation: Triplet
     meshes: ReactElement[]
+    args: Triplet
 };
 
-export default function CoffeePot(
+export default function MultiMeshObject(
     {
         name,
         scale,
         position,
         rotation,
-        meshes
-    }: CoffeePotProps
+        meshes,
+        args
+    }: MultiMeshObjectProps
 ) {
     const [ref, _api1]: [RefObject<THREE.Mesh>, PublicApi] = useBox(
         () => ({ 
           mass: 1,
           position: position,
           rotation: rotation,
-          args: [0.4, 0.8, 0.4]
+          args: args
         }),
         useRef<THREE.Mesh>(null),
     );

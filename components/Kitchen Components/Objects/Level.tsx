@@ -1,16 +1,11 @@
 import type { GLTF } from 'three-stdlib';
 import { useRef, useEffect, useState } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
-import { Vector3, MeshPhysicalMaterial, LoopOnce } from 'three';
+import { MeshPhysicalMaterial, LoopOnce } from 'three';
 import Plane from '../PhysicsObjects/Plane';
-import Stool from '../PhysicsObjects/Stool';
-import Pot from '../PhysicsObjects/Pot';
-import Mug from '../PhysicsObjects/Mug';
-import Plate from '../PhysicsObjects/Plate';
-import WineGlass from '../PhysicsObjects/WineGlass';
-import Glass from '../PhysicsObjects/Glass';
-import CoffeePot from '../PhysicsObjects/CoffeePot';
 import LevelBoundaries from '../Wrappers/LevelBoundaries';
+import SingleMeshObject from '../PhysicsObjects/SingleMeshObject';
+import MultiMeshObject from '../PhysicsObjects/MultiMeshObject';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,6 +22,9 @@ type GLTFResult = GLTF & {
     glass1: THREE.Mesh
     Cylinder004: THREE.Mesh
     Cylinder004_1: THREE.Mesh
+    vine: THREE.Mesh
+    leaves: THREE.Mesh
+    bowl: THREE.Mesh
     stoveButton: THREE.Mesh
     Cube009: THREE.Mesh
     Cube009_1: THREE.Mesh
@@ -64,6 +62,7 @@ type GLTFResult = GLTF & {
     glass: THREE.MeshPhysicalMaterial
     plantPot: THREE.MeshStandardMaterial
     soil: THREE.MeshStandardMaterial
+    plant: THREE.MeshStandardMaterial
     button: THREE.MeshStandardMaterial
     metallic: THREE.MeshStandardMaterial
     iron: THREE.MeshStandardMaterial
@@ -114,7 +113,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
         <mesh name="window" geometry={nodes.window.geometry} material={materials.counterTop} position={[0, 3.95, -8.21]} rotation={[0, 0, 0]} scale={[-2.57, -1.36, -0.24]} />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
-        {/* NOTE: use 0.27 for counters group scale (gltfjsx will round up to 0.3) */}
+        {/* NOTE: use 0.027 for counters group scale (gltfjsx will round up to 0.03) */}
         <group name="counters" rotation={[Math.PI / 2, 0, -Math.PI / 2]} scale={0.027}>
           <mesh name="Plane007" geometry={nodes.Plane007.geometry} material={materials.counterTop} />
           <mesh name="Plane007_1" geometry={nodes.Plane007_1.geometry} material={materials.counter} />
@@ -164,104 +163,119 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           <mesh name="Plane003_1" geometry={nodes.Plane003_1.geometry} material={materials.floor} />
         </group>
         <mesh name="shelves" geometry={nodes.shelves.geometry} material={nodes.shelves.material} position={[4.73, 4.34, -7.59]} scale={[1.69, 1, 0.38]} />
-        <group name="flowerPot" position={[5.65, 4.83, -7.59]} scale={[0.17, 0.31, 0.17]}>
+        <group name="flowerPot" position={[6.21, 4.96, -7.59]} scale={[0.09, 0.17, 0.09]}>
           <mesh name="Cylinder004" geometry={nodes.Cylinder004.geometry} material={materials.plantPot} />
           <mesh name="Cylinder004_1" geometry={nodes.Cylinder004_1.geometry} material={materials.soil} />
         </group>
+        {/* NOTE: use 0.033 for vine scale (gltfjsx will round down to 0.03) */}
+        <mesh name="vine" geometry={nodes.vine.geometry} material={materials.plant} position={[6.18, 4.22, -7.17]} scale={0.033} />
+        <mesh name="leaves" geometry={nodes.leaves.geometry} material={materials.plant} position={[6.18, 4.15, -7.07]} rotation={[0.78, -1.11, 0.45]} scale={-0.08} />
 
         {/* physics objects */}
-        <Pot
+        <MultiMeshObject
           name="pot"
-          scale={new Vector3(0.22, 0.18, 0.22)}
+          scale={[0.22, 0.18, 0.22]}
           position={[-7.48, 3.04, -1.84]}
           rotation={[Math.PI, -0.77, -3.13]}
           meshes={[
             <mesh name="Cylinder001" geometry={nodes.Cylinder001.geometry} material={materials.copper} key={0} />,
             <mesh name="Cylinder001_1" geometry={nodes.Cylinder001_1.geometry} material={materials.metallic} key={1} />
           ]}
+          args={[0.6, 0.5, 0.6]}
         />
-        <Stool
+        <SingleMeshObject 
           name="stool001"
           geometry={nodes.stool001.geometry}
           material={materials.stool}
-          scale={new Vector3(-0.52, -0.08, -0.39)}
+          scale={[-0.52, -0.08, -0.39]}
           position={[6.86, 1.05, -0.28]}
           rotation={[-Math.PI, 0, -Math.PI]}
+          args={[1, 1.9, 1.8]}
         />
-        <Stool
+        <SingleMeshObject
           name="stool002"
           geometry={nodes.stool002.geometry}
           material={materials.stool}
-          scale={new Vector3(-0.52, -0.08, -0.39)}
+          scale={[-0.52, -0.08, -0.39]}
           position={[7.16, 1.05, -3.86]}
           rotation={[Math.PI, -0.44, Math.PI]}
+          args={[1, 1.9, 1.8]}
         />
-        <Mug
+        <SingleMeshObject
           name="mug0"
           geometry={nodes.mug0.geometry}
           material={materials.mug}
-          position={[3.9, 4.95, -7.71]}
+          position={[4.01, 4.95, -7.52]}
           rotation={[Math.PI, -1.01, Math.PI]}
           scale={0.17}
+          args={[0.35, 0.4, 0.35]}
         />
-        <Mug
+        <SingleMeshObject
           name="mug1"
           geometry={nodes.mug1.geometry}
           material={materials.mug}
-          position={[4.19, 4.95, -7.46]}
+          position={[4.42, 4.95, -7.7]}
           rotation={[0, -0.62, 0]}
           scale={0.17}
+          args={[0.35, 0.4, 0.35]}
         />
-        <Plate
+        <SingleMeshObject
           name="plate0"
           geometry={nodes.plate0.geometry}
           material={materials.plate}
-          position={[4.79, 3.99, -7.59]}
+          position={[5.33, 3.99, -7.59]}
           scale={[0.63, 0.88, 0.63]}
+          args={[0.7, 0.08, 0.7]}
         />
-        <Plate
+        <SingleMeshObject
           name="plate1"
           geometry={nodes.plate1.geometry}
           material={materials.plate}
-          position={[4.79, 4.05, -7.59]}
+          position={[5.33, 4.05, -7.59]}
           scale={[0.63, 0.88, 0.63]}
+          args={[0.7, 0.08, 0.7]}
         />
-        <Plate
+        <SingleMeshObject
           name="plate2"
           geometry={nodes.plate2.geometry}
           material={materials.plate}
-          position={[4.8, 4.12, -7.6]}
+          position={[5.34, 4.12, -7.6]}
           scale={[0.63, 0.88, 0.63]}
+          args={[0.7, 0.08, 0.7]}
         />
-        <WineGlass 
+        <SingleMeshObject 
           name="wineGlass0"
           geometry={nodes.wineGlass0.geometry}
           material={glass}
-          position={[3.5, 4.24, -7.8]}
+          position={[3.72, 4.24, -7.52]}
           scale={0.21}
+          args={[0.25, 0.65, 0.25]}
         />
-        <WineGlass
+        <SingleMeshObject
           name="wineGlass1"
           geometry={nodes.wineGlass1.geometry}
           material={glass}
           position={[3.3, 4.24, -7.42]}
           scale={0.21}
+          args={[0.25, 0.65, 0.25]}
         />
-        <Glass
+        <SingleMeshObject
           name="glass0"
           geometry={nodes.glass0.geometry}
           material={glass}
-          position={[3.97, 4.19, -7.73]}
+          position={[4.19, 4.19, -7.48]}
           scale={0.14}
+          args={[0.25, 0.6, 0.25]}
         />
-        <Glass
+        <SingleMeshObject
           name="glass1"
           geometry={nodes.glass1.geometry}
           material={glass}
-          position={[4.14, 4.19, -7.41]}
+          position={[4.62, 4.19, -7.41]}
           scale={0.14}
+          args={[0.25, 0.6, 0.25]}
         />
-        <CoffeePot
+        <MultiMeshObject
           name="coffeePot"
           scale={0.26}
           position={[3.4, 5.18, -7.59]}
@@ -270,6 +284,15 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
             <mesh name="Circle003" geometry={nodes.Circle003.geometry} material={materials.metallic_01} key={0} />,
             <mesh name="Circle003_1" geometry={nodes.Circle003_1.geometry} material={materials.black} key={1} />
           ]}
+          args={[0.4, 0.8, 0.4]}
+        />
+        <SingleMeshObject
+          name="bowl"
+          geometry={nodes.bowl.geometry}
+          material={materials.plate}
+          position={[5.34, 4.94, -7.6]}
+          scale={[1.37, 1.92, 1.37]}
+          args={[0.8, 0.35, 0.8]}
         />
         <LevelBoundaries />
       </group>
