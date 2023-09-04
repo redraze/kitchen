@@ -53,6 +53,19 @@ type GLTFResult = GLTF & {
     window: THREE.Mesh
     sink: THREE.Mesh
     dishWasher: THREE.Mesh
+    Cube015: THREE.Mesh
+    Cube015_1: THREE.Mesh
+    Cube015_2: THREE.Mesh
+    dustpan: THREE.Mesh
+    Plane004: THREE.Mesh
+    Plane004_1: THREE.Mesh
+    Plane004_2: THREE.Mesh
+    Plane004_3: THREE.Mesh
+    Plane006: THREE.Mesh
+    Plane006_1: THREE.Mesh
+    Plane006_2: THREE.Mesh
+    Plane006_3: THREE.Mesh
+    Plane006_4: THREE.Mesh
   }
   materials: {
     mug: THREE.MeshStandardMaterial
@@ -71,6 +84,11 @@ type GLTFResult = GLTF & {
     stool: THREE.MeshStandardMaterial
     counterTop: THREE.MeshStandardMaterial
     counter: THREE.MeshStandardMaterial
+    rugBorder: THREE.MeshStandardMaterial
+    rugPlain: THREE.MeshStandardMaterial
+    rugInset1: THREE.MeshStandardMaterial
+    rugInset2: THREE.MeshStandardMaterial
+    rugNavy: THREE.MeshStandardMaterial
   }
 };
 
@@ -108,7 +126,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
     <group ref={group} dispose={null}>
       <group name="Scene">
 
-        {/* non:physics objects */}
+        {/* non-physics objects */}
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
         <mesh name="window" geometry={nodes.window.geometry} material={materials.counterTop} position={[0, 3.95, -8.21]} rotation={[0, 0, 0]} scale={[-2.57, -1.36, -0.24]} />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
@@ -170,6 +188,19 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
         {/* NOTE: use 0.033 for vine scale (gltfjsx will round down to 0.03) */}
         <mesh name="vine" geometry={nodes.vine.geometry} material={materials.plant} position={[6.18, 4.22, -7.17]} scale={0.033} />
         <mesh name="leaves" geometry={nodes.leaves.geometry} material={materials.plant} position={[6.18, 4.15, -7.07]} rotation={[0.78, -1.11, 0.45]} scale={-0.08} />
+        <group name="rug1" position={[1.35, 0.12, -4.21]} scale={[3.53, 1, 1.37]}>
+          <mesh name="Plane004" geometry={nodes.Plane004.geometry} material={materials.rugBorder} />
+          <mesh name="Plane004_1" geometry={nodes.Plane004_1.geometry} material={materials.rugPlain} />
+          <mesh name="Plane004_2" geometry={nodes.Plane004_2.geometry} material={materials.black} />
+          <mesh name="Plane004_3" geometry={nodes.Plane004_3.geometry} material={materials.rugInset1} />
+        </group>
+        <group name="rug0" position={[-4.03, 0.12, 0.9]} scale={[1.72, 1, 6.5]}>
+          <mesh name="Plane006" geometry={nodes.Plane006.geometry} material={materials.rugBorder} />
+          <mesh name="Plane006_1" geometry={nodes.Plane006_1.geometry} material={materials.rugInset1} />
+          <mesh name="Plane006_2" geometry={nodes.Plane006_2.geometry} material={materials.rugInset2} />
+          <mesh name="Plane006_3" geometry={nodes.Plane006_3.geometry} material={materials.rugNavy} />
+          <mesh name="Plane006_4" geometry={nodes.Plane006_4.geometry} material={materials.rugPlain} />
+        </group>
 
         {/* physics objects */}
         <MultiMeshObject
@@ -294,7 +325,29 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
           scale={[1.37, 1.92, 1.37]}
           args={[0.8, 0.35, 0.8]}
         />
+        <MultiMeshObject
+          name="broom"
+          scale={[0.05, 2.15, 0.05]}
+          position={[-6.63, 2.85, 7.27]}
+          rotation={[-0.13, 0, 0]}
+          meshes={[
+            <mesh name="Cube015" geometry={nodes.Cube015.geometry} material={materials.metallic_01} key={0} />,
+            <mesh name="Cube015_1" geometry={nodes.Cube015_1.geometry} material={materials.button} key={1} />,
+            <mesh name="Cube015_2" geometry={nodes.Cube015_2.geometry} material={materials.stool} key={2} />
+            ]}
+          args={[0.8, 4.8, 0.1]}
+        />
+        <SingleMeshObject
+          name="dustpan"
+          geometry={nodes.dustpan.geometry}
+          material={materials.metallic_01}
+          position={[-6.63, 0.46, 7.07]}
+          rotation={[-0.39, 0, 0]}
+          scale={[0.05, 2.15, 0.05]}
+          args={[1, 0.8, 0.1]}
+        />
         <LevelBoundaries />
+
       </group>
     </group>
   </>);
