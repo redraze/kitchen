@@ -3,13 +3,22 @@ import type {
     containerDataType,
     voidFunc
 } from "lib/commonTypes";
-import type { componentSettings } from "lib/settings";
-import type { KeyboardEvent } from "react";
-import { useState, useEffect, useRef } from "react";
+import {
+    type KeyboardEvent,
+    useState,
+    useEffect,
+    useRef
+} from "react";
+import {
+    type componentSettings,
+    initSettings,
+    fridgeSettings,
+    pantrySettings,
+    stoveSettings
+} from "lib/settings";
 import css from "styles/Scene.module.scss";
 import HUD from "components/HUD Components/HUD";
 import Kitchen from "components/Kitchen Components/Kitchen";
-import { initSettings, fridgeSettings, pantrySettings, stoveSettings } from "lib/settings";
 
 type SceneProps = {
     ingredients: JSX.Element[]

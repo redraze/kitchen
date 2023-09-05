@@ -80,7 +80,6 @@ export default function HUD(
                 dataListState={dataListState}
                 updateSettings={updateSettings}
                 reRender={reRender}
-                recipeDataVisibility={recipeDataVisibilityState.value}
             />
             <RecipesNav
                 clientIngredientData={clientIngredientData}

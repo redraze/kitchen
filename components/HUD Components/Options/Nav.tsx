@@ -1,9 +1,8 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
 import Image from "next/image";
-// import Link from "next/link";
 
 type OptionsNavProps = {
     resetData: voidFunc
@@ -11,15 +10,7 @@ type OptionsNavProps = {
 };
 
 export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
-    const [open, setOpen] = useState(true);
-
-    const [offset, setOffset] = useState<string>('-350px');
-    useEffect(() => {
-        setTimeout(() => {
-            setOffset('-300px');
-        }, 2000);
-    }, []);
-
+    const [open, setOpen] = useState(false);
     const [resetCheck, setResetCheck] = useState<boolean>(false);
     const [top, setTop] = useState<number>(0)
     const [left, setLeft] = useState<number>(0)
@@ -37,7 +28,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
     return (
         <div
             className={ css.nav }
-            style={{ right: open ? '0' : offset }}
+            style={{ right: open ? '0' : '-300px' }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}
         >

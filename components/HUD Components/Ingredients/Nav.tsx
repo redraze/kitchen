@@ -1,8 +1,4 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
-import { useEffect, useState } from "react";
-import css from "styles/HUD/Ingredients/Nav.module.scss";
-import Button from "../Button";
-import IngredientsTab from "./Tab";
 import {
     type componentSettings,
     initSettings,
@@ -10,6 +6,11 @@ import {
     pantrySettings,
     stoveSettings
 } from "lib/settings";
+import { useEffect } from "react";
+import css from "styles/HUD/Ingredients/Nav.module.scss";
+import Button from "../Button";
+import IngredientsTab from "./Tab";
+import Image from "next/image";
 
 type IngredientsNavProps = {
     ingredients: JSX.Element[]
@@ -21,7 +22,6 @@ type IngredientsNavProps = {
     dataListState: stateType<(JSX.Element | undefined)[]>
     updateSettings: voidFunc<componentSettings>
     reRender: stateType<number>
-    recipeDataVisibility: boolean
 };
 
 export default function IngredientsNav(
@@ -34,8 +34,7 @@ export default function IngredientsNav(
         userInputState,
         dataListState,
         updateSettings,
-        reRender,
-        recipeDataVisibility,
+        reRender
     }: IngredientsNavProps
 ) {
     const {value: userInput} = userInputState;
@@ -46,17 +45,10 @@ export default function IngredientsNav(
         };
     }, [focus]);
 
-    const [offset, setOffset] = useState<string>('-350px');
-    useEffect(() => {
-        setTimeout(() => {
-            setOffset('-300px');
-        }, 2000);
-    }, []);
-
-    return (<>
+    return (
         <div 
             className={ css.ingredientsNav }
-            style={{ left: open ? '0px' : !recipeDataVisibility ? offset : '-400px' }}
+            style={{ left: open ? '0px' : '-300px' }}
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
                 if (
@@ -69,7 +61,7 @@ export default function IngredientsNav(
             onClick={() => forceReRender()}
         >
             <Button openState={ingredientsNavOpenState} left />
-            <IngredientsTab 
+            <IngredientsTab
                 ingredients={ingredients}
                 focus={focus}
                 userInputState={userInputState}
@@ -85,6 +77,22 @@ export default function IngredientsNav(
                     <span>Unrefrigerated Ingredients</span>
                 </li>
             </ul>
+            <button 
+                className={ 
+                    focus == fridgeSettings.focus || focus == pantrySettings.focus ? 
+                    css.buttonActive : css.buttonInactive
+                }
+                onClick={ () => changeSettings(initSettings) }
+            >
+                <div>
+                    <Image
+                        src={'/Icons/Back.png'}
+                        alt='Back'
+                        height={30}
+                        width={30}
+                    />    
+                </div>
+            </button>
         </div>
-    </>);
+    );
 };

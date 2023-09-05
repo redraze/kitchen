@@ -50,3 +50,32 @@
         }
     }
 }
+
+.buttonActive div {
+    position: absolute;
+    top: 30px;
+    right: -90px;
+    background-color: nv.$navHoverBG;
+    padding: 10px;
+    border-radius: 100%;
+    border: solid white 5px;
+    transition: padding nv.$transitionTime/2;
+
+    img {
+        transition: width nv.$transitionTime/2, height nv.$transitionTime/2;
+    }
+}
+
+.buttonActive:hover div {
+    padding: 7.5px;
+    cursor: pointer;
+
+    img {
+        height: 35px;
+        width: 35px;
+    }
+}
+
+.buttonInactive div {
+    display: none;
+}
