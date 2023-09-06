@@ -69,6 +69,7 @@ export default function HUD(
             <OptionsNav
                 spaceState={spaceState}
                 resetData={resetData}
+                changeSettings={changeSettings}
             />
             <IngredientsNav
                 ingredients={ingredients}

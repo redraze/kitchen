@@ -52,11 +52,13 @@ export default function IngredientsNav(
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => {
                 if (
-                    (focus == initSettings.focus || focus == stoveSettings.focus)
-                    && !userInput
+                    focus == fridgeSettings.focus
+                    || focus == pantrySettings.focus
+                    || userInput
                 ) {
-                    setOpen(false);
+                    return;
                 };
+                setOpen(false);
             }}
             onClick={() => forceReRender()}
         >

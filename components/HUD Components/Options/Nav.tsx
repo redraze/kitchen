@@ -1,4 +1,5 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
+import { type componentSettings, aboutSettings } from "lib/settings";
 import { useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
@@ -7,9 +8,16 @@ import Image from "next/image";
 type OptionsNavProps = {
     resetData: voidFunc
     spaceState: stateType<boolean>
+    changeSettings: voidFunc<componentSettings>
 };
 
-export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
+export default function OptionsNav(
+    {
+        resetData,
+        spaceState,
+        changeSettings
+    }: OptionsNavProps
+) {
     const [open, setOpen] = useState(false);
     const [resetCheck, setResetCheck] = useState<boolean>(false);
     const [top, setTop] = useState<number>(0)
@@ -19,10 +27,6 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
         setLeft(e.clientX)
         setTop(e.clientY)
         setResetCheck(true);
-    };
-
-    const aboutHandler = () => {
-        
     };
 
     return (
@@ -83,7 +87,7 @@ export default function OptionsNav({ resetData, spaceState }: OptionsNavProps) {
                 <li onClick={ () => spaceState.setValue(!spaceState.value) }>
                     <span>Space!</span>
                 </li>
-                <li onClick={ () => aboutHandler() }>
+                <li onClick={ () => changeSettings(aboutSettings) }>
                     <span>About</span>
                 </li>
             </ul>
