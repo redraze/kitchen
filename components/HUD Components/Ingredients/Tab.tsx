@@ -1,7 +1,7 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
 import type { componentSettings } from "lib/settings";
 import css from "styles/HUD/Ingredients/Tab.module.scss";
-import { initSettings } from "lib/settings";
+import { fridgeSettings, initSettings, pantrySettings } from "lib/settings";
 
 type IngredientsTabProps = {
     ingredients: JSX.Element[]
@@ -41,10 +41,14 @@ export default function IngredientsTab(
     };
 
     const concatClassName = (name: string) => {
-        if (focus !== initSettings.focus || userInput) {
-            return [css[name], css[name + '_focus']].join(' ')
-        }
-        return css[name]
+        if (
+            focus == fridgeSettings.focus
+            || focus == pantrySettings.focus
+            || userInput
+        ) {
+            return [css[name], css[name + '_focus']].join(' ');
+        };
+        return css[name];
     };
 
     return (

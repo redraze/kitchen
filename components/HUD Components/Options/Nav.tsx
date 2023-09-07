@@ -1,5 +1,5 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
-import { type componentSettings, aboutSettings } from "lib/settings";
+import { type componentSettings, aboutSettings, initSettings } from "lib/settings";
 import { useState } from "react";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
@@ -9,13 +9,17 @@ type OptionsNavProps = {
     resetData: voidFunc
     spaceState: stateType<boolean>
     changeSettings: voidFunc<componentSettings>
+    ingredientsNavOpenState: stateType<boolean>
+    focus: number
 };
 
 export default function OptionsNav(
     {
         resetData,
         spaceState,
-        changeSettings
+        changeSettings,
+        ingredientsNavOpenState,
+        focus
     }: OptionsNavProps
 ) {
     const [open, setOpen] = useState(false);
@@ -29,7 +33,12 @@ export default function OptionsNav(
         setResetCheck(true);
     };
 
-    return (
+    const aboutHandler = () => {
+        changeSettings(aboutSettings);
+        ingredientsNavOpenState.setValue(false);
+    };
+
+    return (<>
         <div
             className={ css.nav }
             style={{ right: open ? '0' : '-300px' }}
@@ -38,10 +47,7 @@ export default function OptionsNav(
         >
             <Button openState={{value: open, setValue: setOpen}}/>
             <div
-                className={ resetCheck ? 
-                    [css.check, css.checkActive].join(' ') :
-                    [css.check, css.checkInactive].join(' ')
-                }
+                className={ css.check }
                 style={ resetCheck ?
                     {display: 'initial', top: `${top}px`, left: `${left}px`} :
                     {display: 'none', top: `${top}px`, left: `${left}px`}
@@ -87,10 +93,24 @@ export default function OptionsNav(
                 <li onClick={ () => spaceState.setValue(!spaceState.value) }>
                     <span>Space!</span>
                 </li>
-                <li onClick={ () => changeSettings(aboutSettings) }>
+                <li onClick={ () => aboutHandler() }>
                     <span>About</span>
                 </li>
             </ul>
         </div>
-    );
+        <button 
+            className={ css.button }
+            style={ focus == aboutSettings.focus ? {top: '20px'} : {top: '-100px'} }
+            onClick={ () => changeSettings(initSettings) }
+        >
+            <div>
+                <Image
+                    src={'/Icons/Back.png'}
+                    alt='Back'
+                    height={30}
+                    width={30}
+                />    
+            </div>
+        </button>
+    </>);
 };

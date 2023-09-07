@@ -92,10 +92,27 @@ $checkDim: 200px;
     }
 }
 
-.checkActive {
-
+.button  {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: nv.$navHoverBG;
+    padding: 15px;
+    border-radius: 100%;
+    border: solid white 5px;
+    transition: top nv.$transitionTime/2, padding nv.$transitionTime/2;
+    
+    img {
+        transition: width nv.$transitionTime/2, height nv.$transitionTime/2;
+    }
 }
 
-.checkInactive {
-    
+.button:hover {
+    padding: 10px;
+    cursor: pointer;
+
+    img {
+        height: 40px;
+        width: 40px;
+    }
 }

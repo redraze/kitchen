@@ -209,7 +209,7 @@ export default function Results(
                         {display: ''} : {display: 'none'}
                     }
                 >
-                    { dataMap }
+                    { dataMap ? dataMap : <Spinner /> }
                 </div>
             </div>
         </div>

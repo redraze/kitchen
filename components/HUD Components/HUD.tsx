@@ -3,7 +3,7 @@ import type {
     stateType,
     voidFunc
 } from "lib/commonTypes";
-import type { componentSettings } from "lib/settings";
+import { aboutSettings, type componentSettings } from "lib/settings";
 import { useEffect, useState } from "react";
 import css from "styles/HUD/HUD.module.scss";
 import OptionsNav from "./Options/Nav";
@@ -53,6 +53,7 @@ export default function HUD(
             recipeDataVisibilityState.value 
             || recipeResultsVisibilityState.value
             || JSON.stringify(clientRecipeData) == JSON.stringify({})
+            || focusState.value == aboutSettings.focus
         ) {
             setButtonVisibility(false);
             return;
@@ -70,6 +71,8 @@ export default function HUD(
                 spaceState={spaceState}
                 resetData={resetData}
                 changeSettings={changeSettings}
+                ingredientsNavOpenState={ingredientsNavOpenState}
+                focus={focusState.value}
             />
             <IngredientsNav
                 ingredients={ingredients}
