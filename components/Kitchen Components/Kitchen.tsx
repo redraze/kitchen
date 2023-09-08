@@ -8,6 +8,7 @@ import { useRef, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { Physics } from "@react-three/cannon";
+import Loader from "./Loader";
 import ControlGroup from "./Wrappers/ControlGroup";
 import Level from "./Objects/Level";
 import Lights from "./Objects/Lights";
@@ -61,7 +62,7 @@ export default function Kitchen(
                 };
             }}
         >
-            <Suspense>
+            <Suspense fallback={<Loader />} >
                 <ControlGroup
                     pos={pos}
                     focus={focus}

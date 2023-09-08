@@ -6,6 +6,7 @@ import Plane from '../PhysicsObjects/Plane';
 import LevelBoundaries from '../Wrappers/LevelBoundaries';
 import SingleMeshObject from '../PhysicsObjects/SingleMeshObject';
 import MultiMeshObject from '../PhysicsObjects/MultiMeshObject';
+import Window from './Window';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -128,7 +129,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
 
         {/* non-physics objects */}
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
-        <mesh name="window" geometry={nodes.window.geometry} material={materials.counterTop} position={[0, 3.95, -8.21]} rotation={[0, 0, 0]} scale={[-2.57, -1.36, -0.24]} />
+        <Window geometry={nodes.window.geometry} material={materials.counterTop} />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         {/* NOTE: use 0.027 for counters group scale (gltfjsx will round up to 0.03) */}
