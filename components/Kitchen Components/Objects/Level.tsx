@@ -95,7 +95,12 @@ type GLTFResult = GLTF & {
 
 const url = 'objects/level.gltf';
 
-export default function Level(props: JSX.IntrinsicElements['group']) {
+type LevelProps = {
+  focus: number
+  space: boolean
+}
+
+export default function Level({ focus, space }: LevelProps) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
   const group = useRef<THREE.Group>(null!)
   const { actions } = useAnimations<THREE.AnimationClip>(animations, group)
@@ -129,7 +134,7 @@ export default function Level(props: JSX.IntrinsicElements['group']) {
 
         {/* non-physics objects */}
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
-        <Window geometry={nodes.window.geometry} material={materials.counterTop} />
+        <Window focus={focus} space={space} geometry={nodes.window.geometry} material={materials.counterTop} />
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         {/* NOTE: use 0.027 for counters group scale (gltfjsx will round up to 0.03) */}
