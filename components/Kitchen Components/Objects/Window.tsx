@@ -1,5 +1,4 @@
 import type { BufferGeometry, MeshStandardMaterial } from "three";
-import { Flex, Box } from '@react-three/flex';
 import Text from "./Text";
 import { useEffect, useState } from "react";
 import { aboutSettings } from "lib/settings";
@@ -25,10 +24,7 @@ export default function Window({ focus, space, geometry, material }: WindowProps
     // });
 
     return (
-        <Flex
-            position={[0, 3.95, -8.21]}
-            size={[0,0,0]}
-        >
+        <group position={[0, 3.95, -8.21]} >
             <mesh
                 name="window"
                 geometry={geometry}
@@ -37,52 +33,38 @@ export default function Window({ focus, space, geometry, material }: WindowProps
             />
             <group visible={focus == aboutSettings.focus ? true : false} >
                 <Text
-                    position={[1, 0.9, 0]}
+                    position={[0.3, 0.8, 0]}
                     rotation={[0, rot, 0]}
-                    anchorX="center"
-                    anchorY="middle"
-                    fontSize={0.5}
-                    lineHeight={1}
-                    letterSpacing={-0.05}
+                    fontSize={0.4}
                     color={color}
-                >
-                    Connor
-                </Text>
+                    text="Connor"
+                />
                 <Text
-                    position={[1.75, 0.3, 0]}
+                    position={[1.2, 0.15, 0]}
                     rotation={[0, rot, 0]}
-                    anchorX="center"
-                    anchorY="middle"
-                    fontSize={0.5}
-                    lineHeight={1}
-                    letterSpacing={-0.05}
+                    fontSize={0.4}
                     color={color}
-                >
-                    Vika
-                </Text>
+                    text="Vika"
+                />
                 <Text
-                    position={[-1.25, -0.45, 0]}
-                    anchorX="center"
-                    anchorY="middle"
-                    fontSize={0.25}
-                    lineHeight={1}
-                    letterSpacing={-0.05}
+                    position={[-2.25, -0.35, 0]}
+                    fontSize={0.2}
                     color={color}
-                >
-                    Learn to cook some of 
-                </Text>
+                    text="Learn to cook"
+                />
                 <Text
-                    position={[-1.25, -0.85, 0]}
-                    anchorX="center"
-                    anchorY="middle"
-                    fontSize={0.25}
-                    lineHeight={1}
-                    letterSpacing={-0.05}
+                    position={[-2.25, -0.75, 0]}
+                    fontSize={0.2}
                     color={color}
-                >
-                    our favorite recipes!
-                </Text>
+                    text="some of our"
+                />
+                <Text
+                    position={[-2.25, -1.15, 0]}
+                    fontSize={0.2}
+                    color={color}
+                    text="favorite recipes!"
+                />
             </group>
-        </Flex>
+        </group>
     );
 };
