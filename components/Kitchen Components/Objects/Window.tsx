@@ -1,27 +1,18 @@
 import type { BufferGeometry, MeshStandardMaterial } from "three";
 import Text from "./Text";
-import { useEffect, useState } from "react";
+import { useLoader } from "@react-three/fiber";
+import { TextureLoader } from 'three/src/loaders/TextureLoader';
 import { aboutSettings } from "lib/settings";
-// import { useFrame } from "@react-three/fiber";
 
 type WindowProps = {
     focus: number
-    space: boolean
     geometry: BufferGeometry
     material: MeshStandardMaterial
 };
 
-export default function Window({ focus, space, geometry, material }: WindowProps) {
-    const [color, setColor] = useState('black');
-    useEffect(() => {
-        space ? setColor('white') : setColor('black');
-    }, [space]);
-
-    const [rot, setRot] = useState(0);
-    // useFrame(() => {
-    //     // TODO:    have rot oscillate between two values
-    //     setRot(rot + 0.05);
-    // });
+export default function Window({ focus, geometry, material }: WindowProps) {
+    const Vika = useLoader(TextureLoader, 'Vika.jpg');
+    const Connor = useLoader(TextureLoader, 'Connor.jpg');
 
     return (
         <group position={[0, 3.95, -8.21]} >
@@ -33,35 +24,38 @@ export default function Window({ focus, space, geometry, material }: WindowProps
             />
             <group visible={focus == aboutSettings.focus ? true : false} >
                 <Text
-                    position={[0.3, 0.8, 0]}
-                    rotation={[0, rot, 0]}
+                    position={[0.3, 0.75, 0]}
                     fontSize={0.4}
-                    color={color}
                     text="Connor"
                 />
+                <mesh position={[-1.2,0.65,0]} >
+                    <planeGeometry args={[1.75, 1.75*0.75]} />
+                    <meshStandardMaterial map={Connor} color={'grey'} />
+                </mesh>
+
                 <Text
-                    position={[1.2, 0.15, 0]}
-                    rotation={[0, rot, 0]}
+                    position={[0.6, 0.15, 0]}
                     fontSize={0.4}
-                    color={color}
                     text="Vika"
                 />
+                <mesh position={[1.25,-0.65,0]} >
+                    <planeGeometry args={[2, 2*0.666]} />
+                    <meshBasicMaterial map={Vika} color={'lightGrey'} />
+                </mesh>
+
                 <Text
                     position={[-2.25, -0.35, 0]}
                     fontSize={0.2}
-                    color={color}
                     text="Learn to cook"
                 />
                 <Text
                     position={[-2.25, -0.75, 0]}
                     fontSize={0.2}
-                    color={color}
                     text="some of our"
                 />
                 <Text
                     position={[-2.25, -1.15, 0]}
                     fontSize={0.2}
-                    color={color}
                     text="favorite recipes!"
                 />
             </group>

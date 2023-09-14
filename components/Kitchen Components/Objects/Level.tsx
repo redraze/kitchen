@@ -7,6 +7,7 @@ import LevelBoundaries from '../Wrappers/LevelBoundaries';
 import SingleMeshObject from '../PhysicsObjects/SingleMeshObject';
 import MultiMeshObject from '../PhysicsObjects/MultiMeshObject';
 import Window from './Window';
+import { aboutSettings } from 'lib/settings';
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -67,6 +68,8 @@ type GLTFResult = GLTF & {
     Plane006_2: THREE.Mesh
     Plane006_3: THREE.Mesh
     Plane006_4: THREE.Mesh
+    arrow0: THREE.Mesh
+    arrow1: THREE.Mesh
   }
   materials: {
     mug: THREE.MeshStandardMaterial
@@ -95,12 +98,7 @@ type GLTFResult = GLTF & {
 
 const url = 'objects/level.gltf';
 
-type LevelProps = {
-  focus: number
-  space: boolean
-}
-
-export default function Level({ focus, space }: LevelProps) {
+export default function Level({ focus }: { focus: number }) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
   const group = useRef<THREE.Group>(null!)
   const { actions } = useAnimations<THREE.AnimationClip>(animations, group)
@@ -134,7 +132,11 @@ export default function Level({ focus, space }: LevelProps) {
 
         {/* non-physics objects */}
         <mesh name="floor" geometry={nodes.floor.geometry} material={materials.floor} position={[0, 0, 2.45]} rotation={[-Math.PI, 0, -Math.PI]} scale={[8.03, 0.07, 10.38]} />
-        <Window focus={focus} space={space} geometry={nodes.window.geometry} material={materials.counterTop} />
+        <Window focus={focus} geometry={nodes.window.geometry} material={materials.counterTop} />
+        <group visible={ focus == aboutSettings.focus ? true : false } >
+          <mesh name="arrow0" geometry={nodes.arrow0.geometry} material={materials.counterTop} position={[1.9, 4.24, -8.23]} rotation={[Math.PI, 0, 2.95]} scale={[0.03, 0.24, 0.06]} />
+          <mesh name="arrow1" geometry={nodes.arrow1.geometry} material={materials.counterTop} position={[0.31, 4.37, -8.23]} rotation={[-Math.PI, 0, -1.85]} scale={[0.03, 0.24, 0.06]} />
+        </group>
         <mesh name="sink" geometry={nodes.sink.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         <mesh name="dishWasher" geometry={nodes.dishWasher.geometry} material={materials.metallic} position={[0, 1.31, -6.97]} scale={[13.12, 1.21, 1]} />
         {/* NOTE: use 0.027 for counters group scale (gltfjsx will round up to 0.03) */}
