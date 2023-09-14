@@ -1,0 +1,39 @@
+@use 'styles/foundation/navVariables' as nv;
+
+.back {
+    left: 50%;
+    transition: top nv.$transitionTime/2, padding nv.$transitionTime/2;
+}
+
+.sourceCode {
+    left: 40%;
+    transition: top nv.$transitionTime, padding nv.$transitionTime/2;
+}
+
+.LinkedIn {
+    left: 30%;
+    transition: top nv.$transitionTime/0.5, padding nv.$transitionTime/2;
+}
+
+.button {
+    position: absolute;
+    transform: translateX(-50%);
+    background-color: nv.$navHoverBG;
+    padding: 10px;
+    border-radius: 100px;
+    border: solid white 5px;
+    
+    img {
+        transition: width nv.$transitionTime/2, height nv.$transitionTime/2;
+    }
+}
+
+.button:hover {
+    padding: 5px;
+    cursor: pointer;
+
+    img {
+        height: 40px;
+        width: 40px;
+    }
+}

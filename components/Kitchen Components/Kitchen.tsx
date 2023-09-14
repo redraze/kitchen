@@ -70,7 +70,7 @@ export default function Kitchen(
                     enabled={!grab}
                 >
                     <Physics gravity={[0, spaceState.value ? 0 : -9.8, 0]}>
-                        <Level focus={focus} space={spaceState.value} />
+                        <Level focus={focus} />
                     </Physics>
                     <Lights 
                         space={spaceState.value}

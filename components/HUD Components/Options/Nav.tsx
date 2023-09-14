@@ -1,9 +1,10 @@
 import type { stateType, voidFunc } from "lib/commonTypes";
-import { type componentSettings, aboutSettings, initSettings } from "lib/settings";
+import { type componentSettings, aboutSettings } from "lib/settings";
 import { useState } from "react";
+import Image from "next/image";
 import css from "styles/HUD/Options/Nav.module.scss";
 import Button from "../Button";
-import Image from "next/image";
+import AboutButtons from "./AboutButtons";
 
 type OptionsNavProps = {
     resetData: voidFunc
@@ -98,19 +99,6 @@ export default function OptionsNav(
                 </li>
             </ul>
         </div>
-        <button 
-            className={ css.button }
-            style={ focus == aboutSettings.focus ? {top: '20px'} : {top: '-100px'} }
-            onClick={ () => changeSettings(initSettings) }
-        >
-            <div>
-                <Image
-                    src={'/Icons/Back.png'}
-                    alt='Back'
-                    height={30}
-                    width={30}
-                />    
-            </div>
-        </button>
+        <AboutButtons focus={focus} changeSettings={changeSettings} />
     </>);
 };
