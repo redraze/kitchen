@@ -100,8 +100,8 @@ const url = 'objects/level.gltf';
 
 export default function Level({ focus }: { focus: number }) {
   const { nodes, materials, animations } = useGLTF(url) as unknown as GLTFResult;
-  const group = useRef<THREE.Group>(null!)
-  const { actions } = useAnimations<THREE.AnimationClip>(animations, group)
+  const group = useRef<THREE.Group>(null!);
+  const { actions } = useAnimations<THREE.AnimationClip>(animations, group);
 
   const [doorPosition, setDoorPosition] = useState(false);
 
