@@ -6,6 +6,12 @@ export type MetaProps = {
     description: string
 }
 
+Meta.defaultProps = {
+    title: "C&V's Kitchen",
+    keywords: 'cook food recipe kitchen',
+    description: "Learn to cook some of Connor and Vika's favorite recipes!"
+};
+
 export default function Meta({ title, keywords, description }: MetaProps) {
     return(
         <Head>
@@ -16,10 +22,4 @@ export default function Meta({ title, keywords, description }: MetaProps) {
             <link rel="icon" href="/favicon.ico" />
         </Head>
     );
-};
-
-Meta.defaultProps = {
-    title: "C&V Kitchen",
-    keywords: 'cook food recipe kitchen',
-    description: "A place for some of Connor's and Vika's favorite recipes!"
 };
