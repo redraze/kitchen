@@ -23,7 +23,7 @@ export default function OptionsNav(
         focus
     }: OptionsNavProps
 ) {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const [resetCheck, setResetCheck] = useState<boolean>(false);
     const [top, setTop] = useState<number>(0)
     const [left, setLeft] = useState<number>(0)
